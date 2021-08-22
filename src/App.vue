@@ -45,7 +45,7 @@
       </div>
       <div class="data-visualization">
         <GrowthChart
-          :heightData="heightData"
+          :scatterData="scatterData"
           :centileData="centiles[sex]"
         />
       </div>
@@ -67,13 +67,15 @@ export default {
       visits: [{ date: "2020-01-01", height: 60, weight: 4 }],
       centiles: {
         male: {
-          p50: [
-            { x: 0, y: 47 },
-            { x: 0.2, y: 53 },
-            { x: 0.5, y: 62 },
-            { x: 0.8, y: 81 },
-            { x: 1, y: 100 },
-          ],
+          height: {
+            p50: [
+              { x: 0, y: 47 },
+              { x: 0.2, y: 53 },
+              { x: 0.5, y: 62 },
+              { x: 0.8, y: 81 },
+              { x: 1, y: 100 },
+            ],
+          },
         },
       },
     }
@@ -82,11 +84,12 @@ export default {
     birthdateDate () {
       return new Date(this.birthdate).setHours(0, 0, 0, 0)
     },
-    heightData() {
+    scatterData() {
       return this.visits.map(v => {
         return {
-          x: this.dateDiffYears(new Date(v.date).setHours(0, 0, 0, 0), this.birthdateDate),
-          y: v.height,
+          age: this.dateDiffYears(new Date(v.date).setHours(0, 0, 0, 0), this.birthdateDate),
+          height: v.height,
+          weight: v.weight,
         }
       })
     },

@@ -12,14 +12,17 @@ export default {
   name: "GrowthChart",
   components: { ScatterChart },
   props: {
-    heightData: {
+    scatterData: {
       type: Array,
       default () { [] },
     },
     centileData: {
       type: Object,
       default () {
-        return { p03: [], p50: [], p97: [] }
+        return {
+          height: { p03: [], p50: [], p97: [] },
+          weight: { p03: [], p50: [], p97: [] },
+        }
       },
     },
     options: {
@@ -36,6 +39,22 @@ export default {
     },
   },
   computed: {
+    heightData: function () {
+      return this.scatterData.map(s => {
+        return {
+          x: s.age,
+          y: s.height,
+        }
+      })
+    },
+    weightData: function () {
+      return this.scatterData.map(s => {
+        return {
+          x: s.age,
+          y: s.weight,
+        }
+      })
+    },
     chartData: function () {
       return {
         datasets: [
@@ -43,7 +62,13 @@ export default {
             label: "Height",
             type: "scatter",
             data: this.heightData,
-            backgroundColor: "rgb(255, 99, 132)",
+            backgroundColor: "#ff6384",
+          },
+          {
+            label: "Weight",
+            type: "scatter",
+            data: this.weightData,
+            backgroundColor: "#36a2eb",
           },
           {
             label: "p50",
@@ -51,7 +76,7 @@ export default {
             fill: false,
             borderDash: [5],
             borderWidth: 2,
-            data: this.centileData.p50,
+            data: this.centileData.height.p50,
             borderColor: 'black',
             pointRadius: 0,
           },
@@ -60,7 +85,7 @@ export default {
             type: "line",
             fill: false,
             borderWidth: 2,
-            data: this.centileData.p97,
+            data: this.centileData.height.p97,
             borderColor: 'black',
             pointRadius: 0,
           },
@@ -69,7 +94,7 @@ export default {
             type: "line",
             fill: false,
             borderWidth: 2,
-            data: this.centileData.p03,
+            data: this.centileData.height.p03,
             borderColor: 'black',
             pointRadius: 0,
           },
