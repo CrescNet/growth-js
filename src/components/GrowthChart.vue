@@ -31,8 +31,8 @@ export default {
         return {
           responsive: true,
           scales: {
-            x: { title: { display: true, text: 'Age (years)' } },
-            y: { title: { display: true, text: 'Height (cm)' } },
+            x: { beginAtZero: true, title: { display: true, text: 'Age (years)' } },
+            y: { beginAtZero: true, title: { display: true, text: 'Height (cm)' } },
           }
         }
       },
