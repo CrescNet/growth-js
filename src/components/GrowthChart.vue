@@ -33,6 +33,7 @@ export default {
           scales: {
             x: { beginAtZero: true, title: { display: true, text: 'Age (years)' } },
             y: { beginAtZero: true, title: { display: true, text: 'Height (cm)' } },
+            y1: { beginAtZero: true, title: { display: true, text: 'Weight (kg)' }, position: 'right' },
           }
         }
       },
@@ -69,6 +70,7 @@ export default {
             type: "scatter",
             data: this.weightData,
             backgroundColor: "#36a2eb",
+            yAxisID: 'y1',
           },
           {
             label: "p50",
