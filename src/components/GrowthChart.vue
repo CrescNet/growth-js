@@ -1,9 +1,16 @@
+<template>
+  <ScatterChart :chartData="chartData" :options="options" />
+</template>
+
 <script>
-import { Scatter } from "vue3-chart-v2"
+import { ScatterChart } from "vue-chart-3"
+import { Chart, registerables } from "chart.js";
+
+Chart.register(...registerables);
 
 export default {
   name: "GrowthChart",
-  extends: Scatter,
+  components: { ScatterChart },
   props: {
     heightData: {
       type: Array,
@@ -19,9 +26,10 @@ export default {
       type: Object,
       default () {
         return {
+          responsive: true,
           scales: {
-            xAxes: [{ scaleLabel: { display: true, labelString: 'Age (years)' } }],
-            yAxes: [{ scaleLabel: { display: true, labelString: 'Height (cm)' } }],
+            x: { title: { display: true, text: 'Age (years)' } },
+            y: { title: { display: true, text: 'Height (cm)' } },
           }
         }
       },
@@ -69,14 +77,5 @@ export default {
       }
     },
   },
-  mounted () {
-    this.renderChart()
-  },
-  watch: {
-    centileData () {
-      this.state.chartObj.destroy()
-      this.renderChart()
-    },
-  }
 }
 </script>
