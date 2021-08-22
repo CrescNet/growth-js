@@ -19,10 +19,7 @@ export default {
     centileData: {
       type: Object,
       default () {
-        return {
-          height: { p03: [], p50: [], p97: [] },
-          weight: { p03: [], p50: [], p97: [] },
-        }
+        return { p03: [], p50: [], p97: [] }
       },
     },
     options: {
@@ -32,45 +29,26 @@ export default {
           responsive: true,
           scales: {
             x: { beginAtZero: true, title: { display: true, text: 'Age (years)' } },
-            y: { beginAtZero: true, title: { display: true, text: 'Height (cm)' } },
-            y1: { beginAtZero: true, title: { display: true, text: 'Weight (kg)' }, position: 'right' },
+            y: { beginAtZero: true, title: { display: true } },
           }
         }
       },
     },
+    color: {
+      type: String,
+      default: "#ff6384",
+    },
+    propertyName: String,
   },
   computed: {
-    heightData: function () {
-      return this.scatterData.map(s => {
-        return {
-          x: s.age,
-          y: s.height,
-        }
-      })
-    },
-    weightData: function () {
-      return this.scatterData.map(s => {
-        return {
-          x: s.age,
-          y: s.weight,
-        }
-      })
-    },
     chartData: function () {
       return {
         datasets: [
           {
-            label: "Height",
+            label: this.propertyName,
             type: "scatter",
-            data: this.heightData,
-            backgroundColor: "#ff6384",
-          },
-          {
-            label: "Weight",
-            type: "scatter",
-            data: this.weightData,
-            backgroundColor: "#36a2eb",
-            yAxisID: 'y1',
+            data: this.scatterData,
+            backgroundColor: this.color,
           },
           {
             label: "p50",
@@ -78,7 +56,7 @@ export default {
             fill: false,
             borderDash: [5],
             borderWidth: 2,
-            data: this.centileData.height.p50,
+            data: this.centileData ? this.centileData.p50 : [],
             borderColor: 'black',
             pointRadius: 0,
           },
@@ -87,7 +65,7 @@ export default {
             type: "line",
             fill: false,
             borderWidth: 2,
-            data: this.centileData.height.p97,
+            data: this.centileData ? this.centileData.p97 : [],
             borderColor: 'black',
             pointRadius: 0,
           },
@@ -96,7 +74,7 @@ export default {
             type: "line",
             fill: false,
             borderWidth: 2,
-            data: this.centileData.height.p03,
+            data: this.centileData ? this.centileData.p03 : [],
             borderColor: 'black',
             pointRadius: 0,
           },
