@@ -82,9 +82,11 @@ export default {
   },
   computed: {
     birthdateDate () {
+      if (this.birthdate == null) return null
       return new Date(this.birthdate).setHours(0, 0, 0, 0)
     },
     scatterData() {
+      if (this.birthdateDate == null) return []
       return this.visits.map(v => {
         return {
           age: this.dateDiffYears(new Date(v.date).setHours(0, 0, 0, 0), this.birthdateDate),
