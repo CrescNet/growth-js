@@ -32,15 +32,15 @@
 
 <script>
 export default {
-  props: ['value'],
+  props: ['modelValue'],
   computed: {
     local () {
-      return this.value ? this.value : {}
+      return this.modelValue ? this.modelValue : {}
     },
   },
   methods: {
     update (key, value) {
-      this.$emit('input', { ...this.value, [key]: value })
+      this.$emit('update:modelValue', { ...this.modelValue, [key]: value })
     },
   },
 }

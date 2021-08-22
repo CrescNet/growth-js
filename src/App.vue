@@ -36,7 +36,7 @@
             <VisitRow
               v-for="(visit, index) in visits"
               :key="index"
-              :value="visit"
+              v-model="visits[index]"
               @deleteRow="removeVisit(visit)"
             />
             <tr><td colspan="4"><input type="button" value="Add visit" @click="addVisit"></td></tr>
