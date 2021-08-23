@@ -1,7 +1,7 @@
 {
   "description": {
     "label": "Description",
-    "text": "On this page you can enter growth data and visualise it in comparison to a reference population. Please first select the reference values to be used and then enter sex, date of birth and the measured values to be visualised. The values are displayed on the right-hand side. Click on \" Height\" or \"Weight\" to switch between the two graphics. With the lower green buttons, the entered data can be saved, deleted and output as a QR code."
+    "text": "On this page you can enter growth data and visualise it in comparison to a reference population. Please first select the reference values to be used and then enter sex, date of birth and the measured values to be visualised. The values are displayed on the right-hand side. Click on \" Height\" or \"Weight\" to switch between the two graphics. With the lower green buttons, the entered data can be saved, output as a QR code or deleted."
   },
   "dataPrivacy": {
     "label": "Data Privacy",
@@ -21,12 +21,13 @@
   "reference": "Reference",
   "showQrCode": "Show QR code",
   "resetData": "Reset data",
-  "saveDataForLater": "Save data for later",
+  "saveForLater": "Save for later",
   "viewOnGitHub": "View on GitHub",
   "selectReference": "Please select a reference...",
   "normal_german": "German children without chronic diseases",
   "noonan_japan": "Children with Noonan Syndrome",
   "copyrightNotice": "CrescNet, Medical Faculty, University of Leipzig 2021",
   "close": "Close",
-  "source": "Source"
+  "source": "Source",
+  "saveToFile": "Save to file"
 }

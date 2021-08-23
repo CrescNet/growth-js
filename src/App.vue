@@ -43,20 +43,26 @@
                   color="primary"
                   icon="save"
                   :disabled="!dirty"
-                  :label="$t('saveDataForLater')"
+                  :label="$t('saveForLater')"
                   @click="saveUserInput"
                 />
                 <q-btn
                   color="primary"
-                  icon="restart_alt"
-                  :label="$t('resetData')"
-                  @click="resetUserInput"
+                  icon="download"
+                  :label="$t('saveToFile')"
+                  @click="saveFile"
                 />
                 <q-btn
                   color="primary"
                   icon="qr_code_2"
                   :label="$t('showQrCode')"
                   @click="showQrCode = true"
+                />
+                <q-btn
+                  color="red"
+                  icon="restart_alt"
+                  :label="$t('resetData')"
+                  @click="resetUserInput"
                 />
               </q-btn-group>
             </q-card-section>
@@ -238,6 +244,17 @@ export default {
       localStorage.removeItem("userInput");
       this.dirty = false;
     },
+    saveFile: function() {
+      const data = JSON.stringify(this.userInput)
+      const blob = new Blob([data], {type: 'text/plain'})
+      const e = document.createEvent('MouseEvents'),
+      a = document.createElement('a');
+      a.download = "test.json";
+      a.href = window.URL.createObjectURL(blob);
+      a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+      e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      a.dispatchEvent(e);
+    }
   },
 };
 </script>
