@@ -60,7 +60,7 @@
         <q-separator inset />
 
         <q-card-section>
-          <table>
+          <q-markup-table>
             <thead>
               <tr>
                 <th>Date</th>
@@ -88,7 +88,7 @@
                 </td>
               </tr>
             </tbody>
-          </table>
+          </q-markup-table>
         </q-card-section>
 
         <q-card-section>
