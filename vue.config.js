@@ -10,5 +10,13 @@ module.exports = {
   },
   transpileDependencies: [
     'quasar'
-  ]
+  ],
+  chainWebpack: config => {
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].title = "Growth JS";
+        return args;
+      })
+  }
 }
