@@ -157,7 +157,7 @@
           You can scan this QR code to get your entered data as JSON format.<br>
           This format is machine-readable.
         </q-card-section>
-        <q-card-section>
+        <q-card-section class="text-center">
           <qrcode-vue
             :value="JSON.stringify(nonEmptyVisits)"
             :size="Math.sqrt(nonEmptyVisits.length) * 100"
