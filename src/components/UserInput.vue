@@ -10,7 +10,7 @@
         v-model="local.reference"
         :options="availableReferences"
       />
-      <span v-if="selectedReference && selectedReference.url">
+      <span class="text-caption" v-if="selectedReference && selectedReference.url">
         {{ $t('source') }}:<a :href="selectedReference.url">{{ selectedReference.url }}</a>
       </span>
 
