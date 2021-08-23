@@ -26,72 +26,12 @@
       <q-splitter v-model="splitterModel" :limits="[20, 80]">
         <template v-slot:before>
           <q-card bordered class="q-mr-md">
-            <q-card-section>
-              <q-select
-                outlined
-                label="Reference"
-                stack-label
-                emit-value
-                map-options
-                v-model="userInput.reference"
-                :options="availableReferences"
-              />
-
-              <br />
-
-              <div class="q-gutter-sm">
-                <q-radio v-model="userInput.sex" val="male" label="Male" />
-                <q-radio v-model="userInput.sex" val="female" label="Female" />
-              </div>
-
-              <br />
-
-              <q-input
-                outlined
-                type="date"
-                label="Date of birth"
-                stack-label
-                debounce="500"
-                v-model="userInput.birthdate"
-              />
-            </q-card-section>
-
-            <q-separator inset />
-
-            <q-card-section>
-              <q-markup-table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Height</th>
-                    <th>Weight</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <VisitRow
-                    v-for="(visit, index) in userInput.visits"
-                    :key="index"
-                    v-model="userInput.visits[index]"
-                    @deleteRow="removeVisit(visit)"
-                  />
-                  <tr>
-                    <td colspan="4">
-                      <q-btn
-                        rounded
-                        color="secondary"
-                        icon="add"
-                        label="Add row"
-                        @click="addVisit"
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </q-markup-table>
-            </q-card-section>
-
-            <q-card-section>
-              <q-btn-group rounded>
+            <user-input
+              v-model="userInput"
+              :availableReferences="availableReferences"
+            />
+            <q-card-section class="text-center">
+              <q-btn-group rounded push>
                 <q-btn
                   color="primary"
                   icon="save"
@@ -189,12 +129,12 @@
 <script>
 import { ref } from "vue";
 import GrowthChart from "./components/GrowthChart.vue";
-import VisitRow from "./components/VisitRow.vue";
+import UserInput from "./components/UserInput.vue";
 import QrcodeVue from "qrcode.vue";
 
 export default {
   name: "App",
-  components: { GrowthChart, VisitRow, QrcodeVue },
+  components: { GrowthChart, UserInput, QrcodeVue },
   data() {
     return {
       userInput: {
@@ -282,12 +222,6 @@ export default {
     this.dirty = false;
   },
   methods: {
-    addVisit() {
-      this.userInput.visits.push({});
-    },
-    removeVisit(visit) {
-      this.userInput.visits.splice(this.userInput.visits.indexOf(visit), 1);
-    },
     dateDiffYears(d1, d2) {
       return (d1 - d2) / (1000 * 60 * 60 * 24 * 365.25);
     },
