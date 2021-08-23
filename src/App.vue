@@ -36,20 +36,20 @@
                   color="primary"
                   icon="save"
                   :disabled="!dirty"
-                  label="Save data for later"
+                  :label="$t('saveDataForLater')"
                   @click="saveUserInput"
                 />
                 <q-btn
                   color="primary"
                   icon="restart_alt"
-                  label="Reset data"
+                  :label="$t('resetData')"
                   @click="resetUserInput"
                 />
                 <q-btn
                   color="primary"
                   icon="qr_code_2"
-                  label="Toggle QR code"
-                  @click="showQrCode = !showQrCode"
+                  :label="$t('showQrCode')"
+                  @click="showQrCode = true"
                 />
               </q-btn-group>
             </q-card-section>
@@ -60,9 +60,9 @@
           <div class="q-ml-md">
             <q-card bordered class="col">
               <q-card-section>
-                <div class="text-h6 text-center">Height</div>
+                <div class="text-h6 text-center" v-t="'height'" />
                 <GrowthChart
-                  propertyName="Height (cm)"
+                  :propertyName="$t('height') + ' (cm)'"
                   :scatterData="heightData"
                   :centileData="
                     centiles.height ? centiles.height[userInput.sex] : []
@@ -73,9 +73,9 @@
 
             <q-card bordered class="col">
               <q-card-section>
-                <div class="text-h6 text-center">Weight</div>
+                <div class="text-h6 text-center" v-t="'weight'" />
                 <GrowthChart
-                  propertyName="Weight (kg)"
+                  :propertyName="$t('weight') + ' (kg)'"
                   :scatterData="weightData"
                   :centileData="
                     centiles.weight ? centiles.weight[userInput.sex] : []
@@ -90,10 +90,7 @@
 
     <q-dialog v-model="showQrCode">
       <q-card>
-        <q-card-section class="text-center">
-          You can scan this QR code to get your entered data as JSON format.<br />
-          This format is machine-readable.
-        </q-card-section>
+        <q-card-section class="text-center" v-html="$t('qrCodeDescription')" />
         <q-card-section class="text-center">
           <qrcode-vue
             :value="JSON.stringify(nonEmptyVisits)"
@@ -102,7 +99,7 @@
           />
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn flat label="Close" color="primary" v-close-popup />
+          <q-btn flat :label="$t('close')" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -110,7 +107,7 @@
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
         <q-toolbar-title class="text-subtitle1">
-          &copy; CrescNet, Medical Faculty, University of Leipzig 2021
+          &copy; {{ $t('copyrightNotice') }}
         </q-toolbar-title>
         <q-btn
           type="a"
@@ -119,7 +116,7 @@
           flat
           rounded
           dense
-          label="View on GitHub"
+          :label="$t('viewOnGitHub')"
         />
       </q-toolbar>
     </q-footer>
@@ -147,12 +144,9 @@ export default {
       showQrCode: false,
       dirty: false,
       availableReferences: [
-        { value: null, label: "Please select a reference..." },
-        {
-          value: "normal_german",
-          label: "German children without chronic diseases",
-        },
-        { value: "noonan_japan", label: "Children with Noonan Syndrome" },
+        { value: null, label: this.$t("selectReference") },
+        { value: "normal_german", label: this.$t("normal_german") },
+        { value: "noonan_japan", label: this.$t("noonan_japan") },
       ],
       splitterModel: ref(65),
     };

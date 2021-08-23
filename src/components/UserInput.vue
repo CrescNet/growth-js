@@ -3,7 +3,7 @@
     <q-card-section>
       <q-select
         outlined
-        label="Reference"
+        :label="$t('reference')"
         stack-label
         emit-value
         map-options
@@ -14,8 +14,8 @@
       <br />
 
       <div class="q-gutter-sm">
-        <q-radio v-model="local.sex" val="male" label="Male" />
-        <q-radio v-model="local.sex" val="female" label="Female" />
+        <q-radio v-model="local.sex" val="male" :label="$t('male')" />
+        <q-radio v-model="local.sex" val="female" :label="$t('female')" />
       </div>
 
       <br />
@@ -23,7 +23,7 @@
       <q-input
         outlined
         type="date"
-        label="Date of birth"
+        :label="$t('birthdate')"
         stack-label
         debounce="500"
         v-model="local.birthdate"
@@ -36,9 +36,9 @@
       <q-markup-table>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Height</th>
-            <th>Weight</th>
+            <th v-t="'date'" />
+            <th v-t="'height'" />
+            <th v-t="'weight'" />
             <th></th>
           </tr>
         </thead>
@@ -55,7 +55,7 @@
                 rounded
                 color="secondary"
                 icon="add"
-                label="Add row"
+                :label="$t('addRow')"
                 @click="addVisit"
               />
             </td>

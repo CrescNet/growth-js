@@ -6,5 +6,25 @@
   "dataPrivacy": {
     "label": "Data Privacy",
     "text": "..."
-  }
+  },
+  "inUnit": "in {unit}",
+  "qrCodeDescription": "You can scan this QR code to get your entered data as JSON format.<br>This format is machine-readable.",
+  "height": "Height",
+  "weight": "Weight",
+  "deleteRow": "Delete row",
+  "date": "Date",
+  "addRow": "Add row",
+  "birthdate": "Birthdate",
+  "female": "female",
+  "male": "male",
+  "sex": "sex",
+  "reference": "Reference",
+  "showQrCode": "Show QR code",
+  "resetData": "Reset data",
+  "saveDataForLater": "Save data for later",
+  "viewOnGitHub": "View on GitHub",
+  "selectReference": "Please select a reference...",
+  "normal_german": "German children without chronic diseases",
+  "noonan_japan": "Children with Noonan Syndrome",
+  "copyrightNotice": "CrescNet, Medical Faculty, University of Leipzig 2021"
 }

@@ -15,7 +15,7 @@
         type="number"
         step="any"
         min="0"
-        title="in cm"
+        :title="$t('inUnit', { unit: 'cm' })"
         debounce="500"
         :modelValue="local.height"
         @update:model-value="update('height', $event)"
@@ -27,14 +27,14 @@
         type="number"
         step="any"
         min="0"
-        title="in kg"
+        :title="$t('inUnit', { unit: 'kg' })"
         debounce="500"
         :modelValue="local.weight"
         @update:model-value="update('weight', $event)"
       />
     </td>
     <td>
-      <q-btn round color="red" icon="clear" @click="$emit('deleteRow')" />
+      <q-btn round color="red" icon="clear" :title="$t('deleteRow')" @click="$emit('deleteRow')" />
     </td>
   </tr>
 </template>

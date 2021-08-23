@@ -6,5 +6,25 @@
   "dataPrivacy": {
     "label": "Datenschutz",
     "text": "..."
-  }
+  },
+  "inUnit": "in {unit}",
+  "qrCodeDescription": "Sie können diesen QR-Code scannen um Ihre eingegebenen Daten im JSON-Format zu erhalten.<br>Dieses Format ist maschinenlesbar.",
+  "height": "Größe",
+  "weight": "Gewicht",
+  "deleteRow": "Zeile löschen",
+  "date": "Datum",
+  "addRow": "Zeile Hinzufügen",
+  "birthdate": "Geburtsdatum",
+  "female": "Weiblich",
+  "male": "Männlich",
+  "sex": "Geschlecht",
+  "reference": "Referenz",
+  "showQrCode": "QR-Code anzeigen",
+  "resetData": "Daten zurücksetzen",
+  "saveDataForLater": "Daten für später speichern",
+  "viewOnGitHub": "Auf GitHub anzeigen",
+  "selectReference": "Bitte Referenz auswählen...",
+  "normal_german": "Deutsche Kinder ohne chronische Erkrankungen",
+  "noonan_japan": "Kinder mit Noonan-Syndrom",
+  "copyrightNotice": "CrescNet, Medizinische Fakultät, Universität Leipzig 2021"
 }
