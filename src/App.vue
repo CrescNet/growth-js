@@ -153,8 +153,8 @@ export default {
     availableReferences() {
       return [
         { value: null, label: this.$t("selectReference") },
-        { value: "normal_german", label: this.$t("normal_german") },
-        { value: "noonan_japan", label: this.$t("noonan_japan") },
+        { value: "normal_german", label: this.$t("normal_german"), url: 'https://doi.org/10.1007/s001120170107' },
+        { value: "noonan_japan", label: this.$t("noonan_japan"), url: 'https://doi.org/10.1038/pr.2015.254' },
       ]
     },
     birthdateDate() {

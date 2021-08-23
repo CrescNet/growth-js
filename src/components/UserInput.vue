@@ -10,6 +10,9 @@
         v-model="local.reference"
         :options="availableReferences"
       />
+      <span v-if="selectedReference && selectedReference.url">
+        {{ $t('source') }}:<a :href="selectedReference.url">{{ selectedReference.url }}</a>
+      </span>
 
       <br />
 
@@ -81,6 +84,9 @@ export default {
     local () {
       return this.modelValue ? this.modelValue : {};
     },
+    selectedReference () {
+      return this.availableReferences.find(r => r.value == this.local.reference)
+    }
   },
   methods: {
     update (key, value) {
