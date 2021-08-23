@@ -13,10 +13,14 @@
 
     <q-page-container class="q-my-md q-pa-md q-gutter-y-md">
       <q-card bordered>
-        <q-card-section class="description"
-          >App for visualization of growth data</q-card-section
-        >
-        <q-card-section class="data-privacy">Data Privacy: ...</q-card-section>
+        <q-card-section class="description">
+          <strong v-t="'description.label'" />:
+          <p v-t="'description.text'" />
+        </q-card-section>
+        <q-card-section class="data-privacy">
+          <strong v-t="'dataPrivacy.label'" />:
+          <p v-t="'dataPrivacy.text'" />
+        </q-card-section>
       </q-card>
 
       <q-splitter v-model="splitterModel" :limits="[20, 80]">
