@@ -216,8 +216,8 @@ export default {
     },
   },
   mounted() {
-    if (this.$cookie.getCookie("userInput"))
-      this.userInput = this.$cookie.getCookie("userInput");
+    if (localStorage.getItem("userInput"))
+      this.userInput = JSON.parse(localStorage.getItem("userInput"));
     this.dirty = false;
   },
   methods: {
@@ -225,7 +225,7 @@ export default {
       return (d1 - d2) / (1000 * 60 * 60 * 24 * 365.25);
     },
     saveUserInput() {
-      this.$cookie.setCookie("userInput", this.userInput);
+      localStorage.setItem("userInput", JSON.stringify(this.userInput));
       this.dirty = false;
     },
     resetUserInput() {
@@ -235,7 +235,7 @@ export default {
         sex: null,
         visits: [{}],
       };
-      this.$cookie.removeCookie("userInput");
+      localStorage.removeItem("userInput");
       this.dirty = false;
     },
   },
