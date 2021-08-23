@@ -10,6 +10,15 @@
 
     <div class="content">
       <div class="data-entry">
+        Reference:
+        <select v-model="reference">
+          <option :value="null">Please select a reference...</option>
+          <option value="normal_german">German children without chronic diseases</option>
+          <option value="noonan_japan">Children with Noonan Syndrome</option>
+        </select>
+
+        <br>
+
         Sex:
         <input type="radio" id="male" value="male" v-model="sex">
         <label for="male">male</label>
@@ -62,17 +71,17 @@
 <script>
 import GrowthChart from "./components/GrowthChart.vue"
 import VisitRow from "./components/VisitRow.vue"
-import centiles from "./json/centiles.json"
 
 export default {
   name: "App",
   components: { GrowthChart, VisitRow },
-  data() {
+  data () {
     return {
       birthdate: null,
       sex: null,
       visits: [{}],
-      centiles: centiles,
+      reference: null,
+      centiles: {},
     }
   },
   computed: {
@@ -80,7 +89,7 @@ export default {
       if (this.birthdate == null) return null
       return new Date(this.birthdate).setHours(0, 0, 0, 0)
     },
-    heightData() {
+    heightData () {
       if (this.birthdateDate == null) return []
       return this.visits.map(v => {
         return {
@@ -89,7 +98,7 @@ export default {
         }
       })
     },
-    weightData() {
+    weightData () {
       if (this.birthdateDate == null) return []
       return this.visits.map(v => {
         return {
@@ -98,6 +107,21 @@ export default {
         }
       })
     },
+  },
+  watch: {
+    reference: function (val) {
+      if (val == null) {
+        this.centiles = {}
+        return
+      }
+      var self = this
+      this.axios.get(`/references/${val}.json`).then((response) => {
+        self.centiles = response.data
+      }).catch(() => {
+        self.reference = null
+        self.centiles = {}
+      })
+    }
   },
   methods: {
     addVisit () {
@@ -108,7 +132,7 @@ export default {
     },
     dateDiffYears (d1, d2) {
       return (d1 - d2) / (1000 * 60 * 60 * 24 * 365.25)
-    }
+    },
   }
 }
 </script>
