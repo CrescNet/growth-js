@@ -177,6 +177,7 @@ export default {
         visits: [{}],
       }
       this.$cookie.removeCookie('userInput')
+      this.dirty = false
     },
   }
 }
