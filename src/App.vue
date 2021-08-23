@@ -8,18 +8,25 @@
           </q-avatar>
           Growth JS
         </q-toolbar-title>
+        <q-select
+          dense
+          emit-value
+          map-options
+          v-model="$root.$i18n.locale"
+          :options="[{ value: 'de', label: 'DE' }, { value: 'en', label: 'EN' }]"
+        />
       </q-toolbar>
     </q-header>
 
     <q-page-container class="q-my-md q-pa-md q-gutter-y-md">
       <q-card bordered>
         <q-card-section class="description">
-          <strong v-t="'description.label'" />:
-          <p v-t="'description.text'" />
+          <strong>{{ $t('description.label') }}</strong>:
+          <p>{{$t('description.text') }}</p>
         </q-card-section>
         <q-card-section class="data-privacy">
-          <strong v-t="'dataPrivacy.label'" />:
-          <p v-t="'dataPrivacy.text'" />
+          <strong>{{ $t('dataPrivacy.label') }}</strong>:
+          <p>{{ $t('dataPrivacy.text') }}</p>
         </q-card-section>
       </q-card>
 
@@ -143,15 +150,17 @@ export default {
       centiles: {},
       showQrCode: false,
       dirty: false,
-      availableReferences: [
-        { value: null, label: this.$t("selectReference") },
-        { value: "normal_german", label: this.$t("normal_german") },
-        { value: "noonan_japan", label: this.$t("noonan_japan") },
-      ],
       splitterModel: ref(65),
     };
   },
   computed: {
+    availableReferences() {
+      return [
+        { value: null, label: this.$t("selectReference") },
+        { value: "normal_german", label: this.$t("normal_german") },
+        { value: "noonan_japan", label: this.$t("noonan_japan") },
+      ]
+    },
     birthdateDate() {
       if (this.userInput.birthdate == null) return null;
       return new Date(this.userInput.birthdate).setHours(0, 0, 0, 0);
