@@ -26,139 +26,145 @@
         <q-card-section class="data-privacy">Data Privacy: ...</q-card-section>
       </q-card>
 
-      <q-card bordered>
-        <q-card-section>
-          <q-select
-            outlined
-            label="Reference"
-            stack-label
-            emit-value
-            map-options
-            v-model="userInput.reference"
-            :options="availableReferences"
-          />
-
-          <br />
-
-          <div class="q-gutter-sm">
-            <q-radio v-model="userInput.sex" val="male" label="Male" />
-            <q-radio v-model="userInput.sex" val="female" label="Female" />
-          </div>
-
-          <br />
-
-          <q-input
-            outlined
-            type="date"
-            label="Date of birth"
-            stack-label
-            debounce="500"
-            v-model="userInput.birthdate"
-          />
-        </q-card-section>
-
-        <q-separator inset />
-
-        <q-card-section>
-          <q-markup-table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Height</th>
-                <th>Weight</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <VisitRow
-                v-for="(visit, index) in userInput.visits"
-                :key="index"
-                v-model="userInput.visits[index]"
-                @deleteRow="removeVisit(visit)"
+      <q-splitter v-model="splitterModel" :limits="[20, 80]">
+        <template v-slot:before>
+          <q-card bordered class="q-mr-md">
+            <q-card-section>
+              <q-select
+                outlined
+                label="Reference"
+                stack-label
+                emit-value
+                map-options
+                v-model="userInput.reference"
+                :options="availableReferences"
               />
-              <tr>
-                <td colspan="4">
-                  <q-btn
-                    rounded
-                    color="secondary"
-                    icon="add"
-                    label="Add row"
-                    @click="addVisit"
+
+              <br />
+
+              <div class="q-gutter-sm">
+                <q-radio v-model="userInput.sex" val="male" label="Male" />
+                <q-radio v-model="userInput.sex" val="female" label="Female" />
+              </div>
+
+              <br />
+
+              <q-input
+                outlined
+                type="date"
+                label="Date of birth"
+                stack-label
+                debounce="500"
+                v-model="userInput.birthdate"
+              />
+            </q-card-section>
+
+            <q-separator inset />
+
+            <q-card-section>
+              <q-markup-table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Height</th>
+                    <th>Weight</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <VisitRow
+                    v-for="(visit, index) in userInput.visits"
+                    :key="index"
+                    v-model="userInput.visits[index]"
+                    @deleteRow="removeVisit(visit)"
                   />
-                </td>
-              </tr>
-            </tbody>
-          </q-markup-table>
-        </q-card-section>
+                  <tr>
+                    <td colspan="4">
+                      <q-btn
+                        rounded
+                        color="secondary"
+                        icon="add"
+                        label="Add row"
+                        @click="addVisit"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </q-markup-table>
+            </q-card-section>
 
-        <q-card-section>
-          <q-btn-group rounded>
-            <q-btn
-              color="primary"
-              icon="save"
-              :disabled="!dirty"
-              label="Save data for later"
-              @click="saveUserInput"
-            />
-            <q-btn
-              color="primary"
-              icon="restart_alt"
-              label="Reset data"
-              @click="resetUserInput"
-            />
-            <q-btn
-              color="primary"
-              icon="qr_code_2"
-              label="Toggle QR code"
-              @click="showQrCode = !showQrCode"
-            />
-          </q-btn-group>
-        </q-card-section>
-      </q-card>
+            <q-card-section>
+              <q-btn-group rounded>
+                <q-btn
+                  color="primary"
+                  icon="save"
+                  :disabled="!dirty"
+                  label="Save data for later"
+                  @click="saveUserInput"
+                />
+                <q-btn
+                  color="primary"
+                  icon="restart_alt"
+                  label="Reset data"
+                  @click="resetUserInput"
+                />
+                <q-btn
+                  color="primary"
+                  icon="qr_code_2"
+                  label="Toggle QR code"
+                  @click="showQrCode = !showQrCode"
+                />
+              </q-btn-group>
+            </q-card-section>
+          </q-card>
+        </template>
 
-      <q-dialog v-model="showQrCode">
-        <q-card>
-          <q-card-section>
-            <qrcode-vue
-              :value="JSON.stringify(nonEmptyVisits)"
-              :size="Math.sqrt(nonEmptyVisits.length) * 100"
-              level="H"
-            />
-          </q-card-section>
-          <q-card-actions align="right">
-            <q-btn flat label="Close" color="primary" v-close-popup />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
+        <template v-slot:after>
+          <div class="q-ml-md">
+            <q-card bordered class="col">
+              <q-card-section>
+                <div class="text-h6 text-center">Height</div>
+                <GrowthChart
+                  propertyName="Height (cm)"
+                  :scatterData="heightData"
+                  :centileData="
+                    centiles.height ? centiles.height[userInput.sex] : []
+                  "
+                />
+              </q-card-section>
+            </q-card>
 
-      <div class="row q-gutter-x-md items-start">
-        <q-card bordered class="col">
-          <q-card-section>
-            <div class="text-h6 text-center">Height</div>
-            <GrowthChart
-              propertyName="Height (cm)"
-              :scatterData="heightData"
-              :centileData="
-                centiles.height ? centiles.height[userInput.sex] : []
-              "
-            />
-          </q-card-section>
-        </q-card>
-
-        <q-card bordered class="col">
-          <q-card-section>
-            <div class="text-h6 text-center">Weight</div>
-            <GrowthChart
-              propertyName="Weight (kg)"
-              :scatterData="weightData"
-              :centileData="
-                centiles.weight ? centiles.weight[userInput.sex] : []
-              "
-            />
-          </q-card-section>
-        </q-card>
-      </div>
+            <q-card bordered class="col">
+              <q-card-section>
+                <div class="text-h6 text-center">Weight</div>
+                <GrowthChart
+                  propertyName="Weight (kg)"
+                  :scatterData="weightData"
+                  :centileData="
+                    centiles.weight ? centiles.weight[userInput.sex] : []
+                  "
+                />
+              </q-card-section>
+            </q-card>
+          </div>
+        </template>
+      </q-splitter>
     </q-page-container>
+
+    <q-dialog v-model="showQrCode">
+      <q-card>
+        <q-card-section>
+          <qrcode-vue
+            :value="JSON.stringify(nonEmptyVisits)"
+            :size="Math.sqrt(nonEmptyVisits.length) * 100"
+            level="H"
+          />
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Close" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
@@ -172,6 +178,7 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import GrowthChart from "./components/GrowthChart.vue";
 import VisitRow from "./components/VisitRow.vue";
 import QrcodeVue from "qrcode.vue";
@@ -198,6 +205,7 @@ export default {
         },
         { value: "noonan_japan", label: "Children with Noonan Syndrome" },
       ],
+      splitterModel: ref(65),
     };
   },
   computed: {
