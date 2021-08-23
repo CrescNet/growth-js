@@ -65,30 +65,34 @@
 
         <template v-slot:after>
           <div class="q-ml-md">
-            <q-card bordered class="col">
-              <q-card-section>
-                <div class="text-h6 text-center" v-t="'height'" />
-                <GrowthChart
-                  :propertyName="$t('height') + ' (cm)'"
-                  :scatterData="heightData"
-                  :centileData="
-                    centiles.height ? centiles.height[userInput.sex] : []
-                  "
-                />
-              </q-card-section>
-            </q-card>
+            <q-card bordered>
+              <q-tabs v-model="chartTab" dense active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
+                <q-tab name="height" :label="$t('height')" />
+                <q-tab name="weight" :label="$t('weight')" />
+              </q-tabs>
 
-            <q-card bordered class="col">
-              <q-card-section>
-                <div class="text-h6 text-center" v-t="'weight'" />
-                <GrowthChart
-                  :propertyName="$t('weight') + ' (kg)'"
-                  :scatterData="weightData"
-                  :centileData="
-                    centiles.weight ? centiles.weight[userInput.sex] : []
-                  "
-                />
-              </q-card-section>
+              <q-separator />
+
+              <q-tab-panels v-model="chartTab" animated>
+                <q-tab-panel name="height">
+                  <GrowthChart
+                    :propertyName="$t('height') + ' (cm)'"
+                    :scatterData="heightData"
+                    :centileData="
+                      centiles.height ? centiles.height[userInput.sex] : []
+                    "
+                  />
+                </q-tab-panel>
+                <q-tab-panel name="weight">
+                  <GrowthChart
+                    :propertyName="$t('weight') + ' (kg)'"
+                    :scatterData="weightData"
+                    :centileData="
+                      centiles.weight ? centiles.weight[userInput.sex] : []
+                    "
+                  />
+                </q-tab-panel>
+              </q-tab-panels>
             </q-card>
           </div>
         </template>
@@ -142,6 +146,7 @@ export default {
       showQrCode: false,
       dirty: false,
       splitterModel: ref(65),
+      chartTab: 'height',
     };
   },
   computed: {
