@@ -2,7 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import axios from "axios"
 import VueAxios from "vue-axios"
+import { VueCookieNext } from "vue-cookie-next"
 
-const app = createApp(App)
-app.use(VueAxios, axios)
-app.mount('#app')
+createApp(App).use(VueAxios, axios).use(VueCookieNext).mount('#app')
+
+VueCookieNext.config({ expire: Infinity, secure: true, sameSite: 'Strict' })

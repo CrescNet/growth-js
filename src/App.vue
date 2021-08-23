@@ -109,18 +109,48 @@ export default {
     },
   },
   watch: {
-    reference: function (val) {
-      if (val == null) {
+    reference: function () {
+      this.$cookie.setCookie('reference', this.reference)
+      if (this.reference == null) {
         this.centiles = {}
         return
       }
       var self = this
-      this.axios.get(`/references/${val}.json`).then((response) => {
+      this.axios.get(`/references/${this.reference}.json`).then((response) => {
         self.centiles = response.data
       }).catch(() => {
         self.reference = null
         self.centiles = {}
       })
+    },
+    birthdate: function () {
+      this.$cookie.setCookie('birthdate', this.birthdate)
+    },
+    sex: function () {
+      this.$cookie.setCookie('sex', this.sex)
+    },
+    visits: {
+      deep: true,
+      handler () {
+        this.$cookie.setCookie('visits', { data: this.visits })
+      }
+    }
+  },
+  mounted () {
+    if (this.$cookie.getCookie('reference'))
+      this.reference = this.$cookie.getCookie('reference')
+    if (this.$cookie.getCookie('birthdate'))
+      this.birthdate = this.$cookie.getCookie('birthdate')
+    if (this.$cookie.getCookie('sex'))
+      this.sex = this.$cookie.getCookie('sex')
+
+    if (this.$cookie.getCookie('visits')) {
+      try {
+        this.visits = this.$cookie.getCookie('visits').data
+      } catch (e) {
+        console.log(e)
+        this.$cookie.removeCookie('visits')
+      }
     }
   },
   methods: {
