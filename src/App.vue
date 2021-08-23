@@ -19,19 +19,19 @@
     </q-header>
 
     <q-page-container class="q-my-sm q-pa-md q-gutter-y-md">
-      <q-card bordered>
-        <q-card-section class="description">
-          <strong>{{ $t('description.label') }}</strong>:
-          <p>{{$t('description.text') }}</p>
-        </q-card-section>
-        <q-card-section class="data-privacy">
-          <strong>{{ $t('dataPrivacy.label') }}</strong>:
-          <p>{{ $t('dataPrivacy.text') }}</p>
-        </q-card-section>
-      </q-card>
-
-      <q-splitter v-model="splitterModel" :limits="[20, 80]">
+      <q-splitter v-model="splitterModel" :limits="[30, 80]">
         <template v-slot:before>
+          <q-card bordered class="q-mr-md q-mb-md">
+            <q-card-section class="description">
+              <strong>{{ $t('description.label') }}</strong>:
+              <p>{{$t('description.text') }}</p>
+            </q-card-section>
+            <q-card-section class="data-privacy">
+              <strong>{{ $t('dataPrivacy.label') }}</strong>:
+              <p>{{ $t('dataPrivacy.text') }}</p>
+            </q-card-section>
+          </q-card>
+
           <q-card bordered class="q-mr-md">
             <user-input
               v-model="userInput"
@@ -145,7 +145,7 @@ export default {
       centiles: {},
       showQrCode: false,
       dirty: false,
-      splitterModel: ref(65),
+      splitterModel: ref(57),
       chartTab: 'height',
     };
   },
