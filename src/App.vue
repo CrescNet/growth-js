@@ -100,8 +100,8 @@
         <q-card-section class="text-center" v-t="'qrCodeDescription'" />
         <q-card-section class="text-center">
           <qrcode-vue
-            :value="JSON.stringify(nonEmptyVisits)"
-            :size="Math.sqrt(nonEmptyVisits.length) * 100"
+            :value="JSON.stringify(userInput)"
+            :size="Math.sqrt(userInput.visits.length) * 100"
             level="H"
           />
         </q-card-section>
