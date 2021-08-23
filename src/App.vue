@@ -18,7 +18,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-page-container class="q-my-md q-pa-md q-gutter-y-md">
+    <q-page-container class="q-my-sm q-pa-md q-gutter-y-md">
       <q-card bordered>
         <q-card-section class="description">
           <strong>{{ $t('description.label') }}</strong>:
