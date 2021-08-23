@@ -66,6 +66,7 @@ export default {
             data: this.localCentileData.p50,
             borderColor: 'black',
             pointRadius: 0,
+            pointHitRadius: 0,
           },
           {
             label: "p97",
@@ -75,6 +76,7 @@ export default {
             data: this.localCentileData.p97,
             borderColor: 'black',
             pointRadius: 0,
+            pointHitRadius: 0,
           },
           {
             label: "p03",
@@ -84,6 +86,7 @@ export default {
             data: this.localCentileData.p03,
             borderColor: 'black',
             pointRadius: 0,
+            pointHitRadius: 0,
           },
         ],
       }
