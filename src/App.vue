@@ -54,9 +54,15 @@
 
         <hr>
 
-        <input type="button" value="Save data for later" @click="saveUserInput">
+        <input type="button" :disabled="!dirty" value="Save data for later" @click="saveUserInput">
         <input type="button" value="Reset data" @click="resetUserInput">
+        <input type="button" value="Toggle QR code" @click="showQrCode = !showQrCode">
       </div>
+
+      <div class="qrcode" v-if="showQrCode">
+        <qrcode-vue :value="JSON.stringify(nonEmptyVisits)" :size="Math.sqrt(nonEmptyVisits.length) * 100" level="H" />
+      </div>
+
       <div class="data-visualization">
         <GrowthChart
           propertyName="Height (cm)"
@@ -76,10 +82,11 @@
 <script>
 import GrowthChart from "./components/GrowthChart.vue"
 import VisitRow from "./components/VisitRow.vue"
+import QrcodeVue from "qrcode.vue"
 
 export default {
   name: "App",
-  components: { GrowthChart, VisitRow },
+  components: { GrowthChart, VisitRow, QrcodeVue },
   data () {
     return {
       userInput: {
@@ -89,6 +96,8 @@ export default {
         visits: [{}],
       },
       centiles: {},
+      showQrCode: false,
+      dirty: false,
     }
   },
   computed: {
@@ -114,6 +123,11 @@ export default {
         }
       })
     },
+    nonEmptyVisits () {
+      return this.userInput.visits.filter(
+        v => v.date != null && (v.height != null || v.weight != null)
+      )
+    },
   },
   watch: {
     "userInput.reference": function () {
@@ -128,11 +142,18 @@ export default {
         self.userInput.reference = null
         self.centiles = {}
       })
+    },
+    userInput: {
+      deep: true,
+      handler: function () {
+        this.dirty = true
+      }
     }
   },
   mounted () {
     if (this.$cookie.getCookie('userInput'))
       this.userInput = this.$cookie.getCookie('userInput')
+    this.dirty = false
   },
   methods: {
     addVisit () {
@@ -146,6 +167,7 @@ export default {
     },
     saveUserInput () {
       this.$cookie.setCookie('userInput', this.userInput)
+      this.dirty = false
     },
     resetUserInput () {
       this.userInput = {
@@ -155,7 +177,7 @@ export default {
         visits: [{}],
       }
       this.$cookie.removeCookie('userInput')
-    }
+    },
   }
 }
 </script>
