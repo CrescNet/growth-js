@@ -33,7 +33,7 @@ export default {
           plugins: {
             zoom: {
               limits: {
-                x: { min: 0, max: 100, minRange: 1 },
+                x: { min: 0, max: 25, minRange: 1 },
                 y: { min: 0, max: 300, minRange: 5 },
               },
               zoom: {
