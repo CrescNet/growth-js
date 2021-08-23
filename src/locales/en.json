@@ -8,7 +8,7 @@
     "text": "..."
   },
   "inUnit": "in {unit}",
-  "qrCodeDescription": "You can scan this QR code to get your entered data as JSON format.<br>This format is machine-readable.",
+  "qrCodeDescription": "You can scan this QR code to get your entered data as JSON format. This format is machine-readable.",
   "height": "Height",
   "weight": "Weight",
   "deleteRow": "Delete row",

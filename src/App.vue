@@ -90,7 +90,7 @@
 
     <q-dialog v-model="showQrCode">
       <q-card>
-        <q-card-section class="text-center" v-html="$t('qrCodeDescription')" />
+        <q-card-section class="text-center" v-t="'qrCodeDescription'" />
         <q-card-section class="text-center">
           <qrcode-vue
             :value="JSON.stringify(nonEmptyVisits)"

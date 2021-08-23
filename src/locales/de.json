@@ -8,7 +8,7 @@
     "text": "..."
   },
   "inUnit": "in {unit}",
-  "qrCodeDescription": "Sie können diesen QR-Code scannen um Ihre eingegebenen Daten im JSON-Format zu erhalten.<br>Dieses Format ist maschinenlesbar.",
+  "qrCodeDescription": "Sie können diesen QR-Code scannen um Ihre eingegebenen Daten im JSON-Format zu erhalten. Dieses Format ist maschinenlesbar.",
   "height": "Größe",
   "weight": "Gewicht",
   "deleteRow": "Zeile löschen",
