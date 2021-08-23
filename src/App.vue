@@ -47,7 +47,7 @@
         <GrowthChart
           propertyName="Height (cm)"
           :scatterData="heightData"
-          :centileData="centiles.height[sex]"
+          :centileData="centiles.height ? centiles.height[sex] : {}"
         />
         <GrowthChart
           propertyName="Weight (kg)"
