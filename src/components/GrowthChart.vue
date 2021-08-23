@@ -27,13 +27,13 @@ export default {
         return {
           responsive: true,
           scales: {
-            x: { min: -0.5, max: 18, title: { display: true, text: 'Age (years)' } },
-            y: { beginAtZero: true, title: { display: true } },
+            x: { min: 0, max: 18, title: { display: true, text: 'Age (years)' } },
+            y: { min: 0, title: { display: true } },
           },
           plugins: {
             zoom: {
               limits: {
-                x: { min: -0.5, max: 100, minRange: 1 },
+                x: { min: 0, max: 100, minRange: 1 },
                 y: { min: 0, max: 300, minRange: 5 },
               },
               zoom: {
