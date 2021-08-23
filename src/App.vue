@@ -241,3 +241,9 @@ export default {
   },
 };
 </script>
+
+<style>
+body {
+  overflow-y: scroll;
+}
+</style>
