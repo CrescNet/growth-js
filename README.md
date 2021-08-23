@@ -1,5 +1,12 @@
 # growth-js
 
+[![GitHub Pages](https://github.com/CrescNet/growth-js/actions/workflows/gh-pages.yml/badge.svg?branch=master)](https://github.com/CrescNet/growth-js/actions/workflows/gh-pages.yml)
+
+## Description
+This single site application visualizes growth data of children with Chart.js. Users are able to select from multiple reference values.
+
+After entering data users can save to the browsers local storage or to a JSON file. They can also create a QR code containing the data.
+
 ## Project setup
 ```
 npm install
