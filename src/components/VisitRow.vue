@@ -4,8 +4,8 @@
       <q-input
         outlined
         type="date"
-        :value="local.date"
         debounce="500"
+        :modelValue="local.date"
         @update:model-value="update('date', $event)"
       />
     </td>
@@ -17,7 +17,7 @@
         min="0"
         title="in cm"
         debounce="500"
-        :value="local.height"
+        :modelValue="local.height"
         @update:model-value="update('height', $event)"
       />
     </td>
@@ -29,7 +29,7 @@
         min="0"
         title="in kg"
         debounce="500"
-        :value="local.weight"
+        :modelValue="local.weight"
         @update:model-value="update('weight', $event)"
       />
     </td>
@@ -43,13 +43,12 @@
 export default {
   props: ["modelValue"],
   computed: {
-    local() {
-      console.log(this.modelValue)
+    local () {
       return this.modelValue ? this.modelValue : {};
     },
   },
   methods: {
-    update(key, value) {
+    update (key, value) {
       this.$emit("update:modelValue", { ...this.modelValue, [key]: value });
     },
   },
