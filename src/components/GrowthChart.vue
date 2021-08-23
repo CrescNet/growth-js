@@ -17,10 +17,8 @@ export default {
       default () { [] },
     },
     centileData: {
-      type: Object,
-      default () {
-        return { p03: [], p50: [], p97: [] }
-      },
+      type: Array,
+      default () { [] },
     },
     options: {
       type: Object,
@@ -28,7 +26,7 @@ export default {
         return {
           responsive: true,
           scales: {
-            x: { beginAtZero: true, title: { display: true, text: 'Age (years)' } },
+            x: { min: -0.5, max: 20, title: { display: true, text: 'Age (years)' } },
             y: { beginAtZero: true, title: { display: true } },
           }
         }
@@ -41,6 +39,15 @@ export default {
     propertyName: String,
   },
   computed: {
+    localCentileData: function () {
+      var result = {}
+      if (this.centileData != undefined) {
+        for (var centile of ["p03", "p50", "p97"]) {
+          result[centile] = this.centileData.map(c => { return { x: c.age, y: c[centile] } })
+        }
+      }
+      return result
+    },
     chartData: function () {
       return {
         datasets: [
@@ -56,7 +63,7 @@ export default {
             fill: false,
             borderDash: [5],
             borderWidth: 2,
-            data: this.centileData ? this.centileData.p50 : [],
+            data: this.localCentileData.p50,
             borderColor: 'black',
             pointRadius: 0,
           },
@@ -65,7 +72,7 @@ export default {
             type: "line",
             fill: false,
             borderWidth: 2,
-            data: this.centileData ? this.centileData.p97 : [],
+            data: this.localCentileData.p97,
             borderColor: 'black',
             pointRadius: 0,
           },
@@ -74,7 +81,7 @@ export default {
             type: "line",
             fill: false,
             borderWidth: 2,
-            data: this.centileData ? this.centileData.p03 : [],
+            data: this.localCentileData.p03,
             borderColor: 'black',
             pointRadius: 0,
           },

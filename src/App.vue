@@ -47,12 +47,12 @@
         <GrowthChart
           propertyName="Height (cm)"
           :scatterData="heightData"
-          :centileData="centiles.height ? centiles.height[sex] : {}"
+          :centileData="centiles.height ? centiles.height[sex] : []"
         />
         <GrowthChart
           propertyName="Weight (kg)"
           :scatterData="weightData"
-          :centileData="centiles.weight ? centiles.weight[sex] : {}"
+          :centileData="centiles.weight ? centiles.weight[sex] : []"
         />
       </div>
     </div>
@@ -62,6 +62,7 @@
 <script>
 import GrowthChart from "./components/GrowthChart.vue"
 import VisitRow from "./components/VisitRow.vue"
+import centiles from "./json/centiles.json"
 
 export default {
   name: "App",
@@ -70,20 +71,8 @@ export default {
     return {
       birthdate: null,
       sex: null,
-      visits: [{ date: "2020-01-01", height: 60, weight: 4 }],
-      centiles: {
-        height: {
-          male: {
-            p50: [
-              { x: 0, y: 47 },
-              { x: 0.2, y: 53 },
-              { x: 0.5, y: 62 },
-              { x: 0.8, y: 81 },
-              { x: 1, y: 100 },
-            ],
-          },
-        },
-      },
+      visits: [{}],
+      centiles: centiles,
     }
   },
   computed: {
@@ -120,6 +109,6 @@ export default {
     dateDiffYears (d1, d2) {
       return (d1 - d2) / (1000 * 60 * 60 * 24 * 365.25)
     }
-  },
+  }
 }
 </script>
