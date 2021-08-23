@@ -27,7 +27,7 @@ export default {
         return {
           responsive: true,
           scales: {
-            x: { min: -0.5, max: 20, title: { display: true, text: 'Age (years)' } },
+            x: { min: -0.5, max: 18, title: { display: true, text: 'Age (years)' } },
             y: { beginAtZero: true, title: { display: true } },
           },
           plugins: {
