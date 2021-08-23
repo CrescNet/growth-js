@@ -11,7 +11,7 @@
     <div class="content">
       <div class="data-entry">
         Reference:
-        <select v-model="reference">
+        <select v-model="userInput.reference">
           <option :value="null">Please select a reference...</option>
           <option value="normal_german">German children without chronic diseases</option>
           <option value="noonan_japan">Children with Noonan Syndrome</option>
@@ -20,15 +20,15 @@
         <br>
 
         Sex:
-        <input type="radio" id="male" value="male" v-model="sex">
+        <input type="radio" id="male" value="male" v-model="userInput.sex">
         <label for="male">male</label>
-        <input type="radio" id="female" value="female" v-model="sex">
+        <input type="radio" id="female" value="female" v-model="userInput.sex">
         <label for="female">female</label>
 
         <br>
 
         <label for="birthdate">Birthdate:</label>
-        <input type="date" id="birthdate" v-model="birthdate" />
+        <input type="date" id="birthdate" v-model="userInput.birthdate" />
 
         <hr>
 
@@ -43,25 +43,30 @@
           </thead>
           <tbody>
             <VisitRow
-              v-for="(visit, index) in visits"
+              v-for="(visit, index) in userInput.visits"
               :key="index"
-              v-model="visits[index]"
+              v-model="userInput.visits[index]"
               @deleteRow="removeVisit(visit)"
             />
             <tr><td colspan="4"><input type="button" value="Add visit" @click="addVisit"></td></tr>
           </tbody>
         </table>
+
+        <hr>
+
+        <input type="button" value="Save data for later" @click="saveUserInput">
+        <input type="button" value="Reset data" @click="resetUserInput">
       </div>
       <div class="data-visualization">
         <GrowthChart
           propertyName="Height (cm)"
           :scatterData="heightData"
-          :centileData="centiles.height ? centiles.height[sex] : []"
+          :centileData="centiles.height ? centiles.height[userInput.sex] : []"
         />
         <GrowthChart
           propertyName="Weight (kg)"
           :scatterData="weightData"
-          :centileData="centiles.weight ? centiles.weight[sex] : []"
+          :centileData="centiles.weight ? centiles.weight[userInput.sex] : []"
         />
       </div>
     </div>
@@ -77,21 +82,23 @@ export default {
   components: { GrowthChart, VisitRow },
   data () {
     return {
-      birthdate: null,
-      sex: null,
-      visits: [{}],
-      reference: null,
+      userInput: {
+        reference: null,
+        birthdate: null,
+        sex: null,
+        visits: [{}],
+      },
       centiles: {},
     }
   },
   computed: {
     birthdateDate () {
-      if (this.birthdate == null) return null
-      return new Date(this.birthdate).setHours(0, 0, 0, 0)
+      if (this.userInput.birthdate == null) return null
+      return new Date(this.userInput.birthdate).setHours(0, 0, 0, 0)
     },
     heightData () {
       if (this.birthdateDate == null) return []
-      return this.visits.map(v => {
+      return this.userInput.visits.map(v => {
         return {
           x: this.dateDiffYears(new Date(v.date).setHours(0, 0, 0, 0), this.birthdateDate),
           y: v.height,
@@ -100,7 +107,7 @@ export default {
     },
     weightData () {
       if (this.birthdateDate == null) return []
-      return this.visits.map(v => {
+      return this.userInput.visits.map(v => {
         return {
           x: this.dateDiffYears(new Date(v.date).setHours(0, 0, 0, 0), this.birthdateDate),
           y: v.weight,
@@ -109,60 +116,46 @@ export default {
     },
   },
   watch: {
-    reference: function () {
-      this.$cookie.setCookie('reference', this.reference)
-      if (this.reference == null) {
+    "userInput.reference": function () {
+      if (this.userInput.reference == null) {
         this.centiles = {}
         return
       }
       var self = this
-      this.axios.get(`/references/${this.reference}.json`).then((response) => {
+      this.axios.get(`/references/${this.userInput.reference}.json`).then((response) => {
         self.centiles = response.data
       }).catch(() => {
-        self.reference = null
+        self.userInput.reference = null
         self.centiles = {}
       })
-    },
-    birthdate: function () {
-      this.$cookie.setCookie('birthdate', this.birthdate)
-    },
-    sex: function () {
-      this.$cookie.setCookie('sex', this.sex)
-    },
-    visits: {
-      deep: true,
-      handler () {
-        this.$cookie.setCookie('visits', { data: this.visits })
-      }
     }
   },
   mounted () {
-    if (this.$cookie.getCookie('reference'))
-      this.reference = this.$cookie.getCookie('reference')
-    if (this.$cookie.getCookie('birthdate'))
-      this.birthdate = this.$cookie.getCookie('birthdate')
-    if (this.$cookie.getCookie('sex'))
-      this.sex = this.$cookie.getCookie('sex')
-
-    if (this.$cookie.getCookie('visits')) {
-      try {
-        this.visits = this.$cookie.getCookie('visits').data
-      } catch (e) {
-        console.log(e)
-        this.$cookie.removeCookie('visits')
-      }
-    }
+    if (this.$cookie.getCookie('userInput'))
+      this.userInput = this.$cookie.getCookie('userInput')
   },
   methods: {
     addVisit () {
-      this.visits.push({})
+      this.userInput.visits.push({})
     },
     removeVisit (visit) {
-      this.visits.splice(this.visits.indexOf(visit), 1)
+      this.userInput.visits.splice(this.userInput.visits.indexOf(visit), 1)
     },
     dateDiffYears (d1, d2) {
       return (d1 - d2) / (1000 * 60 * 60 * 24 * 365.25)
     },
+    saveUserInput () {
+      this.$cookie.setCookie('userInput', this.userInput)
+    },
+    resetUserInput () {
+      this.userInput = {
+        reference: null,
+        birthdate: null,
+        sex: null,
+        visits: [{}],
+      }
+      this.$cookie.removeCookie('userInput')
+    }
   }
 }
 </script>
