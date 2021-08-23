@@ -5,8 +5,9 @@
 <script>
 import { ScatterChart } from "vue-chart-3"
 import { Chart, registerables } from "chart.js";
+import zoomPlugin from "chartjs-plugin-zoom";
 
-Chart.register(...registerables);
+Chart.register(...registerables, zoomPlugin);
 
 export default {
   name: "GrowthChart",
@@ -28,6 +29,23 @@ export default {
           scales: {
             x: { min: -0.5, max: 20, title: { display: true, text: 'Age (years)' } },
             y: { beginAtZero: true, title: { display: true } },
+          },
+          plugins: {
+            zoom: {
+              limits: {
+                x: { min: -0.5, max: 100, minRange: 1 },
+                y: { min: 0, max: 300, minRange: 5 },
+              },
+              zoom: {
+                wheel: { enabled: true },
+                pinch: { enabled: true },
+                mode: 'xy',
+              },
+              pan: {
+                enabled: true,
+                mode: 'xy',
+              },
+            }
           }
         }
       },
