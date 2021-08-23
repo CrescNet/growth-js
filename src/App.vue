@@ -13,13 +13,6 @@
 
     <q-page-container class="q-my-md q-pa-md q-gutter-y-md">
       <q-card bordered>
-        <q-card-section>
-          <div class="text-h5">Growth JS</div>
-          <div class="text-subtutle2">by CrescNet</div>
-        </q-card-section>
-
-        <q-separator inset />
-
         <q-card-section class="description"
           >App for visualization of growth data</q-card-section
         >
@@ -154,7 +147,7 @@
     <q-dialog v-model="showQrCode">
       <q-card>
         <q-card-section class="text-center">
-          You can scan this QR code to get your entered data as JSON format.<br>
+          You can scan this QR code to get your entered data as JSON format.<br />
           This format is machine-readable.
         </q-card-section>
         <q-card-section class="text-center">
@@ -175,7 +168,15 @@
         <q-toolbar-title class="text-subtitle1">
           &copy; CrescNet, Medical Faculty, University of Leipzig 2021
         </q-toolbar-title>
-        <q-btn type="a" href="https://github.com/ChristophB/growth-js" target="_blank" flat rounded dense label="View on GitHub" />
+        <q-btn
+          type="a"
+          href="https://github.com/ChristophB/growth-js"
+          target="_blank"
+          flat
+          rounded
+          dense
+          label="View on GitHub"
+        />
       </q-toolbar>
     </q-footer>
   </q-layout>
