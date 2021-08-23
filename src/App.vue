@@ -116,15 +116,6 @@
         <q-toolbar-title class="text-subtitle1">
           &copy; {{ $t('copyrightNotice') }}
         </q-toolbar-title>
-        <q-btn
-          type="a"
-          href="https://github.com/ChristophB/growth-js"
-          target="_blank"
-          flat
-          rounded
-          dense
-          :label="$t('viewOnGitHub')"
-        />
       </q-toolbar>
     </q-footer>
   </q-layout>
