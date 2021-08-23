@@ -37,8 +37,8 @@
         <thead>
           <tr>
             <th v-t="'date'" />
-            <th v-t="'height'" />
-            <th v-t="'weight'" />
+            <th>{{ $t('height') + ' (' + $t('inUnit', { unit: 'cm' }) + ')' }}</th>
+            <th>{{ $t('weight') + ' (' + $t('inUnit', { unit: 'kg' }) + ')' }}</th>
             <th></th>
           </tr>
         </thead>
