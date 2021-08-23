@@ -203,7 +203,7 @@ export default {
       }
       var self = this;
       this.axios
-        .get(`/references/${this.userInput.reference}.json`)
+        .get(`./references/${this.userInput.reference}.json`)
         .then((response) => {
           self.centiles = response.data;
         })
