@@ -1,93 +1,187 @@
 <template>
-  <div>
-    <div class="header">
-      <h1>Growth JS</h1>
-      <div class="description">App for visualization of growth data</div>
-      <div class="data-privacy">Data Privacy: ...</div>
-    </div>
+  <q-layout view="hHh lpR fFf">
+    <q-header elevated class="bg-primary text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+          </q-avatar>
+          Growth JS
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-header>
 
-    <hr>
+    <q-page-container class="q-pa-md q-gutter-y-md">
+      <q-card bordered>
+        <q-card-section>
+          <div class="text-h5">Growth JS</div>
+          <div class="text-subtutle2">by CrescNet</div>
+        </q-card-section>
 
-    <div class="content">
-      <div class="data-entry">
-        Reference:
-        <select v-model="userInput.reference">
-          <option :value="null">Please select a reference...</option>
-          <option value="normal_german">German children without chronic diseases</option>
-          <option value="noonan_japan">Children with Noonan Syndrome</option>
-        </select>
+        <q-separator inset />
 
-        <br>
+        <q-card-section class="description"
+          >App for visualization of growth data</q-card-section
+        >
+        <q-card-section class="data-privacy">Data Privacy: ...</q-card-section>
+      </q-card>
 
-        Sex:
-        <input type="radio" id="male" value="male" v-model="userInput.sex">
-        <label for="male">male</label>
-        <input type="radio" id="female" value="female" v-model="userInput.sex">
-        <label for="female">female</label>
+      <q-card bordered>
+        <q-card-section>
+          <q-select
+            outlined
+            label="Reference"
+            stack-label
+            emit-value
+            map-options
+            v-model="userInput.reference"
+            :options="availableReferences"
+          />
 
-        <br>
+          <br />
 
-        <label for="birthdate">Birthdate:</label>
-        <input type="date" id="birthdate" v-model="userInput.birthdate" />
+          <div class="q-gutter-sm">
+            <q-radio v-model="userInput.sex" val="male" label="Male" />
+            <q-radio v-model="userInput.sex" val="female" label="Female" />
+          </div>
 
-        <hr>
+          <br />
 
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Height</th>
-              <th>Weight</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <VisitRow
-              v-for="(visit, index) in userInput.visits"
-              :key="index"
-              v-model="userInput.visits[index]"
-              @deleteRow="removeVisit(visit)"
+          <q-input
+            outlined
+            type="date"
+            label="Date of birth"
+            stack-label
+            debounce="500"
+            v-model="userInput.birthdate"
+          />
+        </q-card-section>
+
+        <q-separator inset />
+
+        <q-card-section>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <VisitRow
+                v-for="(visit, index) in userInput.visits"
+                :key="index"
+                v-model="userInput.visits[index]"
+                @deleteRow="removeVisit(visit)"
+              />
+              <tr>
+                <td colspan="4">
+                  <q-btn
+                    rounded
+                    color="secondary"
+                    icon="add"
+                    label="Add row"
+                    @click="addVisit"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </q-card-section>
+
+        <q-card-section>
+          <q-btn-group rounded>
+            <q-btn
+              color="primary"
+              icon="save"
+              :disabled="!dirty"
+              label="Save data for later"
+              @click="saveUserInput"
             />
-            <tr><td colspan="4"><input type="button" value="Add visit" @click="addVisit"></td></tr>
-          </tbody>
-        </table>
+            <q-btn
+              color="primary"
+              icon="restart_alt"
+              label="Reset data"
+              @click="resetUserInput"
+            />
+            <q-btn
+              color="primary"
+              icon="qr_code_2"
+              label="Toggle QR code"
+              @click="showQrCode = !showQrCode"
+            />
+          </q-btn-group>
+        </q-card-section>
+      </q-card>
 
-        <hr>
+      <q-dialog v-model="showQrCode">
+        <q-card>
+          <q-card-section>
+            <qrcode-vue
+              :value="JSON.stringify(nonEmptyVisits)"
+              :size="Math.sqrt(nonEmptyVisits.length) * 100"
+              level="H"
+            />
+          </q-card-section>
+          <q-card-actions align="right">
+            <q-btn flat label="Close" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
 
-        <input type="button" :disabled="!dirty" value="Save data for later" @click="saveUserInput">
-        <input type="button" value="Reset data" @click="resetUserInput">
-        <input type="button" value="Toggle QR code" @click="showQrCode = !showQrCode">
+      <div class="row q-gutter-x-md items-start">
+        <q-card bordered class="col">
+          <q-card-section>
+            <div class="text-h6 text-center">Height</div>
+            <GrowthChart
+              propertyName="Height (cm)"
+              :scatterData="heightData"
+              :centileData="
+                centiles.height ? centiles.height[userInput.sex] : []
+              "
+            />
+          </q-card-section>
+        </q-card>
+
+        <q-card bordered class="col">
+          <q-card-section>
+            <div class="text-h6 text-center">Weight</div>
+            <GrowthChart
+              propertyName="Weight (kg)"
+              :scatterData="weightData"
+              :centileData="
+                centiles.weight ? centiles.weight[userInput.sex] : []
+              "
+            />
+          </q-card-section>
+        </q-card>
       </div>
+    </q-page-container>
 
-      <div class="qrcode" v-if="showQrCode">
-        <qrcode-vue :value="JSON.stringify(nonEmptyVisits)" :size="Math.sqrt(nonEmptyVisits.length) * 100" level="H" />
-      </div>
-
-      <div class="data-visualization">
-        <GrowthChart
-          propertyName="Height (cm)"
-          :scatterData="heightData"
-          :centileData="centiles.height ? centiles.height[userInput.sex] : []"
-        />
-        <GrowthChart
-          propertyName="Weight (kg)"
-          :scatterData="weightData"
-          :centileData="centiles.weight ? centiles.weight[userInput.sex] : []"
-        />
-      </div>
-    </div>
-  </div>
+    <q-footer elevated class="bg-grey-8 text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+          </q-avatar>
+          <div>Title</div>
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+  </q-layout>
 </template>
 
 <script>
-import GrowthChart from "./components/GrowthChart.vue"
-import VisitRow from "./components/VisitRow.vue"
-import QrcodeVue from "qrcode.vue"
+import GrowthChart from "./components/GrowthChart.vue";
+import VisitRow from "./components/VisitRow.vue";
+import QrcodeVue from "qrcode.vue";
 
 export default {
   name: "App",
   components: { GrowthChart, VisitRow, QrcodeVue },
-  data () {
+  data() {
     return {
       userInput: {
         reference: null,
@@ -98,87 +192,104 @@ export default {
       centiles: {},
       showQrCode: false,
       dirty: false,
-    }
+      availableReferences: [
+        { value: null, label: "Please select a reference..." },
+        {
+          value: "normal_german",
+          label: "German children without chronic diseases",
+        },
+        { value: "noonan_japan", label: "Children with Noonan Syndrome" },
+      ],
+    };
   },
   computed: {
-    birthdateDate () {
-      if (this.userInput.birthdate == null) return null
-      return new Date(this.userInput.birthdate).setHours(0, 0, 0, 0)
+    birthdateDate() {
+      if (this.userInput.birthdate == null) return null;
+      return new Date(this.userInput.birthdate).setHours(0, 0, 0, 0);
     },
-    heightData () {
-      if (this.birthdateDate == null) return []
-      return this.userInput.visits.map(v => {
+    heightData() {
+      if (this.birthdateDate == null) return [];
+      return this.userInput.visits.map((v) => {
         return {
-          x: this.dateDiffYears(new Date(v.date).setHours(0, 0, 0, 0), this.birthdateDate),
+          x: this.dateDiffYears(
+            new Date(v.date).setHours(0, 0, 0, 0),
+            this.birthdateDate
+          ),
           y: v.height,
-        }
-      })
+        };
+      });
     },
-    weightData () {
-      if (this.birthdateDate == null) return []
-      return this.userInput.visits.map(v => {
+    weightData() {
+      if (this.birthdateDate == null) return [];
+      return this.userInput.visits.map((v) => {
         return {
-          x: this.dateDiffYears(new Date(v.date).setHours(0, 0, 0, 0), this.birthdateDate),
+          x: this.dateDiffYears(
+            new Date(v.date).setHours(0, 0, 0, 0),
+            this.birthdateDate
+          ),
           y: v.weight,
-        }
-      })
+        };
+      });
     },
-    nonEmptyVisits () {
+    nonEmptyVisits() {
       return this.userInput.visits.filter(
-        v => v.date != null && (v.height != null || v.weight != null)
-      )
+        (v) => v.date != null && (v.height != null || v.weight != null)
+      );
     },
   },
   watch: {
     "userInput.reference": function () {
       if (this.userInput.reference == null) {
-        this.centiles = {}
-        return
+        this.centiles = {};
+        return;
       }
-      var self = this
-      this.axios.get(`/references/${this.userInput.reference}.json`).then((response) => {
-        self.centiles = response.data
-      }).catch(() => {
-        self.userInput.reference = null
-        self.centiles = {}
-      })
+      var self = this;
+      this.axios
+        .get(`/references/${this.userInput.reference}.json`)
+        .then((response) => {
+          self.centiles = response.data;
+        })
+        .catch(() => {
+          self.userInput.reference = null;
+          self.centiles = {};
+        });
     },
     userInput: {
       deep: true,
       handler: function () {
-        this.dirty = true
-      }
-    }
+        this.dirty = true;
+      },
+    },
   },
-  mounted () {
-    if (this.$cookie.getCookie('userInput'))
-      this.userInput = this.$cookie.getCookie('userInput')
-    this.dirty = false
+  mounted() {
+    if (this.$cookie.getCookie("userInput"))
+      this.userInput = this.$cookie.getCookie("userInput");
+    this.dirty = false;
   },
   methods: {
-    addVisit () {
-      this.userInput.visits.push({})
+    addVisit() {
+      this.userInput.visits.push({});
     },
-    removeVisit (visit) {
-      this.userInput.visits.splice(this.userInput.visits.indexOf(visit), 1)
+    removeVisit(visit) {
+      this.userInput.visits.splice(this.userInput.visits.indexOf(visit), 1);
     },
-    dateDiffYears (d1, d2) {
-      return (d1 - d2) / (1000 * 60 * 60 * 24 * 365.25)
+    dateDiffYears(d1, d2) {
+      return (d1 - d2) / (1000 * 60 * 60 * 24 * 365.25);
     },
-    saveUserInput () {
-      this.$cookie.setCookie('userInput', this.userInput)
-      this.dirty = false
+    saveUserInput() {
+      this.$cookie.setCookie("userInput", this.userInput);
+      this.dirty = false;
     },
-    resetUserInput () {
+    resetUserInput() {
       this.userInput = {
         reference: null,
         birthdate: null,
         sex: null,
         visits: [{}],
-      }
-      this.$cookie.removeCookie('userInput')
-      this.dirty = false
+      };
+      this.$cookie.removeCookie("userInput");
+      this.dirty = false;
     },
-  }
-}
+  },
+};
 </script>
