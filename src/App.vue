@@ -153,6 +153,10 @@
 
     <q-dialog v-model="showQrCode">
       <q-card>
+        <q-card-section class="text-center">
+          You can scan this QR code to get your entered data as JSON format.<br>
+          This format is machine-readable.
+        </q-card-section>
         <q-card-section>
           <qrcode-vue
             :value="JSON.stringify(nonEmptyVisits)"
