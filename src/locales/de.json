@@ -1,11 +1,11 @@
 {
   "description": {
     "label": "Beschreibung",
-    "text": "..."
+    "text": "Auf dieser Seite können Sie Wachstumsdaten eingeben und diese im Vergleich zu einer Vergleichspopulation visualisieren. Wählen Sie bitte zunächst die zu verwendenden Referenzwerte aus und geben Sie anschließend Geschlecht, Geburtsdatum und die Messwerte ein, die visualisiert werden sollen. Die Werte werden auf der rechten Seite angezeigt. Mit Klick auf \"Grösse\" bzw. \"Gewicht\" können Sie zwischen den beiden Grafiken wechseln. Mit den unteren grünen Schaltflächen lassen sich die eingetragenen Daten speichern, löschen und als QR-Code ausgeben."
   },
   "dataPrivacy": {
     "label": "Datenschutz",
-    "text": "..."
+    "text": "Die auf dieser Seite eingetragenen Daten verbleiben ausschließlich auf Ihrem Endgerät. Weder das CrescNet noch andere Parteien haben zu irgendeinem Zeitpunkt Zugriff auf Ihre Daten. Falls Sie die Schaltfläche \"Daten für später Speichern\" betätigen, werden die Eingaben in Ihrem Browser im sogenannten \"Local Storage\" gespeichert."
   },
   "inUnit": "in {unit}",
   "qrCodeDescription": "Sie können diesen QR-Code scannen um Ihre eingegebenen Daten im JSON-Format zu erhalten. Dieses Format ist maschinenlesbar.",
