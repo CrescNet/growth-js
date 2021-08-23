@@ -11,7 +11,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-page-container class="q-pa-md q-gutter-y-md">
+    <q-page-container class="q-my-md q-pa-md q-gutter-y-md">
       <q-card bordered>
         <q-card-section>
           <div class="text-h5">Growth JS</div>
@@ -162,12 +162,10 @@
 
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>
-          <div>Title</div>
+        <q-toolbar-title class="text-subtitle1">
+          &copy; CrescNet, Medical Faculty, University of Leipzig 2021
         </q-toolbar-title>
+        <q-btn type="a" href="https://github.com/ChristophB/growth-js" target="_blank" flat rounded dense label="View on GitHub" />
       </q-toolbar>
     </q-footer>
   </q-layout>
