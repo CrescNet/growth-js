@@ -10,7 +10,7 @@ import de from './locales/de.json'
 import en from './locales/en.json'
 
 VueCookieNext.config({ expire: Infinity, secure: true, sameSite: 'Strict' })
-console.log(de)
+
 const i18n = createI18n({
   locale: 'de',
   fallbackLocale: 'en',
