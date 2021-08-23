@@ -22,11 +22,11 @@
       <q-splitter v-model="splitterModel" :limits="[30, 80]">
         <template v-slot:before>
           <q-card bordered class="q-mr-md q-mb-md">
-            <q-card-section class="description">
+            <q-card-section class="description q-pb-none">
               <strong>{{ $t('description.label') }}</strong>:
               <p>{{$t('description.text') }}</p>
             </q-card-section>
-            <q-card-section class="data-privacy">
+            <q-card-section class="data-privacy q-pt-none">
               <strong>{{ $t('dataPrivacy.label') }}</strong>:
               <p>{{ $t('dataPrivacy.text') }}</p>
             </q-card-section>
