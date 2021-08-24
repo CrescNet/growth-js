@@ -248,8 +248,9 @@ export default {
       const data = JSON.stringify(this.userInput)
       const blob = new Blob([data], {type: 'text/plain'})
       const e = document.createEvent('MouseEvents'),
-      a = document.createElement('a');
-      a.download = "test.json";
+        a = document.createElement('a'),
+        today = new Date().toLocaleDateString();
+      a.download = "data_" + today + ".json";
       a.href = window.URL.createObjectURL(blob);
       a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
       e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
