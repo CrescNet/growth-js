@@ -1,7 +1,7 @@
 {
   "description": {
     "label": "Beschreibung",
-    "text": "Auf dieser Seite können Sie Wachstumsdaten eingeben und diese im Vergleich zu einer Vergleichspopulation visualisieren. Wählen Sie bitte zunächst die zu verwendenden Referenzwerte aus und geben Sie anschließend Geschlecht, Geburtsdatum und die Messwerte ein, die visualisiert werden sollen. Die Werte werden auf der rechten Seite angezeigt. Mit Klick auf \"Grösse\" bzw. \"Gewicht\" können Sie zwischen den beiden Grafiken wechseln. Mit den unteren grünen Schaltflächen lassen sich die eingetragenen Daten speichern, als QR-Code ausgeben oder löschen."
+    "text": "Auf dieser Seite können Sie Wachstumsdaten eingeben und diese im Vergleich zu einer Vergleichspopulation visualisieren. Wählen Sie bitte zunächst die zu verwendenden Referenzwerte aus und geben Sie anschließend Geschlecht, Geburtsdatum und die Messwerte ein, die visualisiert werden sollen. Die Werte werden auf der rechten Seite angezeigt. Mit Klick auf \"Grösse\" bzw. \"Gewicht\" können Sie zwischen den beiden Grafiken wechseln. Außerdem haben Sie die Möglichkeit, mit dem Mausrad zu zoomen. Mit den unteren grünen Schaltflächen lassen sich die eingetragenen Daten speichern, als QR-Code ausgeben oder löschen."
   },
   "dataPrivacy": {
     "label": "Datenschutz",
@@ -26,6 +26,8 @@
   "selectReference": "Bitte Referenz auswählen...",
   "normal_german": "Deutsche Kinder ohne chronische Erkrankungen",
   "noonan_japan": "Kinder mit Noonan-Syndrom",
+  "achondroplasia_sweden": "Kinder mit Achondroplasie",
+  "hypochondroplasia_argentinia": "Kinder mit Hypochondroplasie (nur Größe verfügbar)",
   "copyrightNotice": "CrescNet, Medizinische Fakultät, Universität Leipzig 2021",
   "close": "Schließen",
   "source": "Quelle",

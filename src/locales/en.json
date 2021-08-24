@@ -1,7 +1,7 @@
 {
   "description": {
     "label": "Description",
-    "text": "On this page you can enter growth data and visualise it in comparison to a reference population. Please first select the reference values to be used and then enter sex, date of birth and the measured values to be visualised. The values are displayed on the right-hand side. Click on \" Height\" or \"Weight\" to switch between the two graphics. With the lower green buttons, the entered data can be saved, output as a QR code or deleted."
+    "text": "On this page you can enter growth data and visualise it in comparison to a reference population. Please first select the reference values to be used and then enter sex, date of birth and the measured values to be visualised. The values are displayed on the right-hand side. Click on \" Height\" or \"Weight\" to switch between the two graphics. Furthermore, you have the possibility to zoom with the mouse wheel. With the lower green buttons, the entered data can be saved, output as a QR code or deleted."
   },
   "dataPrivacy": {
     "label": "Data Privacy",
@@ -26,6 +26,8 @@
   "selectReference": "Please select a reference...",
   "normal_german": "German children without chronic diseases",
   "noonan_japan": "Children with Noonan Syndrome",
+  "achondroplasia_sweden": "Children with Achondroplasia",
+  "hypochondroplasia_argentinia": "Children with Hypochondroplasia (only height available)",
   "copyrightNotice": "CrescNet, Medical Faculty, University of Leipzig 2021",
   "close": "Close",
   "source": "Source",
