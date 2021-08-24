@@ -13,7 +13,8 @@
             :options="availableReferences"
           />
           <span class="text-caption" v-if="selectedReference && selectedReference.url">
-            {{ $t('source') }}:<a :href="selectedReference.url" target="_blank">{{ selectedReference.url }}</a>
+            {{ $t('source') }}:
+            <a :href="selectedReference.url" target="_blank" class="text-primary">{{ selectedReference.url }}</a>
           </span>
         </div>
 
