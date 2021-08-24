@@ -69,6 +69,10 @@
           </q-card>
         </template>
 
+        <template v-slot:separator>
+          <q-avatar color="primary" text-color="white" size="30px" icon="drag_indicator" />
+        </template>
+
         <template v-slot:after>
           <div class="q-ml-md">
             <q-card bordered>
