@@ -165,6 +165,8 @@ export default {
         { value: null, label: this.$t("selectReference") },
         { value: "normal_german", label: this.$t("normal_german"), url: 'https://doi.org/10.1007/s001120170107' },
         { value: "noonan_japan", label: this.$t("noonan_japan"), url: 'https://doi.org/10.1038/pr.2015.254' },
+        { value: "achondroplasia_sweden", label: this.$t("achondroplasia_sweden"), url: 'https://doi.org/10.1002/ajmg.a.38853' },
+        { value: "hypochondroplasia_argentinia", label: this.$t("hypochondroplasia_argentinia"), url: 'https://doi.org/10.1515/jpem-2018-0046' },
       ]
     },
     birthdateDate() {
