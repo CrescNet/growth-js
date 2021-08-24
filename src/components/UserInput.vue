@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-card-section>
-      <div class="row items-center">
+      <div class="row">
         <div class="col">
           <q-select
             outlined
@@ -17,7 +17,7 @@
           </span>
         </div>
 
-        <div class="col q-gutter-md">
+        <div class="col q-gutter-md text-center q-pt-sm">
           <q-radio v-model="local.sex" val="male" :label="$t('male')" />
           <q-radio v-model="local.sex" val="female" :label="$t('female')" />
         </div>
