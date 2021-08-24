@@ -1,36 +1,38 @@
 <template>
   <div>
     <q-card-section>
-      <q-select
-        outlined
-        :label="$t('reference')"
-        stack-label
-        emit-value
-        map-options
-        v-model="local.reference"
-        :options="availableReferences"
-      />
-      <span class="text-caption" v-if="selectedReference && selectedReference.url">
-        {{ $t('source') }}:<a :href="selectedReference.url" target="_blank">{{ selectedReference.url }}</a>
-      </span>
+      <div class="row items-center">
+        <div class="col">
+          <q-select
+            outlined
+            :label="$t('reference')"
+            stack-label
+            emit-value
+            map-options
+            v-model="local.reference"
+            :options="availableReferences"
+          />
+          <span class="text-caption" v-if="selectedReference && selectedReference.url">
+            {{ $t('source') }}:<a :href="selectedReference.url" target="_blank">{{ selectedReference.url }}</a>
+          </span>
+        </div>
 
-      <br />
+        <div class="col q-gutter-md">
+          <q-radio v-model="local.sex" val="male" :label="$t('male')" />
+          <q-radio v-model="local.sex" val="female" :label="$t('female')" />
+        </div>
 
-      <div class="q-gutter-sm">
-        <q-radio v-model="local.sex" val="male" :label="$t('male')" />
-        <q-radio v-model="local.sex" val="female" :label="$t('female')" />
+        <div class="col">
+          <q-input
+            outlined
+            type="date"
+            :label="$t('birthdate')"
+            stack-label
+            debounce="500"
+            v-model="local.birthdate"
+          />
+        </div>
       </div>
-
-      <br />
-
-      <q-input
-        outlined
-        type="date"
-        :label="$t('birthdate')"
-        stack-label
-        debounce="500"
-        v-model="local.birthdate"
-      />
     </q-card-section>
 
     <q-separator inset />
