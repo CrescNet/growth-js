@@ -14,7 +14,9 @@
           />
           <span class="text-caption" v-if="selectedReference && selectedReference.url">
             {{ $t('source') }}:
-            <a :href="selectedReference.url" target="_blank" class="text-primary">{{ selectedReference.url }}</a>
+            <a :href="selectedReference.url" target="_blank" class="text-primary">
+              {{ selectedReference.authors ? selectedReference.authors : selectedReference.url }}
+            </a>
           </span>
         </div>
 

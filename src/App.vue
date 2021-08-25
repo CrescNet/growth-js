@@ -163,11 +163,11 @@ export default {
     availableReferences() {
       return [
         { value: null, label: this.$t("selectReference") },
-        { value: "normal_german", label: this.$t("normal_german"), url: 'https://doi.org/10.1007/s001120170107' },
-        { value: "noonan_japan", label: this.$t("noonan_japan"), url: 'https://doi.org/10.1038/pr.2015.254' },
-        { value: "achondroplasia_sweden", label: this.$t("achondroplasia_sweden"), url: 'https://doi.org/10.1002/ajmg.a.38853' },
-        { value: "hypochondroplasia_argentinia", label: this.$t("hypochondroplasia_argentinia"), url: 'https://doi.org/10.1515/jpem-2018-0046' },
-        { value: "trisomy21_america", label: this.$t("trisomy21_america"), url: 'https://doi.org/10.1542/peds.2015-1652' },
+        { value: "normal_german", label: this.$t("normal_german"), authors: "Kromeyer-Hauschild et al. 2001", url: 'https://doi.org/10.1007/s001120170107' },
+        { value: "noonan_japan", label: this.$t("noonan_japan"), authors: "Isojima et al. 2016", url: 'https://doi.org/10.1038/pr.2015.254' },
+        { value: "achondroplasia_sweden", label: this.$t("achondroplasia_sweden"), authors: "Merker et al. 2019", url: 'https://doi.org/10.1002/ajmg.a.38853' },
+        { value: "hypochondroplasia_argentinia", label: this.$t("hypochondroplasia_argentinia"), authors: "Arenas et al. 2018", url: 'https://doi.org/10.1515/jpem-2018-0046' },
+        { value: "trisomy21_america", label: this.$t("trisomy21_america"), authors: "Zemel et al. 2015", url: 'https://doi.org/10.1542/peds.2015-1652' },
       ]
     },
     birthdateDate() {
