@@ -167,6 +167,7 @@ export default {
         { value: "noonan_japan", label: this.$t("noonan_japan"), url: 'https://doi.org/10.1038/pr.2015.254' },
         { value: "achondroplasia_sweden", label: this.$t("achondroplasia_sweden"), url: 'https://doi.org/10.1002/ajmg.a.38853' },
         { value: "hypochondroplasia_argentinia", label: this.$t("hypochondroplasia_argentinia"), url: 'https://doi.org/10.1515/jpem-2018-0046' },
+        { value: "trisomy21_america", label: this.$t("trisomy21_america"), url: 'https://doi.org/10.1542/peds.2015-1652' },
       ]
     },
     birthdateDate() {
