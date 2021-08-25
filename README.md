@@ -1,6 +1,6 @@
 # growth-js
 
-[![GitHub Pages](https://github.com/CrescNet/growth-js/actions/workflows/gh-pages.yml/badge.svg?branch=master)](https://github.com/CrescNet/growth-js/actions/workflows/gh-pages.yml)
+[![GitHub Pages](https://github.com/CrescNet/growth-js/actions/workflows/gh-pages.yml/badge.svg?branch=master)](https://crescnet.github.io/growth-js)
 
 ## Description
 This single-site application visualizes child growth data using Chart.js. Users can choose from multiple reference values.
