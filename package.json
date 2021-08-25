@@ -1,6 +1,18 @@
 {
   "name": "growth-js",
   "version": "0.2.1",
+  "description": "CrescNet app for visualisation of growth data compared to population-based norm values",
+  "keywords": [
+    "growth",
+    "anthropometry",
+    "centiles",
+    "chart.js"
+  ],
+  "homepage": "https://github.com/CrescNet/growth-js#readme",
+  "bugs": {
+    "url": "https://github.com/CrescNet/growth-js/issues"
+  },
+  "license": "MIT",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
