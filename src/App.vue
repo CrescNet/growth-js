@@ -13,7 +13,10 @@
           emit-value
           map-options
           v-model="$root.$i18n.locale"
-          :options="[{ value: 'de', label: 'DE' }, { value: 'en', label: 'EN' }]"
+          :options="[
+            { value: 'de', label: 'DE' },
+            { value: 'en', label: 'EN' },
+          ]"
         />
       </q-toolbar>
     </q-header>
@@ -23,12 +26,14 @@
         <template v-slot:before>
           <q-card bordered class="q-mr-md q-mb-md">
             <q-card-section class="description q-pb-none">
-              <strong>{{ $t('description.label') }}</strong>:
-              <p>{{$t('description.text') }}</p>
+              <strong>{{ $t("description.label") }}</strong
+              >:
+              <p>{{ $t("description.text") }}</p>
             </q-card-section>
             <q-card-section class="data-privacy q-pt-none">
-              <strong>{{ $t('dataPrivacy.label') }}</strong>:
-              <p>{{ $t('dataPrivacy.text') }}</p>
+              <strong>{{ $t("dataPrivacy.label") }}</strong
+              >:
+              <p>{{ $t("dataPrivacy.text") }}</p>
             </q-card-section>
           </q-card>
 
@@ -70,13 +75,25 @@
         </template>
 
         <template v-slot:separator>
-          <q-avatar color="primary" text-color="white" size="30px" icon="drag_indicator" />
+          <q-avatar
+            color="primary"
+            text-color="white"
+            size="30px"
+            icon="drag_indicator"
+          />
         </template>
 
         <template v-slot:after>
           <div class="q-ml-md">
             <q-card bordered>
-              <q-tabs v-model="chartTab" dense active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
+              <q-tabs
+                v-model="chartTab"
+                dense
+                active-color="primary"
+                indicator-color="primary"
+                align="justify"
+                narrow-indicator
+              >
                 <q-tab name="height" :label="$t('height')" />
                 <q-tab name="weight" :label="$t('weight')" />
               </q-tabs>
@@ -128,7 +145,7 @@
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
         <q-toolbar-title class="text-subtitle1">
-          &copy; {{ $t('copyrightNotice') }}
+          &copy; {{ $t("copyrightNotice") }}
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -156,19 +173,44 @@ export default {
       showQrCode: false,
       dirty: false,
       splitterModel: ref(57),
-      chartTab: 'height',
+      chartTab: "height",
     };
   },
   computed: {
     availableReferences() {
       return [
         { value: null, label: this.$t("selectReference") },
-        { value: "normal_german", label: this.$t("normal_german"), authors: "Kromeyer-Hauschild et al. 2001", url: 'https://doi.org/10.1007/s001120170107' },
-        { value: "noonan_japan", label: this.$t("noonan_japan"), authors: "Isojima et al. 2016", url: 'https://doi.org/10.1038/pr.2015.254' },
-        { value: "achondroplasia_sweden", label: this.$t("achondroplasia_sweden"), authors: "Merker et al. 2019", url: 'https://doi.org/10.1002/ajmg.a.38853' },
-        { value: "hypochondroplasia_argentinia", label: this.$t("hypochondroplasia_argentinia"), authors: "Arenas et al. 2018", url: 'https://doi.org/10.1515/jpem-2018-0046' },
-        { value: "trisomy21_america", label: this.$t("trisomy21_america"), authors: "Zemel et al. 2015", url: 'https://doi.org/10.1542/peds.2015-1652' },
-      ]
+        {
+          value: "normal_german",
+          label: this.$t("normal_german"),
+          authors: "Kromeyer-Hauschild et al. 2001",
+          url: "https://doi.org/10.1007/s001120170107",
+        },
+        {
+          value: "noonan_japan",
+          label: this.$t("noonan_japan"),
+          authors: "Isojima et al. 2016",
+          url: "https://doi.org/10.1038/pr.2015.254",
+        },
+        {
+          value: "achondroplasia_sweden",
+          label: this.$t("achondroplasia_sweden"),
+          authors: "Merker et al. 2019",
+          url: "https://doi.org/10.1002/ajmg.a.38853",
+        },
+        {
+          value: "hypochondroplasia_argentinia",
+          label: this.$t("hypochondroplasia_argentinia"),
+          authors: "Arenas et al. 2018",
+          url: "https://doi.org/10.1515/jpem-2018-0046",
+        },
+        {
+          value: "trisomy21_america",
+          label: this.$t("trisomy21_america"),
+          authors: "Zemel et al. 2015",
+          url: "https://doi.org/10.1542/peds.2015-1652",
+        },
+      ];
     },
     birthdateDate() {
       if (this.userInput.birthdate == null) return null;
@@ -251,18 +293,18 @@ export default {
       localStorage.removeItem("userInput");
       this.dirty = false;
     },
-    saveFile: function() {
-      const data = JSON.stringify(this.userInput)
-      const blob = new Blob([data], {type: 'text/plain'})
-      const e = document.createEvent('MouseEvents'),
-        a = document.createElement('a'),
+    saveFile: function () {
+      const data = JSON.stringify(this.userInput);
+      const blob = new Blob([data], { type: "text/plain" });
+      const e = document.createEvent("MouseEvents"),
+        a = document.createElement("a"),
         today = new Date().toLocaleDateString();
       a.download = "data_" + today + ".json";
       a.href = window.URL.createObjectURL(blob);
-      a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-      e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+      e.initEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
       a.dispatchEvent(e);
-    }
+    },
   },
 };
 </script>

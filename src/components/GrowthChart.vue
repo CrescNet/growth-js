@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { ScatterChart } from "vue-chart-3"
+import { ScatterChart } from "vue-chart-3";
 import { Chart, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 
@@ -15,15 +15,19 @@ export default {
   props: {
     scatterData: {
       type: Array,
-      default () { [] },
+      default() {
+        [];
+      },
     },
     centileData: {
       type: Array,
-      default () { [] },
+      default() {
+        [];
+      },
     },
     options: {
       type: Object,
-      default () {
+      default() {
         return {
           responsive: true,
           scales: {
@@ -39,15 +43,15 @@ export default {
               zoom: {
                 wheel: { enabled: true },
                 pinch: { enabled: true },
-                mode: 'xy',
+                mode: "xy",
               },
               pan: {
                 enabled: true,
-                mode: 'xy',
+                mode: "xy",
               },
-            }
-          }
-        }
+            },
+          },
+        };
       },
     },
     color: {
@@ -58,13 +62,15 @@ export default {
   },
   computed: {
     localCentileData: function () {
-      var result = {}
+      var result = {};
       if (this.centileData != undefined) {
         for (var centile of ["p03", "p50", "p97"]) {
-          result[centile] = this.centileData.map(c => { return { x: c.age, y: c[centile] } })
+          result[centile] = this.centileData.map((c) => {
+            return { x: c.age, y: c[centile] };
+          });
         }
       }
-      return result
+      return result;
     },
     chartData: function () {
       return {
@@ -82,7 +88,7 @@ export default {
             borderDash: [5],
             borderWidth: 2,
             data: this.localCentileData.p50,
-            borderColor: 'black',
+            borderColor: "black",
             pointRadius: 0,
             pointHitRadius: 0,
           },
@@ -92,7 +98,7 @@ export default {
             fill: false,
             borderWidth: 2,
             data: this.localCentileData.p97,
-            borderColor: 'black',
+            borderColor: "black",
             pointRadius: 0,
             pointHitRadius: 0,
           },
@@ -102,13 +108,13 @@ export default {
             fill: false,
             borderWidth: 2,
             data: this.localCentileData.p03,
-            borderColor: 'black',
+            borderColor: "black",
             pointRadius: 0,
             pointHitRadius: 0,
           },
         ],
-      }
+      };
     },
   },
-}
+};
 </script>

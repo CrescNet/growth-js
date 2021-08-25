@@ -34,7 +34,13 @@
       />
     </td>
     <td>
-      <q-btn round color="red" icon="clear" :title="$t('deleteRow')" @click="$emit('deleteRow')" />
+      <q-btn
+        round
+        color="red"
+        icon="clear"
+        :title="$t('deleteRow')"
+        @click="$emit('deleteRow')"
+      />
     </td>
   </tr>
 </template>
@@ -43,12 +49,12 @@
 export default {
   props: ["modelValue"],
   computed: {
-    local () {
+    local() {
       return this.modelValue ? this.modelValue : {};
     },
   },
   methods: {
-    update (key, value) {
+    update(key, value) {
       this.$emit("update:modelValue", { ...this.modelValue, [key]: value });
     },
   },

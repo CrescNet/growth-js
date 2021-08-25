@@ -12,10 +12,21 @@
             v-model="local.reference"
             :options="availableReferences"
           />
-          <span class="text-caption" v-if="selectedReference && selectedReference.url">
-            {{ $t('source') }}:
-            <a :href="selectedReference.url" target="_blank" class="text-primary">
-              {{ selectedReference.authors ? selectedReference.authors : selectedReference.url }}
+          <span
+            class="text-caption"
+            v-if="selectedReference && selectedReference.url"
+          >
+            {{ $t("source") }}:
+            <a
+              :href="selectedReference.url"
+              target="_blank"
+              class="text-primary"
+            >
+              {{
+                selectedReference.authors
+                  ? selectedReference.authors
+                  : selectedReference.url
+              }}
             </a>
           </span>
         </div>
@@ -45,8 +56,12 @@
         <thead>
           <tr>
             <th v-t="'date'" />
-            <th>{{ $t('height') + ' (' + $t('inUnit', { unit: 'cm' }) + ')' }}</th>
-            <th>{{ $t('weight') + ' (' + $t('inUnit', { unit: 'kg' }) + ')' }}</th>
+            <th>
+              {{ $t("height") + " (" + $t("inUnit", { unit: "cm" }) + ")" }}
+            </th>
+            <th>
+              {{ $t("weight") + " (" + $t("inUnit", { unit: "kg" }) + ")" }}
+            </th>
             <th></th>
           </tr>
         </thead>
@@ -80,21 +95,23 @@ import VisitRow from "./VisitRow.vue";
 export default {
   props: ["modelValue", "availableReferences"],
   components: { VisitRow },
-  data () {
+  data() {
     return {
-      showQrCode: false
-    }
+      showQrCode: false,
+    };
   },
   computed: {
-    local () {
+    local() {
       return this.modelValue ? this.modelValue : {};
     },
-    selectedReference () {
-      return this.availableReferences.find(r => r.value == this.local.reference)
-    }
+    selectedReference() {
+      return this.availableReferences.find(
+        (r) => r.value == this.local.reference
+      );
+    },
   },
   methods: {
-    update (key, value) {
+    update(key, value) {
       this.$emit("update:modelValue", { ...this.modelValue, [key]: value });
     },
     addVisit() {
