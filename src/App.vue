@@ -21,8 +21,8 @@
       </q-toolbar>
     </q-header>
 
-    <q-page-container class="q-my-sm q-pa-md q-gutter-y-md">
-      <q-splitter v-model="splitterModel" :limits="[30, 80]">
+    <q-page-container class="q-mt-sm q-pa-md q-gutter-y-md">
+      <q-splitter v-model="splitterModel" :limits="[30, 80]" class="q-mb-md">
         <template v-slot:before>
           <q-card bordered class="q-mr-md q-mb-md">
             <q-card-section class="description q-pb-none">
