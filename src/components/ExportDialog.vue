@@ -34,7 +34,7 @@
             color="primary"
             icon="download"
             :label="$t('export.file.title')"
-            @click="saveFile"
+            @click="saveToFile(JSON.stringify(userInput), 'data_' + today + '.json')"
           />
           <div class="col-7" v-t="'export.file.description'" />
         </div>
@@ -59,10 +59,12 @@
 
 <script>
 import QrCodeDialog from "./QrCodeDialog.vue";
+import fileHandler from "../mixins/fileHandler.js";
 
 export default {
   name: "ExportDialog",
   components: { QrCodeDialog },
+  mixins: [ fileHandler ],
   props: {
     show: {
       type: Boolean,
@@ -79,38 +81,15 @@ export default {
       showQrCode: false,
     };
   },
+  computed: {
+    today() {
+      return new Date().toLocaleDateString();
+    }
+  },
   methods: {
     saveUserInput() {
       localStorage.setItem("userInput", JSON.stringify(this.userInput));
       this.$emit('update:dirty', false);
-    },
-    saveFile() {
-      const data = JSON.stringify(this.userInput);
-      const blob = new Blob([data], { type: "text/plain" });
-      const e = document.createEvent("MouseEvents"),
-        a = document.createElement("a"),
-        today = new Date().toLocaleDateString();
-      a.download = "data_" + today + ".json";
-      a.href = window.URL.createObjectURL(blob);
-      a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
-      e.initEvent(
-        "click",
-        true,
-        false,
-        window,
-        0,
-        0,
-        0,
-        0,
-        0,
-        false,
-        false,
-        false,
-        false,
-        0,
-        null
-      );
-      a.dispatchEvent(e);
     },
   },
 };
