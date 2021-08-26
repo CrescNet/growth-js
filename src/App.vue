@@ -119,42 +119,9 @@
       </q-splitter>
     </q-page-container>
 
-    <ExportDialog v-model:modelValue="showExportDialog" v-model:dirty="dirty" :userInput="userInput" />
+    <ExportDialog v-model:show="showExportDialog" v-model:dirty="dirty" :userInput="userInput" />
 
-    <q-dialog v-model="showImportDialog">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6" v-t="'import.title'" />
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-separator inset />
-        <q-card-section class="q-gutter-sm">
-          <p v-t="'import.description'" />
-          <div class="row justify-between items-center">
-            <q-file outlined v-model="jsonFile" :label="$t('import.file.label')"  class="col-7" accept=".json">
-              <template v-slot:prepend>
-                <q-icon name="attach_file" />
-              </template>
-            </q-file>
-            <q-btn rounded stack color="primary" icon="sync" class="col-4" :disabled="!jsonFile" :label="$t('import.file.title')" @click="importJsonFile" />
-          </div>
-          <div class="row justify-between items-center">
-            <q-input outlined type="textarea" v-model="jsonString" :label="$t('import.json.label')" class="col-7" rows="1" />
-            <q-btn
-              rounded
-              stack
-              color="primary"
-              icon="sync"
-              class="col-4"
-              :disabled="!jsonString"
-              :label="$t('import.json.title')"
-              @click="importJsonString"
-            />
-          </div>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <ImportDialog v-model:show="showImportDialog" v-model:userInput="userInput" />
 
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
@@ -171,14 +138,12 @@ import { ref } from "vue";
 import GrowthChart from "./components/GrowthChart.vue";
 import UserInput from "./components/UserInput.vue";
 import ExportDialog from "./components/ExportDialog.vue";
+import ImportDialog from "./components/ImportDialog.vue";
 
 export default {
   name: "App",
-  components: { GrowthChart, UserInput, ExportDialog },
+  components: { GrowthChart, UserInput, ExportDialog, ImportDialog },
   data() {
-    const fileReader = new FileReader();
-    fileReader.onload = e => this.userInput = JSON.parse(e.target.result);
-
     return {
       userInput: {
         reference: null,
@@ -191,9 +156,6 @@ export default {
       showImportDialog: false,
       splitterModel: ref(57),
       chartTab: "height",
-      jsonString: null,
-      jsonFile: null,
-      fileReader: fileReader,
       dirty: false,
     };
   },
@@ -305,24 +267,6 @@ export default {
       localStorage.removeItem("userInput");
       this.dirty = false;
     },
-    importJsonString() {
-      try {
-        this.userInput = JSON.parse(this.jsonString);
-        this.jsonString = null;
-        this.showImportDialog = false;
-      } catch (e) {
-        console.log(e.message);
-      }
-    },
-    importJsonFile() {
-      try {
-        this.fileReader.readAsText(this.jsonFile);
-        this.jsonFile = null;
-        this.showImportDialog = false;
-      } catch (e) {
-        console.log(e.message);
-      }
-    }
   },
 };
 </script>

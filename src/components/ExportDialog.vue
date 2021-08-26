@@ -1,7 +1,7 @@
 <template>
   <q-dialog
-    :model-value="local"
-    @update:model-value="$emit('update:modelValue', $event)"
+    :model-value="show"
+    @update:model-value="$emit('update:show', $event)"
   >
     <q-card>
       <q-card-section class="row items-center q-pb-none">
@@ -64,7 +64,7 @@ export default {
   name: "ExportDialog",
   components: { QrCodeDialog },
   props: {
-    modelValue: {
+    show: {
       type: Boolean,
       default: false,
     },
@@ -78,11 +78,6 @@ export default {
     return {
       showQrCode: false,
     };
-  },
-  computed: {
-    local() {
-      return this.modelValue;
-    },
   },
   methods: {
     saveUserInput() {
