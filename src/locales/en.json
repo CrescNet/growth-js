@@ -29,7 +29,13 @@
   "copyrightNotice": "CrescNet, Medical Faculty, University of Leipzig 2021",
   "close": "Close",
   "source": "Source",
-  "import": "Import",
+  "import": {
+    "title": "Import",
+    "json": {
+      "title": "Load JSON",
+      "string": "JSON string"
+    }
+  },
   "export": {
     "browser": {
       "title": "Save in browser",

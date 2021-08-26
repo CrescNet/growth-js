@@ -53,7 +53,7 @@
                 <q-btn
                   color="primary"
                   icon="file_download"
-                  :label="$t('import')"
+                  :label="$t('import.title')"
                   @click="showImportDialog = true"
                 />
                 <q-btn
@@ -192,20 +192,21 @@
     <q-dialog v-model="showImportDialog">
       <q-card>
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6" v-t="'import'" />
+          <div class="text-h6" v-t="'import.title'" />
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
         <q-separator inset />
         <q-card-section>
-          <p v-t="'importDescription'" />
+          <p v-t="'import.description'" />
+          <q-input filled type="textarea" v-model="jsonString" :label="$t('import.json.string')" />
           <q-btn-group rounded push>
             <q-btn
               color="primary"
-              icon="save"
-              :disabled="!dirty"
-              :label="$t('saveInBrowser')"
-              @click="saveUserInput"
+              icon="sync"
+              :disabled="!jsonString"
+              :label="$t('import.json.title')"
+              @click="importJsonString"
             />
           </q-btn-group>
         </q-card-section>
@@ -246,6 +247,7 @@ export default {
       dirty: false,
       splitterModel: ref(57),
       chartTab: "height",
+      jsonString: null,
     };
   },
   computed: {
@@ -365,7 +367,7 @@ export default {
       localStorage.removeItem("userInput");
       this.dirty = false;
     },
-    saveFile: function () {
+    saveFile() {
       const data = JSON.stringify(this.userInput);
       const blob = new Blob([data], { type: "text/plain" });
       const e = document.createEvent("MouseEvents"),
@@ -377,6 +379,15 @@ export default {
       e.initEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
       a.dispatchEvent(e);
     },
+    importJsonString() {
+      try {
+        this.userInput = JSON.parse(this.jsonString);
+        this.jsonString = null
+        this.showImportDialog = false
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
   },
 };
 </script>

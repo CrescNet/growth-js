@@ -29,7 +29,13 @@
   "copyrightNotice": "CrescNet, Medizinische Fakultät, Universität Leipzig 2021",
   "close": "Schließen",
   "source": "Quelle",
-  "import": "Import",
+  "import": {
+    "title": "Import",
+    "json": {
+      "title": "JSON laden",
+      "string": "JSON Zeichenkette"
+    }
+  },
   "export": {
     "title": "Export",
     "description": "Sie haben folgende Möglichkeiten, um Ihre eingegebenen Daten abzuspeichern, bzw. zu exportieren:",
