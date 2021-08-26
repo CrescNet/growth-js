@@ -5,7 +5,7 @@
   },
   "dataPrivacy": {
     "label": "Data Privacy",
-    "text": "The data entered on this page remains exclusively on your terminal device. Neither CrescNet nor other parties have access to your data at any time. If you click on the button \"Save data for later\" in \"Export\", the entries will be saved in your browser in the so-called \"Local Storage\"."
+    "text": "The data entered on this page remains exclusively on your terminal device. Neither operators of this application nor other parties have access to your data at any time. If you click on the button \"Save data for later\" in \"Export\", the entries will be saved in your browser in the so-called \"Local Storage\"."
   },
   "inUnit": "in {unit}",
   "height": "Height",
@@ -26,7 +26,6 @@
   "achondroplasia_sweden": "Children with Achondroplasia",
   "hypochondroplasia_argentinia": "Children with Hypochondroplasia (only height available)",
   "trisomy21_america": "Children with Trisomy 21",
-  "copyrightNotice": "CrescNet, Medical Faculty, University of Leipzig 2021",
   "close": "Close",
   "source": "Source",
   "import": {
@@ -58,5 +57,6 @@
       "description": "Display a QR code that can be scanned with a smartphone.",
       "description2": "You can scan this QR code to get your entered data as JSON format. This format is machine-readable."
     }
-  }
+  },
+  "imprint": "Imprint"
 }

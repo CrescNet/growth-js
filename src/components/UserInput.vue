@@ -20,7 +20,7 @@
             <a
               :href="selectedReference.url"
               target="_blank"
-              class="text-primary"
+              class="q-link text-primary"
             >
               {{
                 selectedReference.authors

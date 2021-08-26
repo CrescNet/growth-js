@@ -134,8 +134,11 @@
 
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
-        <q-toolbar-title class="text-subtitle1">
-          &copy; {{ $t("copyrightNotice") }}
+        <q-toolbar-title v-if="copyrightNotice" class="text-subtitle1">
+          &copy; {{ copyrightNotice }}
+        </q-toolbar-title>
+        <q-toolbar-title v-if="imprintUrl" class="text-subtitle1 text-right">
+          <a :href="imprintUrl" v-t="'imprint'" class="q-link text-white"></a>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -169,6 +172,12 @@ export default {
     };
   },
   computed: {
+    imprintUrl() {
+      return process.env.VUE_APP_IMPRINT_URL;
+    },
+    copyrightNotice() {
+      return process.env.VUE_APP_COPYRIGHT_NOTICE;
+    },
     availableReferences() {
       return [
         { value: null, label: this.$t("selectReference") },
