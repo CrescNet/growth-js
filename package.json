@@ -1,6 +1,6 @@
 {
   "name": "growth-js",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "CrescNet app for visualisation of growth data compared to population-based norm values",
   "keywords": [
     "growth",
