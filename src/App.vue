@@ -119,59 +119,7 @@
       </q-splitter>
     </q-page-container>
 
-    <QrCodeDialog v-model="showQrCode" :content="userInput" />
-
-    <q-dialog v-model="showExportDialog">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6" v-t="'export.title'" />
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-separator inset />
-        <q-card-section class="q-gutter-sm">
-          <p v-t="'export.description'" />
-          <div class="row justify-between items-center">
-            <q-btn
-              rounded
-              stack
-              class="col-4"
-              color="primary"
-              icon="save"
-              :disabled="!dirty"
-              :title="!dirty ? $t('export.browser.noChanges') : ''"
-              :label="$t('export.browser.title')"
-              @click="saveUserInput"
-            />
-            <div class="col-7" v-t="'export.browser.description'" />
-          </div>
-          <div class="row justify-between items-center">
-            <q-btn
-              rounded
-              stack
-              class="col-4"
-              color="primary"
-              icon="download"
-              :label="$t('export.file.title')"
-              @click="saveFile"
-            />
-            <div class="col-7" v-t="'export.file.description'" />
-          </div>
-          <div class="row justify-between items-center">
-            <q-btn
-              rounded
-              stack
-              class="col-4"
-              color="primary"
-              icon="qr_code_2"
-              :label="$t('export.qrCode.title')"
-              @click="showQrCode = true"
-            />
-            <div class="col-7" v-t="'export.qrCode.description'" />
-          </div>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <ExportDialog ref="exportDialog" v-model="showExportDialog" :userInput="userInput" />
 
     <q-dialog v-model="showImportDialog">
       <q-card>
@@ -222,11 +170,11 @@
 import { ref } from "vue";
 import GrowthChart from "./components/GrowthChart.vue";
 import UserInput from "./components/UserInput.vue";
-import QrCodeDialog from "./components/QrCodeDialog.vue"
+import ExportDialog from "./components/ExportDialog.vue";
 
 export default {
   name: "App",
-  components: { GrowthChart, UserInput, QrCodeDialog },
+  components: { GrowthChart, UserInput, ExportDialog },
   data() {
     const fileReader = new FileReader();
     fileReader.onload = e => this.userInput = JSON.parse(e.target.result);
@@ -239,10 +187,8 @@ export default {
         visits: [{}],
       },
       centiles: {},
-      showQrCode: false,
       showExportDialog: false,
       showImportDialog: false,
-      dirty: false,
       splitterModel: ref(57),
       chartTab: "height",
       jsonString: null,
@@ -314,11 +260,6 @@ export default {
         };
       });
     },
-    nonEmptyVisits() {
-      return this.userInput.visits.filter(
-        (v) => v.date != null && (v.height != null || v.weight != null)
-      );
-    },
   },
   watch: {
     "userInput.reference": function () {
@@ -337,25 +278,15 @@ export default {
           self.centiles = {};
         });
     },
-    userInput: {
-      deep: true,
-      handler: function () {
-        this.dirty = true;
-      },
-    },
   },
   mounted() {
     if (localStorage.getItem("userInput"))
       this.userInput = JSON.parse(localStorage.getItem("userInput"));
-    this.dirty = false;
+    this.$refs.exportDialog.setDirty(false);
   },
   methods: {
     dateDiffYears(d1, d2) {
       return (d1 - d2) / (1000 * 60 * 60 * 24 * 365.25);
-    },
-    saveUserInput() {
-      localStorage.setItem("userInput", JSON.stringify(this.userInput));
-      this.dirty = false;
     },
     resetUserInput() {
       this.userInput = {
@@ -365,19 +296,7 @@ export default {
         visits: [{}],
       };
       localStorage.removeItem("userInput");
-      this.dirty = false;
-    },
-    saveFile() {
-      const data = JSON.stringify(this.userInput);
-      const blob = new Blob([data], { type: "text/plain" });
-      const e = document.createEvent("MouseEvents"),
-        a = document.createElement("a"),
-        today = new Date().toLocaleDateString();
-      a.download = "data_" + today + ".json";
-      a.href = window.URL.createObjectURL(blob);
-      a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
-      e.initEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-      a.dispatchEvent(e);
+      this.$refs.exportDialog.setDirty(false);
     },
     importJsonString() {
       try {
