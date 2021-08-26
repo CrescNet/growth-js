@@ -46,7 +46,8 @@
     "description": "Sie haben folgende Möglichkeiten, um Ihre eingegebenen Daten abzuspeichern, bzw. zu exportieren:",
     "browser": {
       "title": "Im Browser speichern",
-      "description": "Speichern Sie die Daten in Ihrem Browser, um sie direkt beim nächsten Öffnen dieser Seite verfügbar zu haben."
+      "description": "Speichern Sie die Daten in Ihrem Browser, um sie direkt beim nächsten Öffnen dieser Seite verfügbar zu haben.",
+      "noChanges": "Es sind keine Änderungen zum Speichern vorhanden."
     },
     "file": {
       "title": "In Datei speichern",

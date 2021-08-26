@@ -156,6 +156,7 @@
               color="primary"
               icon="save"
               :disabled="!dirty"
+              :title="!dirty ? $t('export.browser.noChanges') : ''"
               :label="$t('export.browser.title')"
               @click="saveUserInput"
             />

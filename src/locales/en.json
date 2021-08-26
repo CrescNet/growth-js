@@ -44,7 +44,8 @@
   "export": {
     "browser": {
       "title": "Save in browser",
-      "description": "Save the data in your browser to have it directly available the next time you open this page."
+      "description": "Save the data in your browser to have it directly available the next time you open this page.",
+      "noChanges": "There are no changes to save."
     },
     "file": {
       "title": "Save to file",
