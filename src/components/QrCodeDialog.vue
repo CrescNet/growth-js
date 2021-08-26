@@ -1,22 +1,21 @@
 <template>
-  <q-dialog :model-value="local" @update:model-value="$emit('update:modelValue', $event)">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6" v-t="'export.qrCode.title'" />
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-separator inset />
-        <q-card-section class="text-center">
-          <p v-t="'export.qrCode.description2'" />
-          <qrcode-vue
-            :value="JSON.stringify(content)"
-            :size="size"
-            level="H"
-          />
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+  <q-dialog
+    :model-value="local"
+    @update:model-value="$emit('update:modelValue', $event)"
+  >
+    <q-card>
+      <q-card-section class="row items-center q-pb-none">
+        <div class="text-h6" v-t="'export.qrCode.title'" />
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+      <q-separator inset />
+      <q-card-section class="text-center">
+        <p v-t="'export.qrCode.description2'" />
+        <qrcode-vue :value="JSON.stringify(content)" :size="size" level="H" />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -38,7 +37,7 @@ export default {
     },
     size() {
       return Math.sqrt(this.content.visits.length) * 100;
-    }
-  }
-}
+    },
+  },
+};
 </script>
