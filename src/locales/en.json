@@ -8,7 +8,6 @@
     "text": "The data entered on this page remains exclusively on your terminal device. Neither CrescNet nor other parties have access to your data at any time. If you click on the button \"Save data for later\", the entries will be saved in your browser in the so-called \"Local Storage\"."
   },
   "inUnit": "in {unit}",
-  "qrCodeDescription": "You can scan this QR code to get your entered data as JSON format. This format is machine-readable.",
   "height": "Height",
   "weight": "Weight",
   "deleteRow": "Delete row",
@@ -19,9 +18,7 @@
   "male": "Male",
   "sex": "sex",
   "reference": "Reference",
-  "showQrCode": "Show QR code",
   "resetData": "Reset data",
-  "saveForLater": "Save for later",
   "viewOnGitHub": "View on GitHub",
   "selectReference": "Please select a reference...",
   "normal_german": "German children without chronic diseases",
@@ -32,5 +29,20 @@
   "copyrightNotice": "CrescNet, Medical Faculty, University of Leipzig 2021",
   "close": "Close",
   "source": "Source",
-  "saveToFile": "Save to file"
+  "import": "Import",
+  "export": {
+    "browser": {
+      "title": "Save in browser",
+      "description": "Save the data in your browser to have it directly available the next time you open this page."
+    },
+    "file": {
+      "title": "Save to file",
+      "description": "Create a file from your data that can for example be handed over to your family doctor."
+    },
+    "qrCode": {
+      "title": "Show QR code",
+      "description": "Display a QR code that can be scanned with a smartphone.",
+      "description2": "You can scan this QR code to get your entered data as JSON format. This format is machine-readable."
+    }
+  }
 }

@@ -47,21 +47,14 @@
                 <q-btn
                   color="primary"
                   icon="save"
-                  :disabled="!dirty"
-                  :label="$t('saveForLater')"
-                  @click="saveUserInput"
+                  :label="$t('export.title')"
+                  @click="showExportDialog = true"
                 />
                 <q-btn
                   color="primary"
-                  icon="download"
-                  :label="$t('saveToFile')"
-                  @click="saveFile"
-                />
-                <q-btn
-                  color="primary"
-                  icon="qr_code_2"
-                  :label="$t('showQrCode')"
-                  @click="showQrCode = true"
+                  icon="file_download"
+                  :label="$t('import')"
+                  @click="showImportDialog = true"
                 />
                 <q-btn
                   color="red"
@@ -128,17 +121,94 @@
 
     <q-dialog v-model="showQrCode">
       <q-card>
-        <q-card-section class="text-center" v-t="'qrCodeDescription'" />
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6" v-t="'export.qrCode.title'" />
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-separator inset />
         <q-card-section class="text-center">
+          <p v-t="'export.qrCode.description2'" />
           <qrcode-vue
             :value="JSON.stringify(userInput)"
             :size="Math.sqrt(userInput.visits.length) * 100"
             level="H"
           />
         </q-card-section>
-        <q-card-actions align="right">
-          <q-btn flat :label="$t('close')" color="primary" v-close-popup />
-        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showExportDialog">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6" v-t="'export.title'" />
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-separator inset />
+        <q-card-section class="q-gutter-sm">
+          <p v-t="'export.description'" />
+          <div class="row justify-between items-center">
+            <q-btn
+              rounded
+              stack
+              class="col-4"
+              color="primary"
+              icon="save"
+              :disabled="!dirty"
+              :label="$t('export.browser.title')"
+              @click="saveUserInput"
+            />
+            <div class="col-7" v-t="'export.browser.description'" />
+          </div>
+          <div class="row justify-between items-center">
+            <q-btn
+              rounded
+              stack
+              class="col-4"
+              color="primary"
+              icon="download"
+              :label="$t('export.file.title')"
+              @click="saveFile"
+            />
+            <div class="col-7" v-t="'export.file.description'" />
+          </div>
+          <div class="row justify-between items-center">
+            <q-btn
+              rounded
+              stack
+              class="col-4"
+              color="primary"
+              icon="qr_code_2"
+              :label="$t('export.qrCode.title')"
+              @click="showQrCode = true"
+            />
+            <div class="col-7" v-t="'export.qrCode.description'" />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showImportDialog">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6" v-t="'import'" />
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-separator inset />
+        <q-card-section>
+          <p v-t="'importDescription'" />
+          <q-btn-group rounded push>
+            <q-btn
+              color="primary"
+              icon="save"
+              :disabled="!dirty"
+              :label="$t('saveInBrowser')"
+              @click="saveUserInput"
+            />
+          </q-btn-group>
+        </q-card-section>
       </q-card>
     </q-dialog>
 
@@ -171,6 +241,8 @@ export default {
       },
       centiles: {},
       showQrCode: false,
+      showExportDialog: false,
+      showImportDialog: false,
       dirty: false,
       splitterModel: ref(57),
       chartTab: "height",
