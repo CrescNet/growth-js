@@ -119,24 +119,7 @@
       </q-splitter>
     </q-page-container>
 
-    <q-dialog v-model="showQrCode">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6" v-t="'export.qrCode.title'" />
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-separator inset />
-        <q-card-section class="text-center">
-          <p v-t="'export.qrCode.description2'" />
-          <qrcode-vue
-            :value="JSON.stringify(userInput)"
-            :size="Math.sqrt(userInput.visits.length) * 100"
-            level="H"
-          />
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <QrCodeDialog v-model="showQrCode" :content="userInput" />
 
     <q-dialog v-model="showExportDialog">
       <q-card>
@@ -239,11 +222,11 @@
 import { ref } from "vue";
 import GrowthChart from "./components/GrowthChart.vue";
 import UserInput from "./components/UserInput.vue";
-import QrcodeVue from "qrcode.vue";
+import QrCodeDialog from "./components/QrCodeDialog.vue"
 
 export default {
   name: "App",
-  components: { GrowthChart, UserInput, QrcodeVue },
+  components: { GrowthChart, UserInput, QrCodeDialog },
   data() {
     const fileReader = new FileReader();
     fileReader.onload = e => this.userInput = JSON.parse(e.target.result);

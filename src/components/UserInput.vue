@@ -95,11 +95,6 @@ import VisitRow from "./VisitRow.vue";
 export default {
   props: ["modelValue", "availableReferences"],
   components: { VisitRow },
-  data() {
-    return {
-      showQrCode: false,
-    };
-  },
   computed: {
     local() {
       return this.modelValue ? this.modelValue : {};
@@ -111,9 +106,6 @@ export default {
     },
   },
   methods: {
-    update(key, value) {
-      this.$emit("update:modelValue", { ...this.modelValue, [key]: value });
-    },
     addVisit() {
       this.local.visits.push({});
     },
