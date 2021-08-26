@@ -197,38 +197,29 @@
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
         <q-separator inset />
-        <q-card-section>
+        <q-card-section class="q-gutter-sm">
           <p v-t="'import.description'" />
-          <q-list>
-            <q-item>
-              <q-item-section>
-                <q-file outlined v-model="jsonFile" :label="$t('import.file.label')" accept=".json">
-                  <template v-slot:prepend>
-                    <q-icon name="attach_file" />
-                  </template>
-                </q-file>
-              </q-item-section>
-              <q-item-section>
-                <q-btn rounded stack color="primary" icon="sync" :disabled="!jsonFile" :label="$t('import.file.title')" @click="importJsonFile" />
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section>
-                <q-input outlined type="textarea" v-model="jsonString" :label="$t('import.json.label')" rows="1" />
-              </q-item-section>
-              <q-item-section>
-                <q-btn
-                  rounded
-                  stack
-                  color="primary"
-                  icon="sync"
-                  :disabled="!jsonString"
-                  :label="$t('import.json.title')"
-                  @click="importJsonString"
-                />
-              </q-item-section>
-            </q-item>
-          </q-list>
+          <div class="row justify-between items-center">
+            <q-file outlined v-model="jsonFile" :label="$t('import.file.label')"  class="col-7" accept=".json">
+              <template v-slot:prepend>
+                <q-icon name="attach_file" />
+              </template>
+            </q-file>
+            <q-btn rounded stack color="primary" icon="sync" class="col-4" :disabled="!jsonFile" :label="$t('import.file.title')" @click="importJsonFile" />
+          </div>
+          <div class="row justify-between items-center">
+            <q-input outlined type="textarea" v-model="jsonString" :label="$t('import.json.label')" class="col-7" rows="1" />
+            <q-btn
+              rounded
+              stack
+              color="primary"
+              icon="sync"
+              class="col-4"
+              :disabled="!jsonString"
+              :label="$t('import.json.title')"
+              @click="importJsonString"
+            />
+          </div>
         </q-card-section>
       </q-card>
     </q-dialog>
