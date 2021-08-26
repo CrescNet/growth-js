@@ -119,7 +119,7 @@
       </q-splitter>
     </q-page-container>
 
-    <ExportDialog ref="exportDialog" v-model="showExportDialog" :userInput="userInput" />
+    <ExportDialog v-model:modelValue="showExportDialog" v-model:dirty="dirty" :userInput="userInput" />
 
     <q-dialog v-model="showImportDialog">
       <q-card>
@@ -194,6 +194,7 @@ export default {
       jsonString: null,
       jsonFile: null,
       fileReader: fileReader,
+      dirty: false,
     };
   },
   computed: {
@@ -262,6 +263,12 @@ export default {
     },
   },
   watch: {
+    userInput: {
+      deep: true,
+      handler: function () {
+        this.dirty = true;
+      },
+    },
     "userInput.reference": function () {
       if (this.userInput.reference == null) {
         this.centiles = {};
@@ -282,7 +289,7 @@ export default {
   mounted() {
     if (localStorage.getItem("userInput"))
       this.userInput = JSON.parse(localStorage.getItem("userInput"));
-    this.$refs.exportDialog.setDirty(false);
+    this.dirty = false;
   },
   methods: {
     dateDiffYears(d1, d2) {
@@ -296,7 +303,7 @@ export default {
         visits: [{}],
       };
       localStorage.removeItem("userInput");
-      this.$refs.exportDialog.setDirty(false);
+      this.dirty = false;
     },
     importJsonString() {
       try {

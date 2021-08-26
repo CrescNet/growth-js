@@ -68,12 +68,15 @@ export default {
       type: Boolean,
       default: false,
     },
+    dirty: {
+      type: Boolean,
+      default: false,
+    },
     userInput: Object,
   },
   data() {
     return {
       showQrCode: false,
-      dirty: false,
     };
   },
   computed: {
@@ -81,18 +84,10 @@ export default {
       return this.modelValue;
     },
   },
-  watch: {
-    userInput: {
-      deep: true,
-      handler: function () {
-        this.setDirty(true);
-      },
-    },
-  },
   methods: {
     saveUserInput() {
       localStorage.setItem("userInput", JSON.stringify(this.userInput));
-      this.setDirty(false);
+      this.$emit('update:dirty', false);
     },
     saveFile() {
       const data = JSON.stringify(this.userInput);
@@ -121,9 +116,6 @@ export default {
         null
       );
       a.dispatchEvent(e);
-    },
-    setDirty(dirty) {
-      this.dirty = dirty;
     },
   },
 };
