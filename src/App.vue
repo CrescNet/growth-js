@@ -119,9 +119,16 @@
       </q-splitter>
     </q-page-container>
 
-    <ExportDialog v-model:show="showExportDialog" v-model:dirty="dirty" :userInput="userInput" />
+    <ExportDialog
+      v-model:show="showExportDialog"
+      v-model:dirty="dirty"
+      :userInput="userInput"
+    />
 
-    <ImportDialog v-model:show="showImportDialog" v-model:userInput="userInput" />
+    <ImportDialog
+      v-model:show="showImportDialog"
+      v-model:userInput="userInput"
+    />
 
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
