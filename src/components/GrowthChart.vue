@@ -56,7 +56,7 @@ export default {
     },
     color: {
       type: String,
-      default: "#ff6384",
+      default: "black",
     },
     propertyName: String,
   },

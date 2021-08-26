@@ -98,6 +98,7 @@
                   <GrowthChart
                     :propertyName="$t('height') + ' (cm)'"
                     :scatterData="heightData"
+                    :color="chartColor"
                     :centileData="
                       centiles.height ? centiles.height[userInput.sex] : []
                     "
@@ -107,6 +108,7 @@
                   <GrowthChart
                     :propertyName="$t('weight') + ' (kg)'"
                     :scatterData="weightData"
+                    :color="chartColor"
                     :centileData="
                       centiles.weight ? centiles.weight[userInput.sex] : []
                     "
@@ -230,6 +232,17 @@ export default {
         };
       });
     },
+    chartColor() {
+      if (this.userInput != undefined) {
+        if (this.userInput.sex == 'male') {
+          return '#2086e8';
+        } else if (this.userInput.sex == 'female') {
+          return '#f392a3';
+        }
+      }
+
+      return 'black';
+    }
   },
   watch: {
     userInput: {
