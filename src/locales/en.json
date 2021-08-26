@@ -31,9 +31,14 @@
   "source": "Source",
   "import": {
     "title": "Import",
+    "description": "Load previously exported input data from a JSON file or string.",
+    "file": {
+      "title": "Load file",
+      "label": "JSON file"
+    },
     "json": {
-      "title": "Load JSON",
-      "string": "JSON string"
+      "title": "Load string",
+      "label": "JSON string"
     }
   },
   "export": {

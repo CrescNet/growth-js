@@ -199,16 +199,36 @@
         <q-separator inset />
         <q-card-section>
           <p v-t="'import.description'" />
-          <q-input filled type="textarea" v-model="jsonString" :label="$t('import.json.string')" />
-          <q-btn-group rounded push>
-            <q-btn
-              color="primary"
-              icon="sync"
-              :disabled="!jsonString"
-              :label="$t('import.json.title')"
-              @click="importJsonString"
-            />
-          </q-btn-group>
+          <q-list>
+            <q-item>
+              <q-item-section>
+                <q-file outlined v-model="jsonFile" :label="$t('import.file.label')" accept=".json">
+                  <template v-slot:prepend>
+                    <q-icon name="attach_file" />
+                  </template>
+                </q-file>
+              </q-item-section>
+              <q-item-section>
+                <q-btn rounded stack color="primary" icon="sync" :disabled="!jsonFile" :label="$t('import.file.title')" @click="importJsonFile" />
+              </q-item-section>
+            </q-item>
+            <q-item>
+              <q-item-section>
+                <q-input outlined type="textarea" v-model="jsonString" :label="$t('import.json.label')" rows="1" />
+              </q-item-section>
+              <q-item-section>
+                <q-btn
+                  rounded
+                  stack
+                  color="primary"
+                  icon="sync"
+                  :disabled="!jsonString"
+                  :label="$t('import.json.title')"
+                  @click="importJsonString"
+                />
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -233,6 +253,9 @@ export default {
   name: "App",
   components: { GrowthChart, UserInput, QrcodeVue },
   data() {
+    const fileReader = new FileReader();
+    fileReader.onload = e => this.userInput = JSON.parse(e.target.result);
+
     return {
       userInput: {
         reference: null,
@@ -248,6 +271,8 @@ export default {
       splitterModel: ref(57),
       chartTab: "height",
       jsonString: null,
+      jsonFile: null,
+      fileReader: fileReader,
     };
   },
   computed: {
@@ -382,10 +407,19 @@ export default {
     importJsonString() {
       try {
         this.userInput = JSON.parse(this.jsonString);
-        this.jsonString = null
-        this.showImportDialog = false
+        this.jsonString = null;
+        this.showImportDialog = false;
       } catch (e) {
-        console.log(e.message)
+        console.log(e.message);
+      }
+    },
+    importJsonFile() {
+      try {
+        this.fileReader.readAsText(this.jsonFile);
+        this.jsonFile = null;
+        this.showImportDialog = false;
+      } catch (e) {
+        console.log(e.message);
       }
     }
   },

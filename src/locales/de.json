@@ -31,9 +31,14 @@
   "source": "Quelle",
   "import": {
     "title": "Import",
+    "description": "Laden Sie vormals exportierte Eingabedaten aus einer JSON Datei oder Zeichenkette.",
+    "file": {
+      "title": "Datei laden",
+      "label": "JSON Datei"
+    },
     "json": {
-      "title": "JSON laden",
-      "string": "JSON Zeichenkette"
+      "title": "Zeichenkette laden",
+      "label": "JSON Zeichenkette"
     }
   },
   "export": {
