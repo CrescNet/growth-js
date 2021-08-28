@@ -89,6 +89,7 @@
               >
                 <q-tab name="height" :label="$t('height')" />
                 <q-tab name="weight" :label="$t('weight')" />
+                <q-tab name="bmi" :label="$t('bmi')" />
               </q-tabs>
 
               <q-separator />
@@ -111,6 +112,16 @@
                     :color="chartColor"
                     :centileData="
                       centiles.weight ? centiles.weight[userInput.sex] : []
+                    "
+                  />
+                </q-tab-panel>
+                <q-tab-panel name="bmi">
+                  <GrowthChart
+                    :propertyName="$t('bmi') + ' (kg/m²)'"
+                    :scatterData="bmiData"
+                    :color="chartColor"
+                    :centileData="
+                      centiles.bmi ? centiles.bmi[userInput.sex] : []
                     "
                   />
                 </q-tab-panel>
@@ -218,26 +229,21 @@ export default {
       return new Date(this.userInput.birthdate).setHours(0, 0, 0, 0);
     },
     heightData() {
-      if (this.birthdateDate == null) return [];
-      return this.userInput.visits.map((v) => {
-        return {
-          x: this.dateDiffYears(
-            new Date(v.date).setHours(0, 0, 0, 0),
-            this.birthdateDate
-          ),
-          y: v.height,
-        };
-      });
+      return this.getData("height");
     },
     weightData() {
+      return this.getData("weight");
+    },
+    bmiData() {
       if (this.birthdateDate == null) return [];
       return this.userInput.visits.map((v) => {
+        if (!v.height || !v.weight) return null;
         return {
           x: this.dateDiffYears(
             new Date(v.date).setHours(0, 0, 0, 0),
             this.birthdateDate
           ),
-          y: v.weight,
+          y: v.weight / (v.height / 100)**2,
         };
       });
     },
@@ -295,6 +301,18 @@ export default {
       };
       localStorage.removeItem("userInput");
       this.dirty = false;
+    },
+    getData(property) {
+      if (this.birthdateDate == null) return [];
+      return this.userInput.visits.map((v) => {
+        return {
+          x: this.dateDiffYears(
+            new Date(v.date).setHours(0, 0, 0, 0),
+            this.birthdateDate
+          ),
+          y: v[property],
+        };
+      });
     },
   },
 };
