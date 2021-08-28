@@ -1,6 +1,6 @@
 {
   "name": "growth-js",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "CrescNet app for visualisation of growth data compared to population-based norm values",
   "keywords": [
     "growth",
@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/CrescNet/growth-js/issues"
   },
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
