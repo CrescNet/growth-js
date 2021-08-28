@@ -22,7 +22,16 @@
     </q-header>
 
     <q-page-container class="q-mt-sm q-pa-md q-gutter-y-md">
-      <q-splitter v-model="splitterModel" :horizontal="$q.screen.lt.md" :limits="[30, 80]" class="q-mb-md" :separator-class="{ 'q-mx-md': $q.screen.gt.sm, 'q-my-md': $q.screen.lt.md }">
+      <q-splitter
+        v-model="splitterModel"
+        :horizontal="$q.screen.lt.md"
+        :limits="[30, 80]"
+        class="q-mb-md"
+        :separator-class="{
+          'q-mx-md': $q.screen.gt.sm,
+          'q-my-md': $q.screen.lt.md,
+        }"
+      >
         <template v-slot:before>
           <q-card bordered class="q-mb-md">
             <q-card-section class="description q-pb-none">
@@ -120,9 +129,7 @@
                   :propertyName="$t('bmi') + ' (kg/m²)'"
                   :scatterData="bmiData"
                   :color="chartColor"
-                  :centileData="
-                    centiles.bmi ? centiles.bmi[userInput.sex] : []
-                  "
+                  :centileData="centiles.bmi ? centiles.bmi[userInput.sex] : []"
                 />
               </q-tab-panel>
             </q-tab-panels>
@@ -242,21 +249,21 @@ export default {
             new Date(v.date).setHours(0, 0, 0, 0),
             this.birthdateDate
           ),
-          y: v.weight / (v.height / 100)**2,
+          y: v.weight / (v.height / 100) ** 2,
         };
       });
     },
     chartColor() {
       if (this.userInput != undefined) {
-        if (this.userInput.sex == 'male') {
-          return '#2086e8';
-        } else if (this.userInput.sex == 'female') {
-          return '#f392a3';
+        if (this.userInput.sex == "male") {
+          return "#2086e8";
+        } else if (this.userInput.sex == "female") {
+          return "#f392a3";
         }
       }
 
-      return 'black';
-    }
+      return "black";
+    },
   },
   watch: {
     userInput: {
