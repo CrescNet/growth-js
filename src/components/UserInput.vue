@@ -2,7 +2,7 @@
   <div>
     <q-card-section>
       <div class="row">
-        <div class="col">
+        <div class="col-12 col-md">
           <q-select
             outlined
             :label="$t('reference')"
@@ -31,12 +31,12 @@
           </span>
         </div>
 
-        <div class="col q-gutter-md text-center q-pt-sm">
+        <div class="col-12 col-md q-gutter-md text-center q-pt-sm">
           <q-radio v-model="local.sex" val="male" :label="$t('male')" />
           <q-radio v-model="local.sex" val="female" :label="$t('female')" />
         </div>
 
-        <div class="col">
+        <div class="col-12 col-md">
           <q-input
             outlined
             type="date"

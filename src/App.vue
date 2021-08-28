@@ -37,7 +37,7 @@
             </q-card-section>
           </q-card>
 
-          <q-card bordered class="q-mr-md">
+          <q-card bordered class="q-mr-md scroll">
             <user-input
               v-model="userInput"
               :availableReferences="availableReferences"
@@ -59,7 +59,7 @@
                 <q-btn
                   color="red"
                   icon="restart_alt"
-                  :label="$t('resetData')"
+                  :label="$t('reset')"
                   @click="resetUserInput"
                 />
               </q-btn-group>
