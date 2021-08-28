@@ -22,9 +22,9 @@
     </q-header>
 
     <q-page-container class="q-mt-sm q-pa-md q-gutter-y-md">
-      <q-splitter v-model="splitterModel" :limits="[30, 80]" class="q-mb-md">
+      <q-splitter v-model="splitterModel" :horizontal="$q.screen.lt.md" :limits="[30, 80]" class="q-mb-md" :separator-class="{ 'q-mx-md': $q.screen.gt.sm, 'q-my-md': $q.screen.lt.md }">
         <template v-slot:before>
-          <q-card bordered class="q-mr-md q-mb-md">
+          <q-card bordered class="q-mb-md">
             <q-card-section class="description q-pb-none">
               <strong>{{ $t("description.label") }}</strong
               >:
@@ -37,7 +37,7 @@
             </q-card-section>
           </q-card>
 
-          <q-card bordered class="q-mr-md scroll">
+          <q-card bordered class="scroll">
             <user-input
               v-model="userInput"
               :availableReferences="availableReferences"
@@ -69,6 +69,7 @@
 
         <template v-slot:separator>
           <q-avatar
+            v-show="$q.screen.gt.sm"
             color="primary"
             text-color="white"
             size="30px"
@@ -77,57 +78,55 @@
         </template>
 
         <template v-slot:after>
-          <div class="q-ml-md">
-            <q-card bordered>
-              <q-tabs
-                v-model="chartTab"
-                dense
-                active-color="primary"
-                indicator-color="primary"
-                align="justify"
-                narrow-indicator
-              >
-                <q-tab name="height" :label="$t('height')" />
-                <q-tab name="weight" :label="$t('weight')" />
-                <q-tab name="bmi" :label="$t('bmi')" />
-              </q-tabs>
+          <q-card bordered>
+            <q-tabs
+              v-model="chartTab"
+              dense
+              active-color="primary"
+              indicator-color="primary"
+              align="justify"
+              narrow-indicator
+            >
+              <q-tab name="height" :label="$t('height')" />
+              <q-tab name="weight" :label="$t('weight')" />
+              <q-tab name="bmi" :label="$t('bmi')" />
+            </q-tabs>
 
-              <q-separator />
+            <q-separator />
 
-              <q-tab-panels v-model="chartTab" animated>
-                <q-tab-panel name="height">
-                  <GrowthChart
-                    :propertyName="$t('height') + ' (cm)'"
-                    :scatterData="heightData"
-                    :color="chartColor"
-                    :centileData="
-                      centiles.height ? centiles.height[userInput.sex] : []
-                    "
-                  />
-                </q-tab-panel>
-                <q-tab-panel name="weight">
-                  <GrowthChart
-                    :propertyName="$t('weight') + ' (kg)'"
-                    :scatterData="weightData"
-                    :color="chartColor"
-                    :centileData="
-                      centiles.weight ? centiles.weight[userInput.sex] : []
-                    "
-                  />
-                </q-tab-panel>
-                <q-tab-panel name="bmi">
-                  <GrowthChart
-                    :propertyName="$t('bmi') + ' (kg/m²)'"
-                    :scatterData="bmiData"
-                    :color="chartColor"
-                    :centileData="
-                      centiles.bmi ? centiles.bmi[userInput.sex] : []
-                    "
-                  />
-                </q-tab-panel>
-              </q-tab-panels>
-            </q-card>
-          </div>
+            <q-tab-panels v-model="chartTab" animated>
+              <q-tab-panel name="height">
+                <GrowthChart
+                  :propertyName="$t('height') + ' (cm)'"
+                  :scatterData="heightData"
+                  :color="chartColor"
+                  :centileData="
+                    centiles.height ? centiles.height[userInput.sex] : []
+                  "
+                />
+              </q-tab-panel>
+              <q-tab-panel name="weight">
+                <GrowthChart
+                  :propertyName="$t('weight') + ' (kg)'"
+                  :scatterData="weightData"
+                  :color="chartColor"
+                  :centileData="
+                    centiles.weight ? centiles.weight[userInput.sex] : []
+                  "
+                />
+              </q-tab-panel>
+              <q-tab-panel name="bmi">
+                <GrowthChart
+                  :propertyName="$t('bmi') + ' (kg/m²)'"
+                  :scatterData="bmiData"
+                  :color="chartColor"
+                  :centileData="
+                    centiles.bmi ? centiles.bmi[userInput.sex] : []
+                  "
+                />
+              </q-tab-panel>
+            </q-tab-panels>
+          </q-card>
         </template>
       </q-splitter>
     </q-page-container>
