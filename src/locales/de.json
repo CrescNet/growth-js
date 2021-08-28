@@ -10,6 +10,7 @@
   "inUnit": "in {unit}",
   "height": "Größe",
   "weight": "Gewicht",
+  "bmi": "BMI",
   "deleteRow": "Zeile löschen",
   "date": "Datum",
   "addRow": "Zeile Hinzufügen",

@@ -34,6 +34,17 @@
       />
     </td>
     <td>
+      <q-input
+        outlined
+        readonly
+        class="cursor-inherit"
+        type="number"
+        step="any"
+        :title="$t('inUnit', { unit: 'kg/m²' })"
+        :modelValue="bmi"
+      />
+    </td>
+    <td>
       <q-btn
         round
         color="red"
@@ -52,6 +63,10 @@ export default {
     local() {
       return this.modelValue ? this.modelValue : {};
     },
+    bmi() {
+      if (!this.local.height || !this.local.weight) return null;
+      return (this.local.weight / (this.local.height / 100)**2).toFixed(2);
+    },
   },
   methods: {
     update(key, value) {
@@ -60,3 +75,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.cursor-inherit input {
+  cursor: inherit;
+}
+</style>

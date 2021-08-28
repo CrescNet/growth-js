@@ -10,6 +10,7 @@
   "inUnit": "in {unit}",
   "height": "Height",
   "weight": "Weight",
+  "bmi": "BMI",
   "deleteRow": "Delete row",
   "date": "Date",
   "addRow": "Add row",

@@ -62,6 +62,9 @@
             <th>
               {{ $t("weight") + " (" + $t("inUnit", { unit: "kg" }) + ")" }}
             </th>
+            <th>
+              {{ $t('bmi') + " (" + $t('inUnit', { unit: "kg/m²" }) + ")"}}
+            </th>
             <th></th>
           </tr>
         </thead>
