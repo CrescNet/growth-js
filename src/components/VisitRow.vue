@@ -78,6 +78,6 @@ export default {
 
 <style>
 .cursor-inherit input {
-  cursor: inherit;
+  cursor: inherit !important;
 }
 </style>
