@@ -1,4 +1,4 @@
-.cursor-inherit input{cursor:inherit}body{overflow-y:scroll}
+.cursor-inherit input{cursor:inherit!important}body{overflow-y:scroll}
 
 /*!
  * * Quasar Framework v2.0.4
