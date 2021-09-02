@@ -9,7 +9,7 @@ import de from './locales/de.json'
 import en from './locales/en.json'
 
 const i18n = createI18n({
-  locale: 'de',
+  locale: navigator.language || navigator.userLanguage,
   fallbackLocale: 'en',
   messages: {
     de: de, en: en
