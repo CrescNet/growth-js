@@ -155,7 +155,7 @@
           &copy; {{ copyrightNotice }}
         </q-toolbar-title>
         <q-toolbar-title v-if="imprintUrl" class="text-subtitle1 text-right">
-          <a :href="imprintUrl" v-t="'imprint'" class="q-link text-white"></a>
+          <a :href="imprintUrl" class="q-link text-white">{{ $t('imprint') }}</a>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
