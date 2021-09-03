@@ -1,11 +1,11 @@
 {
   "description": {
     "label": "Beschreibung",
-    "text": "Auf dieser Seite können Sie Wachstumsdaten eingeben und diese im Vergleich zu einer Vergleichspopulation visualisieren. Wählen Sie bitte zunächst die zu verwendenden Referenzwerte aus und geben Sie anschließend Geschlecht, Geburtsdatum und die Messwerte ein, die visualisiert werden sollen. Die Werte werden auf der rechten Seite angezeigt. Mit Klick auf \"Grösse\" bzw. \"Gewicht\" können Sie zwischen den beiden Grafiken wechseln. Außerdem haben Sie die Möglichkeit, mit dem Mausrad zu zoomen. Mit den unteren Schaltflächen haben Sie die Möglichkeit vorhandene Daten zu importieren oder Ihre vorgenommenen Eingaben zu exportieren und können diese somit z.B. Ihrem Hausarzt vorlegen."
+    "text": "Auf dieser Seite können Sie Wachstumsdaten eingeben und diese im Vergleich zu einer Vergleichspopulation visualisieren. Wählen Sie bitte zunächst die zu verwendenden Referenzwerte aus und geben Sie anschließend Geschlecht, Geburtsdatum und die zu visualisierenden Messwerte ein. Die Werte werden in den Grafiken auf der rechten Seite angezeigt (bzw. unten für Mobilgerätenutzer). Mit Klick auf \"Grösse\", \"Gewicht\" und \"BMI\" kann zwischen den verschiedenen Grafiken gewechselt werden. Außerdem haben Sie die Möglichkeit, mit dem Mausrad zu zoomen. Mit den unteren Schaltflächen können Sie vorhandene Daten importieren oder Ihre Eingaben exportieren und diese somit z.B. Ihrem Hausarzt vorlegen."
   },
   "dataPrivacy": {
     "label": "Datenschutz",
-    "text": "Die auf dieser Seite eingetragenen Daten verbleiben ausschließlich auf Ihrem Endgerät. Weder die Betreiber dieser Anwendung noch andere Parteien haben zu irgendeinem Zeitpunkt Zugriff auf Ihre Daten. Falls Sie die Schaltfläche \"Im Browser speichern\" unter \"Export\" betätigen, werden die Eingaben in Ihrem Browser im sogenannten \"Local Storage\" gespeichert."
+    "text": "Die auf dieser Seite eingetragenen Daten verbleiben ausschließlich auf Ihrem Endgerät. Weder die Betreiber dieser Anwendung noch andere Parteien haben zu irgendeinem Zeitpunkt Zugriff auf Ihre Daten. Falls Sie die Schaltfläche \"Im Browser speichern\" unter \"Export\" betätigen, werden die Eingaben in Ihrem Browser gespeichert."
   },
   "inUnit": "in {unit}",
   "height": "Größe",

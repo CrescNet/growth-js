@@ -1,11 +1,11 @@
 {
   "description": {
     "label": "Description",
-    "text": "On this page you can enter growth data and visualise it in comparison to a reference population. Please first select the reference values to be used and then enter sex, date of birth and the measured values to be visualised. The values are displayed on the right-hand side. Click on \" Height\" or \"Weight\" to switch between the two graphics. Furthermore, you have the possibility to zoom with the mouse wheel. With the buttons below you have the possibility to import existing data or to export the entries you have made and thus present them e.g. to your family doctor."
+    "text": "On this page you can enter growth data and visualise it in comparison to a reference population. Please select the reference values to be used first and then enter sex, date of birth and the measured values to be visualised. The values are displayed in the graphics on the right (or below for mobile device users). Click on \"Height\", \"Weight\" and \"BMI\" to switch between the different graphics. You also have the option of zooming with the mouse wheel. With the buttons at the bottom you can import existing data or export your entries and thus present them eg. to your family doctor."
   },
   "dataPrivacy": {
     "label": "Data Privacy",
-    "text": "The data entered on this page remains exclusively on your terminal device. Neither operators of this application nor other parties have access to your data at any time. If you click on the button \"Save data for later\" in \"Export\", the entries will be saved in your browser in the so-called \"Local Storage\"."
+    "text": "The data entered on this page remains exclusively on your terminal device. Neither operators of this application nor other parties have access to your data at any time. If you click on the button \"Save data for later\" in \"Export\", the entries will be saved in your browser."
   },
   "inUnit": "in {unit}",
   "height": "Height",
