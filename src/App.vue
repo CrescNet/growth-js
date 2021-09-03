@@ -8,17 +8,7 @@
           </q-avatar>
           Growth JS
         </q-toolbar-title>
-        <q-select
-          dense
-          emit-value
-          map-options
-          v-model="$root.$i18n.locale"
-          display-value="Language"
-          :options="[
-            { value: 'de', label: 'DE' },
-            { value: 'en', label: 'EN' },
-          ]"
-        />
+        <language-selector />
       </q-toolbar>
     </q-header>
 
@@ -169,10 +159,11 @@ import GrowthChart from "./components/GrowthChart.vue";
 import UserInput from "./components/UserInput.vue";
 import ExportDialog from "./components/ExportDialog.vue";
 import ImportDialog from "./components/ImportDialog.vue";
+import LanguageSelector from "./components/LanguageSelector.vue";
 
 export default {
   name: "App",
-  components: { GrowthChart, UserInput, ExportDialog, ImportDialog },
+  components: { GrowthChart, UserInput, ExportDialog, ImportDialog, LanguageSelector },
   data() {
     return {
       userInput: {
