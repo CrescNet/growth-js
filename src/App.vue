@@ -145,8 +145,11 @@
         <q-toolbar-title v-if="copyrightNotice" class="text-subtitle1">
           &copy; {{ copyrightNotice }}
         </q-toolbar-title>
-        <q-toolbar-title v-if="imprintUrl" class="text-subtitle1 text-right">
+        <q-toolbar-title v-if="imprintUrl" class="text-subtitle1 text-center">
           <a :href="imprintUrl" class="q-link text-white">{{ $t('imprint') }}</a>
+        </q-toolbar-title>
+        <q-toolbar-title class="text-subtitle1 text-right">
+          <span v-if="version" v-html="'v' + version" :title="$t('version')" />
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -160,6 +163,7 @@ import UserInput from "./components/UserInput.vue";
 import ExportDialog from "./components/ExportDialog.vue";
 import ImportDialog from "./components/ImportDialog.vue";
 import LanguageSelector from "./components/LanguageSelector.vue";
+import { version } from "../package";
 
 export default {
   name: "App",
@@ -178,6 +182,7 @@ export default {
       splitterModel: ref(57),
       chartTab: "height",
       dirty: false,
+      version: version,
     };
   },
   computed: {

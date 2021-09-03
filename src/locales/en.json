@@ -59,5 +59,6 @@
       "description2": "You can scan this QR code to get your entered data as JSON format. This format is machine-readable."
     }
   },
-  "imprint": "Imprint"
+  "imprint": "Imprint",
+  "version": "Version"
 }
