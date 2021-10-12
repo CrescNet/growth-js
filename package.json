@@ -1,6 +1,6 @@
 {
   "name": "growth-js",
-  "version": "0.3.2",
+  "version": "1.0.0",
   "description": "CrescNet app for visualisation of growth data compared to population-based norm values",
   "keywords": [
     "growth",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "chart.js": "^3.5.1",
     "chartjs-plugin-zoom": "^1.1.1",
     "core-js": "^3.6.5",
