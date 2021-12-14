@@ -1,6 +1,7 @@
 <template>
   <q-select
     dense
+    dark
     emit-value
     map-options
     v-model="$root.$i18n.locale"
