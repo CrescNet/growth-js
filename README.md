@@ -7,6 +7,10 @@ This single-site application visualizes child growth data using Chart.js. Users 
 
 After data entry, users can save the data to the browser's local storage or to a JSON file. They can also create a QR code that contains the data.
 
+Data can later be re-imported into the application.
+
+We focused on data privacy when developing this application.
+
 ## Project setup
 ```
 npm install
