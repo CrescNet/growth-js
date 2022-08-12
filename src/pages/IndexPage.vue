@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <q-splitter
       v-model="splitterModel"
       :horizontal="$q.screen.lt.md"

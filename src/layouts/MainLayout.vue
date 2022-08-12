@@ -12,7 +12,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-page-container class="q-mt-sm q-pa-md q-gutter-y-md">
+    <q-page-container>
       <router-view />
     </q-page-container>
 
