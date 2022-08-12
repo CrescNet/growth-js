@@ -67,7 +67,7 @@ module.exports = configure(function (/* ctx */) {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: '.',
       // analyze: true,
       env: require('dotenv-flow').config().parsed,
       // rawDefine: {}
@@ -78,6 +78,10 @@ module.exports = configure(function (/* ctx */) {
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
+
+      extendViteConf(viteConf) {
+        viteConf.base = ''
+      },
 
       vitePlugins: [
         ['@intlify/vite-plugin-vue-i18n', {
