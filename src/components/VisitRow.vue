@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr class="q-tr--no-hover">
     <td>
       <q-input
         outlined

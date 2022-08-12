@@ -74,8 +74,8 @@
             v-model="local.visits[index]"
             @deleteRow="removeVisit(visit)"
           />
-          <tr>
-            <td colspan="4">
+          <tr class="q-tr--no-hover">
+            <td colspan="5">
               <q-btn
                 rounded
                 color="secondary"
