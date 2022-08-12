@@ -1,4 +1,4 @@
-var FtpDeploy = require("ftp-deploy");
+var FtpDeploy = require('ftp-deploy');
 var ftpDeploy = new FtpDeploy();
 
 require('dotenv-flow').config();
@@ -10,10 +10,10 @@ var config = {
   password: process.env.FTP_PASSWORD,
   host: process.env.FTP_HOST,
   port: process.env.FTP_PORT,
-  localRoot: __dirname + "/dist/",
+  localRoot: __dirname + '/dist/spa/',
   remoteRoot: process.env.FTP_REMOTE_ROOT,
-  include: ["*", "**/*"],
-  exclude: ["dist/**/*.map", "node_modules/**", "node_modules/**/.*", ".git/**"],
+  include: ['*', '**/*'],
+  exclude: ['dist/**/*.map', 'node_modules/**', 'node_modules/**/.*', '.git/**'],
   deleteRemote: true,
   forcePasv: true,
   sftp: true
@@ -21,5 +21,5 @@ var config = {
 
 ftpDeploy
   .deploy(config)
-  .then(res => console.log("finished:", res))
+  .then(res => console.log('finished:', res))
   .catch(err => console.log(err));
