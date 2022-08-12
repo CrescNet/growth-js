@@ -53,7 +53,7 @@
       </q-card-section>
     </q-card>
 
-    <QrCodeDialog v-model="showQrCode" :content="userInput" />
+    <qr-code-dialog v-model="showQrCode" :content="userInput" />
   </q-dialog>
 </template>
 

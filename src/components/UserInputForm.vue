@@ -68,7 +68,7 @@
           </tr>
         </thead>
         <tbody>
-          <VisitRow
+          <visit-row
             v-for="(visit, index) in local.visits"
             :key="index"
             v-model="local.visits[index]"

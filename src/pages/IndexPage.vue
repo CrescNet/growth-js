@@ -27,7 +27,7 @@
         <q-card bordered class="scroll">
           <user-input-form
             v-model="userInput"
-            :availableReferences="availableReferences"
+            :available-references="availableReferences"
           />
           <q-card-section class="text-center">
             <q-btn-group rounded push>
@@ -84,30 +84,30 @@
           <q-tab-panels v-model="chartTab" animated>
             <q-tab-panel name="height">
               <growth-chart
-                :propertyName="t('height') + ' (cm)'"
-                :scatterData="heightData"
+                :property-name="t('height') + ' (cm)'"
+                :scatter-data="heightData"
                 :color="chartColor"
-                :centileData="
+                :centile-data="
                   centiles.height ? centiles.height[userInput.sex] : []
                 "
               />
             </q-tab-panel>
             <q-tab-panel name="weight">
               <growth-chart
-                :propertyName="t('weight') + ' (kg)'"
-                :scatterData="weightData"
+                :property-name="t('weight') + ' (kg)'"
+                :scatter-data="weightData"
                 :color="chartColor"
-                :centileData="
+                :centile-data="
                   centiles.weight ? centiles.weight[userInput.sex] : []
                 "
               />
             </q-tab-panel>
             <q-tab-panel name="bmi">
               <growth-chart
-                :propertyName="t('bmi') + ' (kg/m²)'"
-                :scatterData="bmiData"
+                :property-name="t('bmi') + ' (kg/m²)'"
+                :scatter-data="bmiData"
                 :color="chartColor"
-                :centileData="centiles.bmi ? centiles.bmi[userInput.sex] : []"
+                :centile-data="centiles.bmi ? centiles.bmi[userInput.sex] : []"
               />
             </q-tab-panel>
           </q-tab-panels>
