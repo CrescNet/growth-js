@@ -1,17 +1,17 @@
 <template>
-  <ScatterChart v-if="options && chartData" :chartData="chartData" :options="options" />
+  <scatter v-if="options && chartData" :chart-data="chartData" :chart-options="options" />
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { ScatterChart } from 'vue-chart-3'
-import { Chart, registerables } from 'chart.js'
+import { Scatter } from 'vue-chartjs'
+import { Chart as ChartJS, registerables } from 'chart.js'
 import zoomPlugin from 'chartjs-plugin-zoom'
 
-Chart.register(...registerables, zoomPlugin)
+ChartJS.register(...registerables, zoomPlugin)
 
 export default defineComponent({
-  components: { ScatterChart },
+  components: { Scatter },
   props: {
     scatterData: {
       type: Array,
