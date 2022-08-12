@@ -4,12 +4,11 @@
       <div class="row">
         <div class="col-12 col-md">
           <q-select
+            v-model="local.reference"
             outlined
-            :label="$t('reference')"
-            stack-label
+            :label="t('selectReference')"
             emit-value
             map-options
-            v-model="local.reference"
             :options="availableReferences"
           />
           <span

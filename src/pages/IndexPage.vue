@@ -242,7 +242,6 @@ export default defineComponent({
 
       availableReferences: computed(() => {
         return [
-          { value: null, label: t('selectReference') },
           {
             value: 'normal_german',
             label: t('normal_german'),
