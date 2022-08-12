@@ -143,7 +143,7 @@ export default defineComponent({
   components: { GrowthChart, UserInputForm, ExportDialog, ImportDialog },
   setup () {
     const { t } = useI18n()
-    const userInput = ref({} as UserInput)
+    const userInput = ref({ visits: [ {} ] } as UserInput)
     const dirty = ref(false)
     const centiles = ref({})
     const birthdateDate = computed(() => new Date(userInput.value.birthdate))
