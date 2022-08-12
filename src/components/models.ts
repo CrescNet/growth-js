@@ -1,12 +1,12 @@
 export interface UserInput {
   reference?: string,
-  birthdate?: Date,
+  birthdate?: string,
   sex?: string,
   visits?: Array<Visit>
 }
 
 export interface Visit {
-  date?: Date,
+  date?: string,
   height?: number,
   weight?: number
 }

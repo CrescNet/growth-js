@@ -146,6 +146,7 @@ export default defineComponent({
     const userInput = ref({} as UserInput)
     const dirty = ref(false)
     const centiles = ref({})
+    const birthdateDate = computed(() => new Date(userInput.value.birthdate))
 
     const dateDiffYears = (d1: Date|undefined, d2: Date|undefined): number|undefined => {
       if (!d1 || !d2) return undefined
@@ -161,7 +162,7 @@ export default defineComponent({
       return userInput.value.visits?.map((v) => {
         type VisitKey = keyof Visit
         return {
-          x: dateDiffYears(v.date, userInput.value.birthdate),
+          x: dateDiffYears(new Date(v.date), birthdateDate.value),
           y: v[property as VisitKey],
         };
       });
@@ -215,7 +216,7 @@ export default defineComponent({
         return userInput.value.visits?.map((v) => {
           if (!v.height || !v.weight) return null
           return {
-            x: dateDiffYears(v.date, userInput.value.birthdate),
+            x: dateDiffYears(new Date(v.date), birthdateDate.value),
             y: v.weight / (v.height / 100) ** 2,
           }
         })
