@@ -53,7 +53,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 body
   overflow-y: scroll
 </style>
