@@ -86,7 +86,7 @@ export default defineComponent({
     const jsonString = ref(undefined)
     const jsonFile = ref(undefined as Blob|undefined)
 
-    const fileReader = new FileReader();
+    const fileReader = new FileReader()
     fileReader.onload = (e) => {
       if (e.target)
         emit('update:userInput', JSON.parse(e.target.result as string))
