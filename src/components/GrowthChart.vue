@@ -1,9 +1,9 @@
 <template>
-  <ScatterChart v-if="options && chartData" :chartData="chartData" :options="options" />
+  <ScatterChart v-if="mounted" :chartData="chartData" :options="options" />
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import { ScatterChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import zoomPlugin from 'chartjs-plugin-zoom'
@@ -57,6 +57,7 @@ export default defineComponent({
     propertyName: String,
   },
   setup (props) {
+    const mounted = ref(false)
     const localCentileData = computed(() => {
       var result = {}
       if (props.centileData) {
@@ -69,7 +70,11 @@ export default defineComponent({
       return result
     })
 
+    onMounted(() => mounted.value = true)
+
     return {
+      mounted,
+
       chartData: computed(() => {
         return {
           datasets: [
