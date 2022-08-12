@@ -15,7 +15,7 @@
         type="number"
         step="any"
         min="0"
-        :title="$t('inUnit', { unit: 'cm' })"
+        :title="t('inUnit', { unit: 'cm' })"
         debounce="500"
         :modelValue="local.height"
         @update:model-value="update('height', $event)"
@@ -27,7 +27,7 @@
         type="number"
         step="any"
         min="0"
-        :title="$t('inUnit', { unit: 'kg' })"
+        :title="t('inUnit', { unit: 'kg' })"
         debounce="500"
         :modelValue="local.weight"
         @update:model-value="update('weight', $event)"
@@ -40,7 +40,7 @@
         class="cursor-inherit"
         type="number"
         step="any"
-        :title="$t('inUnit', { unit: 'kg/m²' })"
+        :title="t('inUnit', { unit: 'kg/m²' })"
         :modelValue="bmi"
       />
     </td>
@@ -49,35 +49,47 @@
         round
         color="red"
         icon="clear"
-        :title="$t('deleteRow')"
+        :title="t('deleteRow')"
         @click="$emit('deleteRow')"
       />
     </td>
   </tr>
 </template>
 
-<script>
-export default {
-  props: ["modelValue"],
-  computed: {
-    local() {
-      return this.modelValue ? this.modelValue : {};
-    },
-    bmi() {
-      if (!this.local.height || !this.local.weight) return null;
-      return (this.local.weight / (this.local.height / 100)**2).toFixed(2);
-    },
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { Visit } from './models'
+
+export default defineComponent({
+  props: {
+    modelValue: {
+      type: Object as () => Visit,
+      default: () => { {} }
+    }
   },
-  methods: {
-    update(key, value) {
-      this.$emit("update:modelValue", { ...this.modelValue, [key]: value });
-    },
-  },
-};
+  setup (props, { emit }) {
+    const { t } = useI18n()
+    const local = computed(() => props.modelValue ? props.modelValue : {})
+
+    return {
+      t,
+      local,
+
+      bmi: computed(() => {
+        if (!local.value.height || !local.value.weight) return undefined
+        return (local.value.weight / (local.value.height / 100)**2).toFixed(2)
+      }),
+
+      update (key: string, value: number|undefined) {
+        emit('update:modelValue', { ...props.modelValue, [key]: value })
+      }
+    }
+  }
+})
 </script>
 
-<style>
-.cursor-inherit input {
-  cursor: inherit !important;
-}
+<style lang="sass" scoped>
+.cursor-inherit input
+  cursor: inherit !important
 </style>

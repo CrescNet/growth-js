@@ -92,29 +92,46 @@
   </div>
 </template>
 
-<script>
-import VisitRow from "./VisitRow.vue";
+<script lang="ts">
+import { defineComponent, computed, watch } from 'vue'
+import VisitRow from './VisitRow.vue'
+import { useI18n } from 'vue-i18n'
+import { UserInput, Visit, ReferenceDeclaration } from './models'
 
-export default {
-  props: ["modelValue", "availableReferences"],
+export default defineComponent({
+  props: {
+    modelValue: {
+      type: Object as () => UserInput,
+      default: () => { {} }
+    },
+    availableReferences: {
+      type: Array as () => ReferenceDeclaration[],
+      default: () => []
+    }
+  },
   components: { VisitRow },
-  computed: {
-    local() {
-      return this.modelValue ? this.modelValue : {};
-    },
-    selectedReference() {
-      return this.availableReferences.find(
-        (r) => r.value == this.local.reference
-      );
-    },
-  },
-  methods: {
-    addVisit() {
-      this.local.visits.push({});
-    },
-    removeVisit(visit) {
-      this.local.visits.splice(this.local.visits.indexOf(visit), 1);
-    },
-  },
-};
+  setup (props) {
+    const { t } = useI18n()
+    const local = computed(() => props.modelValue)
+
+    return {
+      t,
+      local,
+
+      selectedReference: computed(
+        () => props.availableReferences.find((r) => r.value == local.value.reference)
+      ),
+
+      addVisit () {
+        if (!local.value.visits)
+          local.value.visits = []
+        local.value.visits.push({})
+      },
+
+      removeVisit (visit: Visit) {
+        local.value.visits?.splice(local.value.visits?.indexOf(visit), 1)
+      }
+    }
+  }
+})
 </script>

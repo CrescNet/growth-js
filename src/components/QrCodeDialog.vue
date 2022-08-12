@@ -18,26 +18,28 @@
   </q-dialog>
 </template>
 
-<script>
-import QrcodeVue from "qrcode.vue";
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
+import QrcodeVue from 'qrcode.vue';
+import { UserInput } from './models';
 
-export default {
-  name: "QrCodeDialog",
+export default defineComponent({
   components: { QrcodeVue },
   props: {
     modelValue: {
       type: Boolean,
       default: false,
     },
-    content: Object,
+    content: {
+      type: Object as () => UserInput,
+      default: () => { {} }
+    }
   },
-  computed: {
-    local() {
-      return this.modelValue;
-    },
-    size() {
-      return Math.sqrt(this.content.visits.length) * 100;
-    },
-  },
-};
+  setup (props) {
+    return {
+      local: computed(() => props.modelValue),
+      size: computed(() => props.content.visits ? Math.sqrt(props.content.visits.length) * 100 : 0)
+    }
+  }
+})
 </script>

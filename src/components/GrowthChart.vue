@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import { ScatterChart } from "vue-chart-3";
-import { Chart, registerables } from "chart.js";
-import zoomPlugin from "chartjs-plugin-zoom";
+import { ScatterChart } from 'vue-chart-3';
+import { Chart, registerables } from 'chart.js';
+import zoomPlugin from 'chartjs-plugin-zoom';
 
 Chart.register(...registerables, zoomPlugin);
 
 export default {
-  name: "GrowthChart",
+  name: 'GrowthChart',
   components: { ScatterChart },
   props: {
     scatterData: {
@@ -43,11 +43,11 @@ export default {
               zoom: {
                 wheel: { enabled: true },
                 pinch: { enabled: true },
-                mode: "xy",
+                mode: 'xy',
               },
               pan: {
                 enabled: true,
-                mode: "xy",
+                mode: 'xy',
               },
             },
           },
@@ -56,7 +56,7 @@ export default {
     },
     color: {
       type: String,
-      default: "black",
+      default: 'black',
     },
     propertyName: String,
   },
@@ -64,7 +64,7 @@ export default {
     localCentileData: function () {
       var result = {};
       if (this.centileData != undefined) {
-        for (var centile of ["p03", "p50", "p97"]) {
+        for (var centile of ['p03', 'p50', 'p97']) {
           result[centile] = this.centileData.map((c) => {
             return { x: c.age, y: c[centile] };
           });
@@ -77,38 +77,38 @@ export default {
         datasets: [
           {
             label: this.propertyName,
-            type: "scatter",
+            type: 'scatter',
             data: this.scatterData,
             backgroundColor: this.color,
           },
           {
-            label: "p03",
-            type: "line",
+            label: 'p03',
+            type: 'line',
             fill: false,
             borderWidth: 2,
             data: this.localCentileData.p03,
-            borderColor: "black",
+            borderColor: 'black',
             pointRadius: 0,
             pointHitRadius: 0,
           },
           {
-            label: "p50",
-            type: "line",
+            label: 'p50',
+            type: 'line',
             fill: false,
             borderDash: [5],
             borderWidth: 2,
             data: this.localCentileData.p50,
-            borderColor: "black",
+            borderColor: 'black',
             pointRadius: 0,
             pointHitRadius: 0,
           },
           {
-            label: "p97",
-            type: "line",
+            label: 'p97',
+            type: 'line',
             fill: false,
             borderWidth: 2,
             data: this.localCentileData.p97,
-            borderColor: "black",
+            borderColor: 'black',
             pointRadius: 0,
             pointHitRadius: 0,
           },

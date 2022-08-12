@@ -58,11 +58,11 @@
 </template>
 
 <script>
-import QrCodeDialog from "./QrCodeDialog.vue";
-import fileHandler from "../mixins/fileHandler.js";
+import QrCodeDialog from './QrCodeDialog.vue';
+import fileHandler from 'src/mixins/fileHandler.js';
 
 export default {
-  name: "ExportDialog",
+  name: 'ExportDialog',
   components: { QrCodeDialog },
   mixins: [ fileHandler ],
   props: {
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     saveUserInput() {
-      localStorage.setItem("userInput", JSON.stringify(this.userInput));
+      localStorage.setItem('userInput', JSON.stringify(this.userInput));
       this.$emit('update:dirty', false);
     },
   },

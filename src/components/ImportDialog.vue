@@ -19,7 +19,7 @@
           <q-file
             outlined
             v-model="jsonFile"
-            :label="$t('import.file.label')"
+            :label="t('import.file.label')"
             class="col-7"
             accept=".json"
           >
@@ -34,7 +34,7 @@
             icon="sync"
             class="col-4"
             :disabled="!jsonFile"
-            :label="$t('import.file.title')"
+            :label="t('import.file.title')"
             @click="importJsonFile"
           />
         </div>
@@ -44,7 +44,7 @@
             outlined
             type="textarea"
             v-model="jsonString"
-            :label="$t('import.json.label')"
+            :label="t('import.json.label')"
             class="col-7"
             rows="1"
           />
@@ -55,7 +55,7 @@
             icon="sync"
             class="col-4"
             :disabled="!jsonString"
-            :label="$t('import.json.title')"
+            :label="t('import.json.title')"
             @click="importJsonString"
           />
         </div>
@@ -64,46 +64,59 @@
   </q-dialog>
 </template>
 
-<script>
-export default {
-  name: "ImportDialog",
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import { useI18n } from 'vue-i18n';
+import { UserInput } from './models';
+
+export default defineComponent({
   props: {
     show: {
       type: Boolean,
       default: false,
     },
-    userInput: Object,
+    userInput: {
+      type: Object as () => UserInput,
+      default: () => { {} }
+    },
   },
-  data() {
+  setup (props, { emit }) {
+    const { t } = useI18n()
+    const jsonString = ref(undefined)
+    const jsonFile = ref(undefined as Blob|undefined)
+
     const fileReader = new FileReader();
-    fileReader.onload = (e) =>
-      this.$emit("update:userInput", JSON.parse(e.target.result));
+    fileReader.onload = (e) => {
+      if (e.target)
+        emit('update:userInput', JSON.parse(e.target.result as string))
+    }
 
     return {
-      fileReader: fileReader,
-      jsonString: null,
-      jsonFile: null,
-    };
-  },
-  methods: {
-    importJsonString() {
-      try {
-        this.$emit("update:userInput", JSON.parse(this.jsonString));
-        this.jsonString = null;
-        this.$emit("update:show", false);
-      } catch (e) {
-        console.log(e.message);
+      t,
+      fileReader,
+      jsonString,
+      jsonFile,
+
+      importJsonString() {
+        try {
+          if (jsonString.value)
+            emit('update:userInput', JSON.parse(jsonString.value))
+          jsonString.value = undefined
+          emit('update:show', false)
+        } catch (e) {
+          console.log(e)
+        }
+      },
+      importJsonFile() {
+        try {
+          if (jsonFile.value) fileReader.readAsText(jsonFile.value)
+          jsonFile.value = undefined
+          emit('update:show', false)
+        } catch (e) {
+          console.log(e)
+        }
       }
-    },
-    importJsonFile() {
-      try {
-        this.fileReader.readAsText(this.jsonFile);
-        this.jsonFile = null;
-        this.$emit("update:show", false);
-      } catch (e) {
-        console.log(e.message);
-      }
-    },
-  },
-};
+    }
+  }
+})
 </script>
