@@ -68,6 +68,7 @@ export default defineComponent({
       default: () => { {} }
     }
   },
+  emits: ['update:modelValue', 'deleteRow'],
   setup (props, { emit }) {
     const { t } = useI18n()
     const local = computed(() => props.modelValue ? props.modelValue : {})

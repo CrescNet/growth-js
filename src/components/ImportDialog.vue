@@ -80,6 +80,7 @@ export default defineComponent({
       default: () => { {} }
     },
   },
+  emits: ['update:userInput', 'update:show'],
   setup (props, { emit }) {
     const { t } = useI18n()
     const jsonString = ref(undefined)

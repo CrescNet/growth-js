@@ -35,6 +35,7 @@ export default defineComponent({
       default: () => { {} }
     }
   },
+  emits: ['update:modelValue'],
   setup (props) {
     return {
       local: computed(() => props.modelValue),
