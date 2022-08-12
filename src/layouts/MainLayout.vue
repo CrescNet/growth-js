@@ -6,7 +6,7 @@
           <q-avatar square>
             <img src="/logo.svg" />
           </q-avatar>
-          Growth JS
+          {{ productName }}
         </q-toolbar-title>
         <language-selector />
       </q-toolbar>
