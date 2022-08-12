@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar square>
-            <img src="/logo.svg" />
+            <img src="logo.svg" />
           </q-avatar>
           {{ productName }}
         </q-toolbar-title>
@@ -35,7 +35,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import LanguageSelector from 'components/LanguageSelector.vue'
-import { version } from '../../package.json'
+import { version, productName } from '../../package.json'
 import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
@@ -46,7 +46,8 @@ export default defineComponent({
       t,
       imprintUrl: process.env.VUE_APP_IMPRINT_URL,
       copyrightNotice: process.env.VUE_APP_COPYRIGHT_NOTICE,
-      version: version
+      version: version,
+      productName: productName
     }
   }
 })
