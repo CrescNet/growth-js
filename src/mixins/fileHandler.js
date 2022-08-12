@@ -2,14 +2,14 @@ export default {
   methods: {
     saveToFile(content, filename) {
       const data = content;
-      const blob = new Blob([data], { type: "text/plain" });
-      const e = document.createEvent("MouseEvents"),
-        a = document.createElement("a");
+      const blob = new Blob([data], { type: 'text/plain' });
+      const e = document.createEvent('MouseEvents'),
+        a = document.createElement('a');
       a.download = filename;
       a.href = window.URL.createObjectURL(blob);
-      a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+      a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
       e.initEvent(
-        "click",
+        'click',
         true,
         false,
         window,
@@ -27,5 +27,5 @@ export default {
       );
       a.dispatchEvent(e);
     },
-  }
-}
+  },
+};

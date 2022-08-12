@@ -1,33 +1,29 @@
 <template>
-  <ScatterChart :chartData="chartData" :options="options" />
+  <ScatterChart v-if="options && chartData" :chartData="chartData" :options="options" />
 </template>
 
-<script>
-import { ScatterChart } from "vue-chart-3";
-import { Chart, registerables } from "chart.js";
-import zoomPlugin from "chartjs-plugin-zoom";
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
+import { ScatterChart } from 'vue-chart-3'
+import { Chart, registerables } from 'chart.js'
+import zoomPlugin from 'chartjs-plugin-zoom'
 
-Chart.register(...registerables, zoomPlugin);
+Chart.register(...registerables, zoomPlugin)
 
-export default {
-  name: "GrowthChart",
+export default defineComponent({
   components: { ScatterChart },
   props: {
     scatterData: {
       type: Array,
-      default() {
-        [];
-      },
+      default: () => { [] }
     },
     centileData: {
       type: Array,
-      default() {
-        [];
-      },
+      default: () => { [] }
     },
     options: {
       type: Object,
-      default() {
+      default: () => {
         return {
           responsive: true,
           scales: {
@@ -43,78 +39,81 @@ export default {
               zoom: {
                 wheel: { enabled: true },
                 pinch: { enabled: true },
-                mode: "xy",
+                mode: 'xy',
               },
               pan: {
                 enabled: true,
-                mode: "xy",
+                mode: 'xy',
               },
             },
           },
-        };
+        }
       },
     },
     color: {
       type: String,
-      default: "black",
+      default: 'black',
     },
     propertyName: String,
   },
-  computed: {
-    localCentileData: function () {
-      var result = {};
-      if (this.centileData != undefined) {
-        for (var centile of ["p03", "p50", "p97"]) {
-          result[centile] = this.centileData.map((c) => {
-            return { x: c.age, y: c[centile] };
-          });
+  setup (props) {
+    const localCentileData = computed(() => {
+      var result = {}
+      if (props.centileData) {
+        for (var centile of ['p03', 'p50', 'p97']) {
+          result[centile] = props.centileData.map((c) => {
+            return { x: c.age, y: c[centile] }
+          })
         }
       }
-      return result;
-    },
-    chartData: function () {
-      return {
-        datasets: [
-          {
-            label: this.propertyName,
-            type: "scatter",
-            data: this.scatterData,
-            backgroundColor: this.color,
-          },
-          {
-            label: "p03",
-            type: "line",
-            fill: false,
-            borderWidth: 2,
-            data: this.localCentileData.p03,
-            borderColor: "black",
-            pointRadius: 0,
-            pointHitRadius: 0,
-          },
-          {
-            label: "p50",
-            type: "line",
-            fill: false,
-            borderDash: [5],
-            borderWidth: 2,
-            data: this.localCentileData.p50,
-            borderColor: "black",
-            pointRadius: 0,
-            pointHitRadius: 0,
-          },
-          {
-            label: "p97",
-            type: "line",
-            fill: false,
-            borderWidth: 2,
-            data: this.localCentileData.p97,
-            borderColor: "black",
-            pointRadius: 0,
-            pointHitRadius: 0,
-          },
-        ],
-      };
-    },
-  },
-};
+      return result
+    })
+
+    return {
+      chartData: computed(() => {
+        return {
+          datasets: [
+            {
+              label: props.propertyName,
+              type: 'scatter',
+              data: props.scatterData,
+              backgroundColor: props.color,
+            },
+            {
+              label: 'p03',
+              type: 'line',
+              fill: false,
+              borderWidth: 2,
+              data: localCentileData.value.p03,
+              borderColor: 'black',
+              pointRadius: 0,
+              pointHitRadius: 0,
+            },
+            {
+              label: 'p50',
+              type: 'line',
+              fill: false,
+              borderDash: [5],
+              borderWidth: 2,
+              data: localCentileData.value.p50,
+              borderColor: 'black',
+              pointRadius: 0,
+              pointHitRadius: 0,
+            },
+            {
+              label: 'p97',
+              type: 'line',
+              fill: false,
+              borderWidth: 2,
+              data: localCentileData.value.p97,
+              borderColor: 'black',
+              pointRadius: 0,
+              pointHitRadius: 0,
+            },
+          ],
+        }
+      })
+    }
+  }
+})
 </script>

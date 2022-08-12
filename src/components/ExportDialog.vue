@@ -20,8 +20,8 @@
             color="primary"
             icon="save"
             :disabled="!dirty"
-            :title="!dirty ? $t('export.browser.noChanges') : ''"
-            :label="$t('export.browser.title')"
+            :title="!dirty ? t('export.browser.noChanges') : ''"
+            :label="t('export.browser.title')"
             @click="saveUserInput"
           />
           <div class="col-7" v-t="'export.browser.description'" />
@@ -33,8 +33,8 @@
             class="col-4"
             color="primary"
             icon="download"
-            :label="$t('export.file.title')"
-            @click="saveToFile(JSON.stringify(userInput), 'data_' + today + '.json')"
+            :label="t('export.file.title')"
+            @click="saveToFile(JSON.stringify(userInput), exportFileName)"
           />
           <div class="col-7" v-t="'export.file.description'" />
         </div>
@@ -45,7 +45,7 @@
             class="col-4"
             color="primary"
             icon="qr_code_2"
-            :label="$t('export.qrCode.title')"
+            :label="t('export.qrCode.title')"
             @click="showQrCode = true"
           />
           <div class="col-7" v-t="'export.qrCode.description'" />
@@ -53,16 +53,17 @@
       </q-card-section>
     </q-card>
 
-    <QrCodeDialog v-model="showQrCode" :content="userInput" />
+    <qr-code-dialog v-model="showQrCode" :content="userInput" />
   </q-dialog>
 </template>
 
-<script>
-import QrCodeDialog from "./QrCodeDialog.vue";
-import fileHandler from "../mixins/fileHandler.js";
+<script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+import QrCodeDialog from './QrCodeDialog.vue'
+import fileHandler from 'src/mixins/fileHandler.js'
+import { useI18n } from 'vue-i18n'
 
-export default {
-  name: "ExportDialog",
+export default defineComponent({
   components: { QrCodeDialog },
   mixins: [ fileHandler ],
   props: {
@@ -74,23 +75,26 @@ export default {
       type: Boolean,
       default: false,
     },
-    userInput: Object,
-  },
-  data() {
-    return {
-      showQrCode: false,
-    };
-  },
-  computed: {
-    today() {
-      return new Date().toLocaleDateString();
-    }
-  },
-  methods: {
-    saveUserInput() {
-      localStorage.setItem("userInput", JSON.stringify(this.userInput));
-      this.$emit('update:dirty', false);
+    userInput: {
+      type: Object as () => UserInput,
+      default: () => { {} }
     },
   },
-};
+  emits: ['update:dirty', 'update:show'],
+  setup (params, { emit }) {
+    const { t } = useI18n()
+    const showQrCode = ref(false)
+    return {
+      t,
+      showQrCode,
+
+      exportFileName: computed(() => 'data_' + new Date().toLocaleDateString() + '.json'),
+
+      saveUserInput () {
+        localStorage.setItem('userInput', JSON.stringify(params.userInput))
+        emit('update:dirty', false)
+      }
+    }
+  }
+})
 </script>

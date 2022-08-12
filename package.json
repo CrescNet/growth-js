@@ -1,6 +1,6 @@
 {
   "name": "growth-js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "CrescNet app for visualisation of growth data compared to population-based norm values",
   "keywords": [
     "growth",
@@ -8,6 +8,8 @@
     "centiles",
     "chart.js"
   ],
+  "productName": "Growth JS",
+  "author": "Christoph Beger <christoph.beger@medizin.uni-leipzig.de>",
   "homepage": "https://github.com/CrescNet/growth-js#readme",
   "bugs": {
     "url": "https://github.com/CrescNet/growth-js/issues"
@@ -15,57 +17,42 @@
   "license": "GPL-3.0-only",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint --ext .js,.ts,.vue ./",
+    "format": "prettier --write \"**/*.{js,ts,vue,,html,md,json}\" --ignore-path .gitignore",
+    "test": "echo \"No test specified\" && exit 0",
     "deploy": "node deploy"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
-    "axios": "^0.21.4",
-    "chart.js": "^3.5.1",
-    "chartjs-plugin-zoom": "^1.1.1",
-    "core-js": "^3.6.5",
-    "qrcode.vue": "^3.2.2",
-    "quasar": "^2.0.0",
+    "axios": "^0.21.1",
+    "chart.js": "3.5.1",
+    "chartjs-plugin-zoom": "1.1.1",
+    "qrcode.vue": "^3.3.3",
+    "quasar": "^2.6.0",
     "vue": "^3.0.0",
-    "vue-axios": "^3.2.5",
-    "vue-chart-3": "^0.5.7",
-    "vue-i18n": "^9.1.7"
+    "vue-chart-3": "0.5.7",
+    "vue-i18n": "^9.0.0",
+    "vue-router": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "babel-eslint": "^10.1.0",
+    "@intlify/vite-plugin-vue-i18n": "^3.3.1",
+    "@quasar/app-vite": "^1.0.0",
+    "@types/node": "^12.20.21",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "autoprefixer": "^10.4.2",
     "dotenv-flow": "^3.2.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0",
-    "ftp-deploy": "^2.4.1",
-    "sass": "1.32.12",
-    "sass-loader": "^10.1.0",
-    "vue-cli-plugin-quasar": "~4.0.2"
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
+  "engines": {
+    "node": "^18 || ^16 || ^14.19",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/CrescNet/growth-js"
