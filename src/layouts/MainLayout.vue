@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar square>
-            <img src="/assets/logo.svg" />
+            <img src="/logo.svg" />
           </q-avatar>
           Growth JS
         </q-toolbar-title>
