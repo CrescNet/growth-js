@@ -38,7 +38,7 @@ export default defineComponent({
   setup (props) {
     return {
       local: computed(() => props.modelValue),
-      size: computed(() => props.content.visits ? Math.sqrt(props.content.visits.length) * 100 : 0)
+      size: computed(() => props.content.visits ? Math.sqrt(props.content.visits.length || 1) * 100 : 0)
     }
   }
 })
