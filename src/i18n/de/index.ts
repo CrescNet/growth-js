@@ -7,7 +7,6 @@ export default {
     label: 'Datenschutz',
     text: 'Die auf dieser Seite eingetragenen Daten verbleiben ausschließlich auf Ihrem Endgerät. Weder die Betreiber dieser Anwendung noch andere Parteien haben zu irgendeinem Zeitpunkt Zugriff auf Ihre Daten. Falls Sie die Schaltfläche "Im Browser speichern" unter "Export" betätigen, werden die Eingaben in Ihrem Browser gespeichert.'
   },
-  inUnit: 'in {unit}',
   height: 'Größe',
   weight: 'Gewicht',
   bmi: 'BMI',

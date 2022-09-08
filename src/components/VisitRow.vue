@@ -15,7 +15,7 @@
         type="number"
         step="any"
         min="0"
-        :title="t('inUnit', { unit: 'cm' })"
+        title="cm"
         debounce="500"
         :modelValue="local.height"
         @update:model-value="update('height', $event)"
@@ -27,7 +27,7 @@
         type="number"
         step="any"
         min="0"
-        :title="t('inUnit', { unit: 'kg' })"
+        title="kg"
         debounce="500"
         :modelValue="local.weight"
         @update:model-value="update('weight', $event)"
@@ -40,7 +40,7 @@
         class="cursor-inherit"
         type="number"
         step="any"
-        :title="t('inUnit', { unit: 'kg/m²' })"
+        title="kg/m²"
         :modelValue="bmi"
       />
     </td>

@@ -7,7 +7,6 @@ export default {
     label: 'Data Privacy',
     text: 'The data entered on this page remains exclusively on your terminal device. Neither operators of this application nor other parties have access to your data at any time. If you click on the button "Save data for later" in "Export", the entries will be saved in your browser.'
   },
-  inUnit: 'in {unit}',
   height: 'Height',
   weight: 'Weight',
   bmi: 'BMI',

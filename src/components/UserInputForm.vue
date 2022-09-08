@@ -56,13 +56,13 @@
           <tr>
             <th v-t="'date'" />
             <th>
-              {{ t("height") + ' (' + t('inUnit', { unit: 'cm' }) + ')' }}
+              {{ t("height") + ' (cm)' }}
             </th>
             <th>
-              {{ t("weight") + ' (' + t('inUnit', { unit: 'kg' }) + ')' }}
+              {{ t("weight") + ' (kg)' }}
             </th>
             <th>
-              {{ t('bmi') + ' (' + t('inUnit', { unit: 'kg/m²' }) + ')' }}
+              {{ t('bmi') + ' (kg/m²)' }}
             </th>
             <th></th>
           </tr>
