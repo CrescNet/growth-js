@@ -15,7 +15,7 @@
             class="text-caption"
             v-if="selectedReference && selectedReference.url"
           >
-            {{ $t("source") }}:
+            {{ t("source") }}:
             <a
               :href="selectedReference.url"
               target="_blank"
@@ -31,15 +31,15 @@
         </div>
 
         <div class="col-12 col-md q-gutter-md text-center q-pt-sm">
-          <q-radio v-model="local.sex" val="male" :label="$t('male')" />
-          <q-radio v-model="local.sex" val="female" :label="$t('female')" />
+          <q-radio v-model="local.sex" val="male" :label="t('male')" />
+          <q-radio v-model="local.sex" val="female" :label="t('female')" />
         </div>
 
         <div class="col-12 col-md">
           <q-input
             outlined
             type="date"
-            :label="$t('birthdate')"
+            :label="t('birthdate')"
             stack-label
             debounce="500"
             v-model="local.birthdate"
@@ -56,13 +56,13 @@
           <tr>
             <th v-t="'date'" />
             <th>
-              {{ $t("height") + " (" + $t("inUnit", { unit: "cm" }) + ")" }}
+              {{ t("height") + ' (' + t('inUnit', { unit: 'cm' }) + ')' }}
             </th>
             <th>
-              {{ $t("weight") + " (" + $t("inUnit", { unit: "kg" }) + ")" }}
+              {{ t("weight") + ' (' + t('inUnit', { unit: 'kg' }) + ')' }}
             </th>
             <th>
-              {{ $t('bmi') + " (" + $t('inUnit', { unit: "kg/m²" }) + ")"}}
+              {{ t('bmi') + ' (' + t('inUnit', { unit: 'kg/m²' }) + ')' }}
             </th>
             <th></th>
           </tr>
@@ -80,7 +80,7 @@
                 rounded
                 color="secondary"
                 icon="add"
-                :label="$t('addRow')"
+                :label="t('addRow')"
                 @click="addVisit"
               />
             </td>
