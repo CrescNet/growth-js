@@ -249,6 +249,18 @@ export default defineComponent({
             url: 'https://doi.org/10.1007/s001120170107',
           },
           {
+            value: 'normal_china',
+            label: t('normal_china'),
+            authors: 'Zong et al. 2013',
+            url: 'https://doi.org/10.1371/journal.pone.0059569',
+          },
+          {
+            value: 'normal_who',
+            label: t('normal_who'),
+            authors: 'WHO',
+            url: 'https://doi.org/10.2471/blt.07.043497',
+          },
+          {
             value: 'noonan_japan',
             label: t('noonan_japan'),
             authors: 'Isojima et al. 2016',

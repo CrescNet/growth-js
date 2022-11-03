@@ -59,5 +59,7 @@
     }
   },
   "imprint": "Imprint",
-  "version": "Version"
+  "version": "Version",
+  "normal_china": "Chinese children without chronic diseases",
+  "normal_who": "Children without chronic diseases (international, WHO)"
 }

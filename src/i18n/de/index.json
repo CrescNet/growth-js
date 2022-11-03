@@ -59,5 +59,7 @@
     }
   },
   "imprint": "Impressum",
-  "version": "Version"
+  "version": "Version",
+  "normal_china": "Deutsche Kinder ohne chronische Erkrankungen",
+  "normal_who": "Kinder ohne chronische Erkrankungen (international, WHO)"
 }
