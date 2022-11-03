@@ -271,12 +271,6 @@ export default defineComponent({
             url: 'https://doi.org/10.2471/blt.07.043497',
           },
           {
-            value: 'noonan_japan',
-            label: t('noonan_japan'),
-            authors: 'Isojima et al. 2016',
-            url: 'https://doi.org/10.1038/pr.2015.254',
-          },
-          {
             value: 'achondroplasia_sweden',
             label: t('achondroplasia_sweden'),
             authors: 'Merker et al. 2019',
@@ -287,6 +281,12 @@ export default defineComponent({
             label: t('hypochondroplasia_argentinia'),
             authors: 'Arenas et al. 2018',
             url: 'https://doi.org/10.1515/jpem-2018-0046',
+          },
+          {
+            value: 'noonan_japan',
+            label: t('noonan_japan'),
+            authors: 'Isojima et al. 2016',
+            url: 'https://doi.org/10.1038/pr.2015.254',
           },
           {
             value: 'trisomy21_america',

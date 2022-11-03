@@ -21,11 +21,11 @@
   "reset": "Reset",
   "viewOnGitHub": "View on GitHub",
   "selectReference": "Please select a reference...",
-  "normal_german": "German children without chronic diseases",
-  "noonan_japan": "Children with Noonan Syndrome",
-  "achondroplasia_sweden": "Children with Achondroplasia",
-  "hypochondroplasia_argentinia": "Children with Hypochondroplasia (only height available)",
-  "trisomy21_america": "Children with Trisomy 21",
+  "normal_german": "Germany (without chronic diseases)",
+  "noonan_japan": "Noonan Syndrome",
+  "achondroplasia_sweden": "Achondroplasia",
+  "hypochondroplasia_argentinia": "Hypochondroplasia",
+  "trisomy21_america": "Trisomy 21",
   "close": "Close",
   "source": "Source",
   "import": {
@@ -60,6 +60,6 @@
   },
   "imprint": "Imprint",
   "version": "Version",
-  "normal_china": "Chinese children without chronic diseases",
-  "normal_who": "Children without chronic diseases (international, WHO)"
+  "normal_china": "China (without chronic diseases)",
+  "normal_who": "International, WHO (without chronic diseases)"
 }
