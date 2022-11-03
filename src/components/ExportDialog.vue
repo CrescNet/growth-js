@@ -62,6 +62,7 @@ import { computed, defineComponent, ref } from 'vue'
 import QrCodeDialog from './QrCodeDialog.vue'
 import fileHandler from 'src/mixins/fileHandler.js'
 import { useI18n } from 'vue-i18n'
+import { UserInput } from 'components/models'
 
 export default defineComponent({
   components: { QrCodeDialog },

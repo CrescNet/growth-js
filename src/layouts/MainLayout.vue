@@ -22,7 +22,7 @@
           &copy; {{ copyrightNotice }}
         </q-toolbar-title>
         <q-toolbar-title v-if="imprintUrl" class="text-subtitle1 text-center">
-          <a :href="imprintUrl" class="q-link text-white" v-t="'imprint'" />
+          <a :href="imprintUrl" class="q-link text-white">{{ t('imprint') }}</a>
         </q-toolbar-title>
         <q-toolbar-title class="text-subtitle1 text-right">
           <span v-if="version" v-html="'v' + version" :title="t('version')" />

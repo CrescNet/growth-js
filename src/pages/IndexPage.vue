@@ -87,9 +87,7 @@
                 :property-name="t('height') + ' (cm)'"
                 :scatter-data="heightData"
                 :color="chartColor"
-                :centile-data="
-                  centiles.height ? centiles.height[userInput.sex] : []
-                "
+                :centile-data="getCentileData('height')"
               />
             </q-tab-panel>
             <q-tab-panel name="weight">
@@ -97,9 +95,7 @@
                 :property-name="t('weight') + ' (kg)'"
                 :scatter-data="weightData"
                 :color="chartColor"
-                :centile-data="
-                  centiles.weight ? centiles.weight[userInput.sex] : []
-                "
+                :centile-data="getCentileData('weight')"
               />
             </q-tab-panel>
             <q-tab-panel name="bmi">
@@ -107,7 +103,7 @@
                 :property-name="t('bmi') + ' (kg/m²)'"
                 :scatter-data="bmiData"
                 :color="chartColor"
-                :centile-data="centiles.bmi ? centiles.bmi[userInput.sex] : []"
+                :centile-data="getCentileData('bmi')"
               />
             </q-tab-panel>
           </q-tab-panels>
@@ -130,7 +126,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import { ReferenceDeclaration, UserInput, Visit } from 'components/models'
+import { ReferenceData, ReferenceDeclaration, SexReferenceData, UserInput, Visit } from 'components/models'
 import GrowthChart from 'components/GrowthChart.vue'
 import UserInputForm from 'src/components/UserInputForm.vue'
 import ExportDialog from 'components/ExportDialog.vue'
@@ -145,8 +141,10 @@ export default defineComponent({
     const { t } = useI18n()
     const userInput = ref({ visits: [ {} ] } as UserInput)
     const dirty = ref(false)
-    const centiles = ref({})
-    const birthdateDate = computed(() => new Date(userInput.value.birthdate))
+    const centiles = ref({} as ReferenceData)
+    const birthdateDate = computed(() =>
+      userInput.value.birthdate ? new Date(userInput.value.birthdate) : undefined
+    )
 
     const dateDiffYears = (d1: Date|undefined, d2: Date|undefined): number|undefined => {
       if (!d1 || !d2) return undefined
@@ -158,14 +156,15 @@ export default defineComponent({
     }
 
     const getData = (property: string) => {
-      if (!userInput.value.birthdate) return [];
+      if (!userInput.value.birthdate) return []
       return userInput.value.visits?.map((v) => {
+        if (!v.date) return undefined
         type VisitKey = keyof Visit
         return {
           x: dateDiffYears(new Date(v.date), birthdateDate.value),
           y: v[property as VisitKey],
-        };
-      });
+        }
+      })
     }
 
     watch(
@@ -210,17 +209,20 @@ export default defineComponent({
       chartTab: ref('height'),
 
       heightData: computed(() => getData('height')),
+
       weightData: computed(() => getData('weight')),
+
       bmiData: computed(() => {
         if (!userInput.value.birthdate) return [];
         return userInput.value.visits?.map((v) => {
-          if (!v.height || !v.weight) return null
+          if (!v.date || !v.height || !v.weight) return undefined
           return {
             x: dateDiffYears(new Date(v.date), birthdateDate.value),
             y: v.weight / (v.height / 100) ** 2,
           }
         })
       }),
+
       chartColor: computed(() => {
         if (userInput.value.sex == 'male')
           return '#2086e8'
@@ -235,9 +237,17 @@ export default defineComponent({
           birthdate: undefined,
           sex: undefined,
           visits: [{}],
-        };
+        }
         localStorage.removeItem('userInput')
         dirty.value = false
+      },
+
+      getCentileData (property: string) {
+        type ReferenceDataKey = keyof ReferenceData
+        const centileData = centiles.value[property as ReferenceDataKey]
+        if (!userInput.value.sex || !centileData) return []
+        type SexReferenceDataKey = keyof SexReferenceData
+        return centileData[userInput.value.sex as SexReferenceDataKey]
       },
 
       availableReferences: computed(() => {
@@ -249,10 +259,16 @@ export default defineComponent({
             url: 'https://doi.org/10.1007/s001120170107',
           },
           {
-            value: 'noonan_japan',
-            label: t('noonan_japan'),
-            authors: 'Isojima et al. 2016',
-            url: 'https://doi.org/10.1038/pr.2015.254',
+            value: 'normal_china',
+            label: t('normal_china'),
+            authors: 'Zong et al. 2013',
+            url: 'https://doi.org/10.1371/journal.pone.0059569',
+          },
+          {
+            value: 'normal_who',
+            label: t('normal_who'),
+            authors: 'WHO',
+            url: 'https://doi.org/10.2471/blt.07.043497',
           },
           {
             value: 'achondroplasia_sweden',
@@ -265,6 +281,12 @@ export default defineComponent({
             label: t('hypochondroplasia_argentinia'),
             authors: 'Arenas et al. 2018',
             url: 'https://doi.org/10.1515/jpem-2018-0046',
+          },
+          {
+            value: 'noonan_japan',
+            label: t('noonan_japan'),
+            authors: 'Isojima et al. 2016',
+            url: 'https://doi.org/10.1038/pr.2015.254',
           },
           {
             value: 'trisomy21_america',

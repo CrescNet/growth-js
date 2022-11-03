@@ -17,8 +17,8 @@
 
         <div class="row justify-between items-center">
           <q-file
-            outlined
             v-model="jsonFile"
+            outlined
             :label="t('import.file.label')"
             class="col-7"
             accept=".json"
@@ -84,7 +84,7 @@ export default defineComponent({
   setup (props, { emit }) {
     const { t } = useI18n()
     const jsonString = ref(undefined)
-    const jsonFile = ref(undefined as Blob|undefined)
+    const jsonFile = ref(undefined as File|undefined)
 
     const fileReader = new FileReader()
     fileReader.onload = (e) => {

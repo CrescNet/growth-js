@@ -1,5 +1,6 @@
 <template>
   <q-select
+    v-if="$root"
     dense
     dark
     emit-value
