@@ -7,7 +7,7 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import { ScatterChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import zoomPlugin from 'chartjs-plugin-zoom'
-import { CentileData, ReferenceDataRow } from 'components/models'
+import { CentileData, Coordinate, ReferenceDataRow } from 'components/models'
 
 Chart.register(...registerables, zoomPlugin)
 
@@ -66,7 +66,7 @@ export default defineComponent({
         type ReferenceDataRowKey = keyof ReferenceDataRow
         for (var centile of ['p03', 'p50', 'p97']) {
           result[centile as CentileDataKey] = props.centileData.map((c) => {
-            return { x: c.age, y: c[centile as ReferenceDataRowKey] }
+            return { x: c.age, y: c[centile as ReferenceDataRowKey] } as Coordinate
           })
         }
       }
