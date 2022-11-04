@@ -6,6 +6,7 @@
         type="date"
         debounce="500"
         :modelValue="modelValue.date"
+        :title="age === undefined ? undefined : t('year', age)"
         @update:model-value="update('date', $event)"
       />
     </td>
@@ -91,6 +92,8 @@ export default defineComponent({
 
     return {
       t,
+      age,
+
       bmi: computed(() => {
         if (!bmi.value) return undefined
         return bmi.value.toFixed(2)

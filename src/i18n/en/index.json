@@ -61,5 +61,6 @@
   "imprint": "Imprint",
   "version": "Version",
   "normal_china": "China (without chronic diseases)",
-  "normal_who": "International, WHO (without chronic diseases)"
+  "normal_who": "International, WHO (without chronic diseases)",
+  "year": "0 years|{year} year|{year} years"
 }

@@ -61,5 +61,6 @@
   "imprint": "Impressum",
   "version": "Version",
   "normal_china": "China (ohne chronische Erkrankungen)",
-  "normal_who": "International, WHO (ohne chronische Erkrankungen)"
+  "normal_who": "International, WHO (ohne chronische Erkrankungen)",
+  "year": "0 Jahre|{count} Jahr|{count} Jahre"
 }
