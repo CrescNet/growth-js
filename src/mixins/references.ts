@@ -2,15 +2,15 @@ import { ReferenceDataRow } from 'components/models'
 
 export default {
   methods: {
-    sds_from_lms(value: number, l: number, m: number, s: number): number {
+    sdsFromLms(value: number, l: number, m: number, s: number): number {
       return (Math.abs(l) < 0.00001)
         ? Math.log(value / m) / s
         : ((value / m) ^ l - 1) / (l * s)
     },
 
-    sds_from_reference(referenceData: ReferenceDataRow[], age: number, value: number): number | undefined {
+    sdsFromReference(referenceData: ReferenceDataRow[], age: number, value: number): number | undefined {
       const row = this.getMatchingReferenceRow(referenceData, age)
-      return !row ? undefined : this.sds_from_lms(value, row.l, row.m, row.s)
+      return !row ? undefined : this.sdsFromLms(value, row.l, row.m, row.s)
     },
 
     getMatchingReferenceRow(referenceData: ReferenceDataRow[], age: number): ReferenceDataRow | undefined {
@@ -52,7 +52,7 @@ export default {
       let low = 0
       let high = array.length
       while (low < high) {
-        let cur = Math.floor((high - low) / 2 + low)
+        const cur = Math.floor((high - low) / 2 + low)
         if (value > array[cur]) {
           low = cur + 1
         } else {
