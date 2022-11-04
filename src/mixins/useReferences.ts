@@ -1,7 +1,7 @@
 import { ReferenceDataRow } from 'components/models'
 
-export default {
-  methods: {
+export default function (this: void) {
+  return {
     sdsFromLms(value: number, l: number, m: number, s: number): number {
       return (Math.abs(l) < 0.00001)
         ? Math.log(value / m) / s
