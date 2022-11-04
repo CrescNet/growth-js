@@ -72,6 +72,9 @@
             v-for="(visit, index) in local.visits"
             :key="index"
             v-model="local.visits[index]"
+            :bmi-reference-data="bmiReferenceData"
+            :height-reference-data="heightReferenceData"
+            :weight-reference-data="weightReferenceData"
             @deleteRow="removeVisit(visit)"
           />
           <tr class="q-tr--no-hover">
@@ -95,7 +98,7 @@
 import { defineComponent, computed } from 'vue'
 import VisitRow from './VisitRow.vue'
 import { useI18n } from 'vue-i18n'
-import { UserInput, Visit, ReferenceDeclaration } from './models'
+import { UserInput, Visit, ReferenceDeclaration, ReferenceDataRow } from './models'
 
 export default defineComponent({
   props: {
@@ -106,7 +109,10 @@ export default defineComponent({
     availableReferences: {
       type: Array as () => ReferenceDeclaration[],
       default: () => []
-    }
+    },
+    bmiReferenceData: Array as () => ReferenceDataRow[],
+    heightReferenceData: Array as () => ReferenceDataRow[],
+    weightReferenceData: Array as () => ReferenceDataRow[]
   },
   components: { VisitRow },
   setup (props) {
