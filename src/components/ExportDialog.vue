@@ -19,8 +19,6 @@
             class="col-4"
             color="primary"
             icon="save"
-            :disabled="!dirty"
-            :title="!dirty ? t('export.browser.noChanges') : ''"
             :label="t('export.browser.title')"
             @click="saveUserInput"
           />
@@ -72,16 +70,12 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    dirty: {
-      type: Boolean,
-      default: false,
-    },
     userInput: {
       type: Object as () => UserInput,
       default: () => { {} }
     },
   },
-  emits: ['update:dirty', 'update:show'],
+  emits: ['update:show'],
   setup (params, { emit }) {
     const { t } = useI18n()
     const showQrCode = ref(false)
@@ -93,7 +87,6 @@ export default defineComponent({
 
       saveUserInput () {
         localStorage.setItem('userInput', JSON.stringify(params.userInput))
-        emit('update:dirty', false)
       }
     }
   }

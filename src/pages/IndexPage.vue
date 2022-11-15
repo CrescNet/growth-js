@@ -116,7 +116,6 @@
 
     <export-dialog
       v-model:show="showExportDialog"
-      v-model:dirty="dirty"
       :userInput="userInput"
     />
 
@@ -143,7 +142,6 @@ export default defineComponent({
   setup () {
     const { t } = useI18n()
     const userInput = ref({ visits: [ {} ] } as UserInput)
-    const dirty = ref(false)
     const referenceData = ref({} as ReferenceData)
     const birthdateDate = computed(() =>
       userInput.value.birthdate ? new Date(userInput.value.birthdate) : undefined
@@ -179,11 +177,6 @@ export default defineComponent({
     }
 
     watch(
-      userInput,
-      () => dirty.value = true
-    )
-
-    watch(
       () => userInput.value.reference,
       (val) => {
         if (!val) {
@@ -205,13 +198,11 @@ export default defineComponent({
     onMounted(() => {
       const prefill = localStorage.getItem('userInput')
       if (prefill) userInput.value = JSON.parse(prefill)
-      dirty.value = false
     })
 
     return {
       t,
       userInput,
-      dirty,
 
       showExportDialog: ref(false),
       showImportDialog: ref(false),
@@ -255,7 +246,6 @@ export default defineComponent({
           visits: [{}],
         }
         localStorage.removeItem('userInput')
-        dirty.value = false
       },
 
       availableReferences: computed(() => {

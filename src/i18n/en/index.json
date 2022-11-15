@@ -45,8 +45,7 @@
     "description": "You have the following options for saving or exporting the data you have entered:",
     "browser": {
       "title": "Save in browser",
-      "description": "Save the data in your browser to have it directly available the next time you open this page.",
-      "noChanges": "There are no changes to save."
+      "description": "Save the data in your browser to have it directly available the next time you open this page."
     },
     "file": {
       "title": "Save to file",
