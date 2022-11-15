@@ -6,7 +6,7 @@
         type="date"
         debounce="500"
         :modelValue="modelValue.date"
-        :title="age === undefined ? undefined : t('year', age)"
+        :title="age === undefined ? undefined : t('year', Math.round(age * 10) / 10)"
         @update:model-value="update('date', $event)"
       />
     </td>
@@ -87,6 +87,7 @@ export default defineComponent({
       type: Object as () => Visit,
       default: () => { {} }
     },
+    birthdate: String,
     bmiReferenceData: Array as () => ReferenceDataRow[],
     heightReferenceData: Array as () => ReferenceDataRow[],
     weightReferenceData: Array as () => ReferenceDataRow[]
@@ -96,7 +97,10 @@ export default defineComponent({
     const { t } = useI18n()
     const { sdsFromReference } = useReferences()
 
-    const age = computed(() => 1) // TODO: calculate it!
+    const age = computed(() => {
+      if (!props.birthdate || !props.modelValue.date) return undefined
+      return (new Date(props.modelValue.date).getTime() - new Date(props.birthdate).getTime()) / (1000 * 60 * 60 * 24 * 354.25)
+    })
 
     const bmi = computed(() => {
       if (!props.modelValue.height || !props.modelValue.weight) return undefined

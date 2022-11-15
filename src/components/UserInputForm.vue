@@ -72,6 +72,7 @@
             v-for="(visit, index) in local.visits"
             :key="index"
             v-model="local.visits[index]"
+            :birthdate="local.birthdate"
             :bmi-reference-data="bmiReferenceData"
             :height-reference-data="heightReferenceData"
             :weight-reference-data="weightReferenceData"
