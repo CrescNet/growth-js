@@ -108,7 +108,7 @@ export default defineComponent({
     })
 
     const sds = (referenceData?: ReferenceDataRow[], value?: number): number|undefined => {
-      if (!referenceData || !age.value || !value) return undefined
+      if (!referenceData || age.value == undefined || !value) return undefined
       return sdsFromReference(referenceData, age.value, value)
     }
 
