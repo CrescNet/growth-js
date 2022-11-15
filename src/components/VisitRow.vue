@@ -18,9 +18,15 @@
         min="0"
         title="cm"
         debounce="500"
-        :modelValue="modelValue.height"
+        :model-value="modelValue.height"
         @update:model-value="update('height', $event)"
-      />
+      >
+        <template #append>
+          <div v-if="heightSds" :title="t('sdsDescription')" class="text-subtitle2" :class="sdsClass(heightSds)">
+            {{ heightSds.toFixed(2) }} SDS
+          </div>
+        </template>
+      </q-input>
     </td>
     <td>
       <q-input
@@ -30,9 +36,15 @@
         min="0"
         title="kg"
         debounce="500"
-        :modelValue="modelValue.weight"
+        :model-value="modelValue.weight"
         @update:model-value="update('weight', $event)"
-      />
+      >
+        <template #append>
+          <div v-if="weightSds" :title="t('sdsDescription')" class="text-subtitle2" :class="sdsClass(weightSds)">
+            {{ weightSds.toFixed(2) }} SDS
+          </div>
+        </template>
+      </q-input>
     </td>
     <td>
       <q-input
@@ -42,8 +54,14 @@
         type="number"
         step="any"
         title="kg/m²"
-        :modelValue="bmi"
-      />
+        :model-value="bmi"
+      >
+        <template #append>
+          <div v-if="bmiSds" :title="t('sdsDescription')" class="text-subtitle2" :class="sdsClass(bmiSds)">
+            {{ bmiSds.toFixed(2) }} SDS
+          </div>
+        </template>
+      </q-input>
     </td>
     <td>
       <q-btn
@@ -78,7 +96,7 @@ export default defineComponent({
     const { t } = useI18n()
     const { sdsFromReference } = useReferences()
 
-    const age = computed(() => 1)
+    const age = computed(() => 1) // TODO: calculate it!
 
     const bmi = computed(() => {
       if (!props.modelValue.height || !props.modelValue.weight) return undefined
@@ -107,6 +125,12 @@ export default defineComponent({
 
       update (key: string, value: number|undefined) {
         emit('update:modelValue', { ...props.modelValue, [key]: value })
+      },
+
+      sdsClass (sds: number): string {
+        if (Math.abs(sds) >= 1.881) return 'text-negative'
+        if (Math.abs(sds) >= 1.644) return 'text-warning'
+        return 'text-positive'
       }
     }
   }
