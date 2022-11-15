@@ -19,13 +19,13 @@ export interface ReferenceDeclaration {
 }
 
 export interface ReferenceDataRow {
-  age: Number,
-  l: Number,
-  m: Number,
-  s: Number,
-  p03: Number,
-  p50: Number,
-  p97: Number
+  age: number,
+  l: number,
+  m: number,
+  s: number,
+  p03?: number,
+  p50?: number,
+  p97?: number
 }
 
 export interface SexReferenceData {
@@ -46,6 +46,6 @@ export interface CentileData {
 }
 
 export interface Coordinate {
-  x: Number,
-  y: Number
+  x: number,
+  y: number
 }

@@ -28,6 +28,9 @@
           <user-input-form
             v-model="userInput"
             :available-references="availableReferences"
+            :bmi-reference-data="bmiReferenceData"
+            :height-reference-data="heightReferenceData"
+            :weight-reference-data="weightReferenceData"
           />
           <q-card-section class="text-center">
             <q-btn-group rounded push>
@@ -87,7 +90,7 @@
                 :property-name="t('height') + ' (cm)'"
                 :scatter-data="heightData"
                 :color="chartColor"
-                :centile-data="getCentileData('height')"
+                :centile-data="heightReferenceData"
               />
             </q-tab-panel>
             <q-tab-panel name="weight">
@@ -95,7 +98,7 @@
                 :property-name="t('weight') + ' (kg)'"
                 :scatter-data="weightData"
                 :color="chartColor"
-                :centile-data="getCentileData('weight')"
+                :centile-data="weightReferenceData"
               />
             </q-tab-panel>
             <q-tab-panel name="bmi">
@@ -103,7 +106,7 @@
                 :property-name="t('bmi') + ' (kg/m²)'"
                 :scatter-data="bmiData"
                 :color="chartColor"
-                :centile-data="getCentileData('bmi')"
+                :centile-data="bmiReferenceData"
               />
             </q-tab-panel>
           </q-tab-panels>
@@ -141,7 +144,7 @@ export default defineComponent({
     const { t } = useI18n()
     const userInput = ref({ visits: [ {} ] } as UserInput)
     const dirty = ref(false)
-    const centiles = ref({} as ReferenceData)
+    const referenceData = ref({} as ReferenceData)
     const birthdateDate = computed(() =>
       userInput.value.birthdate ? new Date(userInput.value.birthdate) : undefined
     )
@@ -167,6 +170,14 @@ export default defineComponent({
       })
     }
 
+    const getReferenceData = (property: string) => {
+      type ReferenceDataKey = keyof ReferenceData
+      const propertyReferenceData = referenceData.value[property as ReferenceDataKey]
+      if (!userInput.value.sex || !propertyReferenceData) return []
+      type SexReferenceDataKey = keyof SexReferenceData
+      return propertyReferenceData[userInput.value.sex as SexReferenceDataKey]
+    }
+
     watch(
       userInput,
       () => dirty.value = true
@@ -176,16 +187,16 @@ export default defineComponent({
       () => userInput.value.reference,
       (val) => {
         if (!val) {
-          centiles.value = {}
+          referenceData.value = {}
         } else {
           api
             .get(`./references/${userInput.value.reference}.json`)
             .then((response) => {
-              centiles.value = response.data
+              referenceData.value = response.data
             })
             .catch(() => {
               userInput.value.reference = undefined
-              centiles.value = {}
+              referenceData.value = {}
             })
         }
       }
@@ -201,7 +212,6 @@ export default defineComponent({
       t,
       userInput,
       dirty,
-      centiles,
 
       showExportDialog: ref(false),
       showImportDialog: ref(false),
@@ -223,6 +233,12 @@ export default defineComponent({
         })
       }),
 
+      heightReferenceData: computed(() => getReferenceData('height')),
+
+      weightReferenceData: computed(() => getReferenceData('weight')),
+
+      bmiReferenceData: computed(() => getReferenceData('bmi')),
+
       chartColor: computed(() => {
         if (userInput.value.sex == 'male')
           return '#2086e8'
@@ -240,14 +256,6 @@ export default defineComponent({
         }
         localStorage.removeItem('userInput')
         dirty.value = false
-      },
-
-      getCentileData (property: string) {
-        type ReferenceDataKey = keyof ReferenceData
-        const centileData = centiles.value[property as ReferenceDataKey]
-        if (!userInput.value.sex || !centileData) return []
-        type SexReferenceDataKey = keyof SexReferenceData
-        return centileData[userInput.value.sex as SexReferenceDataKey]
       },
 
       availableReferences: computed(() => {
