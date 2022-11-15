@@ -76,7 +76,7 @@ export default defineComponent({
     },
   },
   emits: ['update:show'],
-  setup (params, { emit }) {
+  setup (params) {
     const { t } = useI18n()
     const showQrCode = ref(false)
     return {
