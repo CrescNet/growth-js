@@ -53,7 +53,7 @@ export default function (this: void) {
   const sdsFromLms = (value: number, l: number, m: number, s: number): number => {
     return (Math.abs(l) < 0.00001)
       ? Math.log(value / m) / s
-      : ((value / m) ^ l - 1) / (l * s)
+      : (Math.pow(value / m, l) - 1) / (l * s)
   }
 
   return {
