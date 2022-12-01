@@ -269,6 +269,12 @@ export default defineComponent({
             url: 'https://doi.org/10.2471/blt.07.043497',
           },
           {
+            value: 'normal_turkish_germany',
+            label: t('normal_turkish_germany'),
+            authors: 'Redlefsen 2008',
+            url: 'https://d-nb.info/990166104/34',
+          },
+          {
             value: 'achondroplasia_sweden',
             label: t('achondroplasia_sweden'),
             authors: 'Merker et al. 2019',
