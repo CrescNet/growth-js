@@ -62,5 +62,6 @@
   "normal_china": "China (without chronic diseases)",
   "normal_who": "International, WHO (without chronic diseases)",
   "year": "0 years|{year} year|{year} years",
-  "sdsDescription": "SDS is a statistical deviation measure.\nAn SDS value of 0 corresponds to the mean value."
+  "sdsDescription": "SDS is a statistical deviation measure.\nAn SDS value of 0 corresponds to the mean value.",
+  "normal_turkish_germany": "Germany (Turkish descent born, without chronic diseases)"
 }
