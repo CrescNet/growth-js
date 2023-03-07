@@ -10,21 +10,15 @@
             emit-value
             map-options
             :options="availableReferences"
+            @update:model-value="$emit('update:reference', $event)"
           />
-          <span
-            class="text-caption"
-            v-if="selectedReference && selectedReference.url"
-          >
+          <span class="text-caption" v-if="selectedReference && selectedReference.url">
             {{ t("source") }}:
-            <a
-              :href="selectedReference.url"
-              target="_blank"
-              class="q-link text-primary"
-            >
+            <a :href="selectedReference.url" target="_blank" class="q-link text-primary">
               {{
                 selectedReference.authors
-                  ? selectedReference.authors
-                  : selectedReference.url
+                ? selectedReference.authors
+                : selectedReference.url
               }}
             </a>
           </span>
@@ -105,7 +99,7 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Object as () => UserInput,
-      default: () => { {} }
+      default: () => { { } }
     },
     availableReferences: {
       type: Array as () => ReferenceDeclaration[],
@@ -116,7 +110,8 @@ export default defineComponent({
     weightReferenceData: Array as () => ReferenceDataRow[]
   },
   components: { VisitRow },
-  setup (props) {
+  emits: ['update:reference'],
+  setup(props) {
     const { t } = useI18n()
     const local = computed(() => props.modelValue)
 
@@ -128,13 +123,13 @@ export default defineComponent({
         () => props.availableReferences.find((r) => r.value == local.value.reference)
       ),
 
-      addVisit () {
+      addVisit() {
         if (!local.value.visits)
           local.value.visits = []
         local.value.visits.push({})
       },
 
-      removeVisit (visit: Visit) {
+      removeVisit(visit: Visit) {
         local.value.visits?.splice(local.value.visits?.indexOf(visit), 1)
       }
     }

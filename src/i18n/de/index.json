@@ -63,5 +63,6 @@
   "normal_who": "International, WHO (ohne chronische Erkrankungen)",
   "year": "0 Jahre|{count} Jahr|{count} Jahre",
   "sdsDescription": "SDS ist ein statistisches Abweichungsmaß.\nEin SDS-Wert von 0 entspricht dem Mittelwert.",
-  "normal_turkish_germany": "Deutschland (türkischer Abstammung, ohne chronische Erkrankungen)"
+  "normal_turkish_germany": "Deutschland (türkischer Abstammung, ohne chronische Erkrankungen)",
+  "referenceDataLoadFailed": "Referenzdaten konnten nicht geladen werden. Bitte versuchen Sie es erneut."
 }

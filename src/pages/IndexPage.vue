@@ -17,9 +17,14 @@
         </q-card>
 
         <q-card bordered class="scroll">
-          <user-input-form v-model="userInput" :available-references="availableReferences"
-            :bmi-reference-data="bmiReferenceData" :height-reference-data="heightReferenceData"
-            :weight-reference-data="weightReferenceData" />
+          <user-input-form
+            v-model="userInput"
+            :available-references="availableReferences"
+            :bmi-reference-data="bmiReferenceData"
+            :height-reference-data="heightReferenceData"
+            :weight-reference-data="weightReferenceData"
+            @update:reference="loadReferenceData($event)"
+          />
           <q-card-section class="text-center">
             <q-btn-group rounded push>
               <q-btn color="primary" icon="save" :label="t('export.title')" @click="showExportDialog = true" />
@@ -70,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import { ReferenceData, ReferenceDeclaration, SexReferenceData, UserInput, Visit } from 'components/models'
 import GrowthChart from 'components/GrowthChart.vue'
 import UserInputForm from 'src/components/UserInputForm.vue'
@@ -78,12 +83,14 @@ import ExportDialog from 'components/ExportDialog.vue'
 import ImportDialog from 'components/ImportDialog.vue'
 import { useI18n } from 'vue-i18n'
 import { api } from 'boot/axios'
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: 'IndexPage',
   components: { GrowthChart, UserInputForm, ExportDialog, ImportDialog },
   setup() {
     const { t } = useI18n()
+    const $q = useQuasar()
 
     const availableReferences = computed(() => {
       return [
@@ -168,7 +175,23 @@ export default defineComponent({
       })
     }
 
-    const getReferenceData = (property: string) => {
+    const loadReferenceData = (referenceId?: string) => {
+      if (!referenceId) {
+        referenceData.value = {}
+      } else {
+        api
+          .get(`./references/${referenceId}.json`)
+          .then((response) => {
+            referenceData.value = response.data
+          })
+          .catch(() => {
+            referenceData.value = {}
+            $q.notify(t('referenceDataLoadFailed'))
+          })
+      }
+    }
+
+    const getReferenceDataByProperty = (property: string) => {
       type ReferenceDataKey = keyof ReferenceData
       const propertyReferenceData = referenceData.value[property as ReferenceDataKey]
       if (!userInput.value.sex || !propertyReferenceData) return []
@@ -176,28 +199,10 @@ export default defineComponent({
       return propertyReferenceData[userInput.value.sex as SexReferenceDataKey]
     }
 
-    watch(
-      () => userInput.value.reference,
-      (val) => {
-        if (!val) {
-          referenceData.value = {}
-        } else {
-          api
-            .get(`./references/${userInput.value.reference}.json`)
-            .then((response) => {
-              referenceData.value = response.data
-            })
-            .catch(() => {
-              userInput.value.reference = undefined
-              referenceData.value = {}
-            })
-        }
-      }
-    )
-
     onMounted(() => {
       const prefill = localStorage.getItem('userInput')
       if (prefill) userInput.value = JSON.parse(prefill)
+      loadReferenceData(userInput.value.reference)
     })
 
     return {
@@ -208,6 +213,7 @@ export default defineComponent({
       showImportDialog: ref(false),
       splitterModel: ref(57),
       chartTab: ref('height'),
+      loadReferenceData,
 
       heightData: computed(() => getData('height')),
 
@@ -224,11 +230,11 @@ export default defineComponent({
         })
       }),
 
-      heightReferenceData: computed(() => getReferenceData('height')),
+      heightReferenceData: computed(() => getReferenceDataByProperty('height')),
 
-      weightReferenceData: computed(() => getReferenceData('weight')),
+      weightReferenceData: computed(() => getReferenceDataByProperty('weight')),
 
-      bmiReferenceData: computed(() => getReferenceData('bmi')),
+      bmiReferenceData: computed(() => getReferenceDataByProperty('bmi')),
 
       chartColor: computed(() => {
         if (userInput.value.sex == 'male')
