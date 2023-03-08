@@ -51,7 +51,7 @@
 
           <q-separator />
 
-          <q-tab-panels v-model="chartTab" animated keep-alive>
+          <q-tab-panels v-model="chartTab" animated>
             <q-tab-panel name="height">
               <growth-chart
                 :property-name="t('height') + ' (cm)'"
