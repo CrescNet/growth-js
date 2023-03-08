@@ -12,7 +12,7 @@
             :options="availableReferences"
             @update:model-value="$emit('update:reference', $event)"
           />
-          <span class="text-caption" v-if="selectedReference && selectedReference.url">
+          <div class="text-caption" v-if="selectedReference && selectedReference.url">
             {{ t("source") }}:
             <a :href="selectedReference.url" target="_blank" class="q-link text-primary">
               {{
@@ -21,7 +21,7 @@
                 : selectedReference.url
               }}
             </a>
-          </span>
+          </div>
         </div>
 
         <div class="col-12 col-md q-gutter-md text-center q-pt-sm">
@@ -38,14 +38,67 @@
             debounce="500"
             v-model="local.birthdate"
           />
+          <q-btn
+            flat
+            dense
+            no-caps
+            :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+            :label="expanded ? t('collapse') : t('expand')"
+            class="text-caption float-right"
+            v-if="selectedReference && selectedReference.url"
+            @click="expanded = !expanded"
+          />
         </div>
       </div>
+      <q-slide-transition>
+        <div v-show="expanded" class="row q-gutter-sm">
+          <q-input
+            v-model.number="local.motherHeight"
+            type="number"
+            class="col-12 col-md"
+            outlined
+            stack-label
+            debounce="500"
+            :label="t('motherHeight')"
+          />
+          <q-input
+            v-model.number="local.fatherHeight"
+            type="number"
+            class="col-12 col-md"
+            outlined
+            stack-label
+            debounce="500"
+            :label="t('fatherHeight')"
+          />
+          <div class="col-12 col-md-6 row items-center justify-end">
+            <div class="q-pr-sm">{{ t('pregnancy') }}:</div>
+            <q-input
+              v-model.number="local.gestationalAgeWeeks"
+              type="number"
+              steps="1"
+              outlined
+              stack-label
+              debounce="500"
+              :label="t('week', 2)"
+            />
+            <q-input
+              v-model.number="local.gestationalAgeDays"
+              type="number"
+              steps="1"
+              outlined
+              stack-label
+              debounce="500"
+              :label="t('day', 2)"
+            />
+          </div>
+        </div>
+      </q-slide-transition>
     </q-card-section>
 
-    <q-separator inset />
+    <q-separator />
 
-    <q-card-section>
-      <q-markup-table>
+    <q-card-section class="q-pa-none">
+      <q-markup-table flat>
         <thead>
           <tr>
             <th v-t="'date'" />
@@ -90,7 +143,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import VisitRow from './VisitRow.vue'
 import { useI18n } from 'vue-i18n'
 import { UserInput, Visit, ReferenceDeclaration, ReferenceDataRow } from './models'
@@ -118,6 +171,7 @@ export default defineComponent({
     return {
       t,
       local,
+      expanded: ref(false),
 
       selectedReference: computed(
         () => props.availableReferences.find((r) => r.value == local.value.reference)

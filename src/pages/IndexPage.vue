@@ -25,13 +25,14 @@
             :weight-reference-data="weightReferenceData"
             @update:reference="loadReferenceData($event)"
           />
-          <q-card-section class="text-center">
+          <q-separator />
+          <q-card-actions class="justify-center">
             <q-btn-group rounded push>
               <q-btn color="primary" icon="save" :label="t('export.title')" @click="showExportDialog = true" />
               <q-btn color="primary" icon="file_download" :label="t('import.title')" @click="showImportDialog = true" />
               <q-btn color="red" icon="restart_alt" :label="t('reset')" @click="resetUserInput" />
             </q-btn-group>
-          </q-card-section>
+          </q-card-actions>
         </q-card>
       </template>
 

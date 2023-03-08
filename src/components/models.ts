@@ -2,6 +2,10 @@ export interface UserInput {
   reference?: string,
   birthdate?: string,
   sex?: string,
+  motherHeight?: number,
+  fatherHeight?: number,
+  gestationalAgeWeeks?: number,
+  gestationalAgeDays?: number,
   visits: Array<Visit>
 }
 
