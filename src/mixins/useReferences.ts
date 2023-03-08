@@ -61,6 +61,10 @@ export default function (this: void) {
     return !row ? undefined : sdsFromLms(value, row.l, row.m, row.s)
   }
 
+  const targetHeight = (motherHeight: number, fatherHeight: number, sex: string): number => {
+    return (motherHeight + fatherHeight) / 2 + (sex == 'male' ? 6.5 : -6.5)
+  }
+
   return {
     rawFromLms(sds: number, l: number, m: number, s: number): number {
       return (Math.abs(l) < 0.00001)
@@ -69,10 +73,9 @@ export default function (this: void) {
     },
     sdsFromLms,
     sdsFromReference,
-
+    targetHeight,
     targetHeightSds(referenceData: ReferenceDataRow[], motherHeight: number, fatherHeight: number, sex: string): number|undefined {
-      const targetHeight = (motherHeight + fatherHeight) / 2 + (sex == 'male' ? 6.5 : -6.5)
-      return sdsFromReference(referenceData, 18, targetHeight)
+      return sdsFromReference(referenceData, 18, targetHeight(motherHeight, fatherHeight, sex))
     }
   }
 }

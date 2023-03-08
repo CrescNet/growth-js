@@ -51,7 +51,7 @@
         </div>
       </div>
       <q-slide-transition>
-        <div v-show="expanded" class="row q-gutter-sm">
+        <div v-show="expanded" class="row items-center q-gutter-md">
           <q-input
             v-model.number="local.motherHeight"
             type="number"
@@ -70,26 +70,11 @@
             debounce="500"
             :label="t('fatherHeight')"
           />
-          <div class="col-12 col-md-6 row items-center justify-end">
-            <div class="q-pr-sm">{{ t('pregnancy') }}:</div>
-            <q-input
-              v-model.number="local.gestationalAgeWeeks"
-              type="number"
-              steps="1"
-              outlined
-              stack-label
-              debounce="500"
-              :label="t('week', 2)"
-            />
-            <q-input
-              v-model.number="local.gestationalAgeDays"
-              type="number"
-              steps="1"
-              outlined
-              stack-label
-              debounce="500"
-              :label="t('day', 2)"
-            />
+          <div class="col-12 col-md">
+            <span v-show="!!targetHeight">
+              {{ t('targetHeight') }}: {{ targetHeight }} cm
+              <q-icon name="info" :title="t('targetHeightDescription')" />
+            </span>
           </div>
         </div>
       </q-slide-transition>
@@ -143,10 +128,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, onMounted, ref } from 'vue'
 import VisitRow from './VisitRow.vue'
 import { useI18n } from 'vue-i18n'
 import { UserInput, Visit, ReferenceDeclaration, ReferenceDataRow } from './models'
+import useReferences from 'src/mixins/useReferences'
 
 export default defineComponent({
   props: {
@@ -166,12 +152,19 @@ export default defineComponent({
   emits: ['update:reference'],
   setup(props) {
     const { t } = useI18n()
+    const { targetHeight } = useReferences()
     const local = computed(() => props.modelValue)
+    const expanded = ref(false)
+
+    onMounted(() => {
+      if (local.value.motherHeight || local.value.fatherHeight)
+        expanded.value = true
+    })
 
     return {
       t,
       local,
-      expanded: ref(false),
+      expanded,
 
       selectedReference: computed(
         () => props.availableReferences.find((r) => r.value == local.value.reference)
@@ -185,7 +178,12 @@ export default defineComponent({
 
       removeVisit(visit: Visit) {
         local.value.visits?.splice(local.value.visits?.indexOf(visit), 1)
-      }
+      },
+
+      targetHeight: computed(() => {
+        if (!local.value.motherHeight || !local.value.fatherHeight || !local.value.sex) return undefined
+        return targetHeight(local.value.motherHeight, local.value.fatherHeight, local.value.sex).toFixed(1)
+      })
     }
   }
 })

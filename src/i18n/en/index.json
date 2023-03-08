@@ -67,10 +67,9 @@
   "referenceDataLoadFailed": "Reference data could not be loaded. Please try again.",
   "motherHeight": "Mother height (cm)",
   "fatherHeight": "Father height (cm)",
-  "week": "Week|Weeks",
-  "day": "Day|Days",
-  "pregnancy": "Pregnancy",
   "expand": "Expand",
   "collapse": "Collapse",
-  "parentalEstimatedValue": "Parental estimated value"
+  "parentalEstimatedValue": "Parental estimated value",
+  "targetHeight": "Target height",
+  "targetHeightDescription": "The target height is an rough estimation of the final hight your child might reach.\nIt is derived from father and mother height."
 }
