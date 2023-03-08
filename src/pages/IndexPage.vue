@@ -53,8 +53,13 @@
 
           <q-tab-panels v-model="chartTab" animated keep-alive>
             <q-tab-panel name="height">
-              <growth-chart :property-name="t('height') + ' (cm)'" :scatter-data="heightData" :color="chartColor"
-                :centile-data="heightReferenceData" />
+              <growth-chart
+                :property-name="t('height') + ' (cm)'"
+                :scatter-data="heightData"
+                :color="chartColor"
+                :centile-data="heightReferenceData"
+                :target-sds="targetHeightSds"
+              />
             </q-tab-panel>
             <q-tab-panel name="weight">
               <growth-chart :property-name="t('weight') + ' (kg)'" :scatter-data="weightData" :color="chartColor"
@@ -77,7 +82,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue'
-import { ReferenceData, ReferenceDeclaration, SexReferenceData, UserInput, Visit } from 'components/models'
+import { Coordinate, ReferenceData, ReferenceDeclaration, SexReferenceData, UserInput, Visit } from 'components/models'
 import GrowthChart from 'components/GrowthChart.vue'
 import UserInputForm from 'src/components/UserInputForm.vue'
 import ExportDialog from 'components/ExportDialog.vue'
@@ -85,6 +90,7 @@ import ImportDialog from 'components/ImportDialog.vue'
 import { useI18n } from 'vue-i18n'
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
+import useReferences from 'src/mixins/useReferences'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -92,6 +98,7 @@ export default defineComponent({
   setup() {
     const { t } = useI18n()
     const $q = useQuasar()
+    const { targetHeightSds } = useReferences()
 
     const availableReferences = computed(() => {
       return [
@@ -100,48 +107,56 @@ export default defineComponent({
           label: t('normal_german'),
           authors: 'Kromeyer-Hauschild et al. 2001',
           url: 'https://doi.org/10.1007/s001120170107',
+          disease: false
         },
         {
           value: 'normal_china',
           label: t('normal_china'),
           authors: 'Zong et al. 2013',
           url: 'https://doi.org/10.1371/journal.pone.0059569',
+          disease: false
         },
         {
           value: 'normal_who',
           label: t('normal_who'),
           authors: 'WHO',
           url: 'https://doi.org/10.2471/blt.07.043497',
+          disease: false
         },
         {
           value: 'normal_turkish_germany',
           label: t('normal_turkish_germany'),
           authors: 'Redlefsen 2008',
           url: 'https://d-nb.info/990166104/34',
+          disease: false
         },
         {
           value: 'achondroplasia_sweden',
           label: t('achondroplasia_sweden'),
           authors: 'Merker et al. 2019',
           url: 'https://doi.org/10.1002/ajmg.a.38853',
+          disease: true
         },
         {
           value: 'hypochondroplasia_argentinia',
           label: t('hypochondroplasia_argentinia'),
           authors: 'Arenas et al. 2018',
           url: 'https://doi.org/10.1515/jpem-2018-0046',
+          disease: true
         },
         {
           value: 'noonan_japan',
           label: t('noonan_japan'),
           authors: 'Isojima et al. 2016',
           url: 'https://doi.org/10.1038/pr.2015.254',
+          disease: true
         },
         {
           value: 'trisomy21_america',
           label: t('trisomy21_america'),
           authors: 'Zemel et al. 2015',
           url: 'https://doi.org/10.1542/peds.2015-1652',
+          disease: true
         },
       ] as ReferenceDeclaration[]
     })
@@ -164,16 +179,16 @@ export default defineComponent({
       return (local1.getTime() - local2.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
     }
 
-    const getData = (property: string) => {
+    const getData = (property: string): Coordinate[] => {
       if (!userInput.value.birthdate) return []
-      return userInput.value.visits?.map((v) => {
-        if (!v.date) return undefined
-        type VisitKey = keyof Visit
-        return {
-          x: dateDiffYears(new Date(v.date), birthdateDate.value),
-          y: v[property as VisitKey],
-        }
-      })
+      return userInput.value.visits?.filter(v => !!v.date)
+        .map(v => {
+          type VisitKey = keyof Visit
+          return {
+            x: dateDiffYears(new Date(v.date as string), birthdateDate.value),
+            y: v[property as VisitKey],
+          } as Coordinate
+        })
     }
 
     const loadReferenceData = (referenceId?: string) => {
@@ -200,6 +215,8 @@ export default defineComponent({
       return propertyReferenceData[userInput.value.sex as SexReferenceDataKey]
     }
 
+    const heightReferenceData = computed(() => getReferenceDataByProperty('height'))
+
     onMounted(() => {
       const prefill = localStorage.getItem('userInput')
       if (prefill) userInput.value = JSON.parse(prefill)
@@ -222,20 +239,31 @@ export default defineComponent({
 
       bmiData: computed(() => {
         if (!userInput.value.birthdate) return [];
-        return userInput.value.visits?.map((v) => {
-          if (!v.date || !v.height || !v.weight) return undefined
-          return {
-            x: dateDiffYears(new Date(v.date), birthdateDate.value),
-            y: v.weight / (v.height / 100) ** 2,
-          }
-        })
+        return userInput.value.visits?.filter(v => v.date && v.height && v.weight)
+          .map((v) => {
+            return {
+              x: dateDiffYears(new Date(v.date as string), birthdateDate.value),
+              y: v.weight as number / (v.height as number / 100) ** 2,
+            } as Coordinate
+          })
       }),
 
-      heightReferenceData: computed(() => getReferenceDataByProperty('height')),
+      heightReferenceData,
 
       weightReferenceData: computed(() => getReferenceDataByProperty('weight')),
 
       bmiReferenceData: computed(() => getReferenceDataByProperty('bmi')),
+
+      targetHeightSds: computed(() => {
+        if (
+          !heightReferenceData.value
+          || availableReferences.value.findIndex(r => r.value === userInput.value.reference && !r.disease) === -1
+          || !userInput.value.motherHeight
+          || !userInput.value.fatherHeight
+          || !userInput.value.sex
+        ) return undefined
+        return targetHeightSds(heightReferenceData.value, userInput.value.motherHeight, userInput.value.fatherHeight, userInput.value.sex)
+      }),
 
       chartColor: computed(() => {
         if (userInput.value.sex == 'male')

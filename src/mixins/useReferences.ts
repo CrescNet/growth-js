@@ -56,12 +56,23 @@ export default function (this: void) {
       : (Math.pow(value / m, l) - 1) / (l * s)
   }
 
-  return {
-    sdsFromLms,
+  const sdsFromReference = (referenceData: ReferenceDataRow[], age: number, value: number): number | undefined => {
+    const row = getMatchingReferenceRow(referenceData, age)
+    return !row ? undefined : sdsFromLms(value, row.l, row.m, row.s)
+  }
 
-    sdsFromReference(referenceData: ReferenceDataRow[], age: number, value: number): number | undefined {
-      const row = getMatchingReferenceRow(referenceData, age)
-      return !row ? undefined : sdsFromLms(value, row.l, row.m, row.s)
+  return {
+    rawFromLms(sds: number, l: number, m: number, s: number): number {
+      return (Math.abs(l) < 0.00001)
+        ? Math.exp(s * sds) * m
+        : (sds * l * s + 1) ** (1 / l) * m
+    },
+    sdsFromLms,
+    sdsFromReference,
+
+    targetHeightSds(referenceData: ReferenceDataRow[], motherHeight: number, fatherHeight: number, sex: string): number|undefined {
+      const targetHeight = (motherHeight + fatherHeight) / 2 + (sex == 'male' ? 6.5 : -6.5)
+      return sdsFromReference(referenceData, 18, targetHeight)
     }
   }
 }

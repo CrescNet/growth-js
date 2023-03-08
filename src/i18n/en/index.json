@@ -71,5 +71,6 @@
   "day": "Day|Days",
   "pregnancy": "Pregnancy",
   "expand": "Expand",
-  "collapse": "Collapse"
+  "collapse": "Collapse",
+  "parentalEstimatedValue": "Parental estimated value"
 }

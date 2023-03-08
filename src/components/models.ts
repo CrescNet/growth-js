@@ -20,6 +20,7 @@ export interface ReferenceDeclaration {
   label?: string,
   authors?: string,
   url?: string,
+  disease: boolean
 }
 
 export interface ReferenceDataRow {

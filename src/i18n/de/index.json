@@ -71,5 +71,6 @@
   "day": "Tag|Tage",
   "pregnancy": "Schwangerschaft",
   "expand": "Erweitern",
-  "collapse": "Reduzieren"
+  "collapse": "Reduzieren",
+  "parentalEstimatedValue": "Elterlicher Erwartungswert"
 }
