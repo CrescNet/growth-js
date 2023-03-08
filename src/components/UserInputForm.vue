@@ -71,9 +71,9 @@
             :label="t('fatherHeight')"
           />
           <div class="col-12 col-md">
-            <span v-show="!!targetHeight">
+            <span v-show="!!targetHeight" :title="t('targetHeightDescription')">
               {{ t('targetHeight') }}: {{ targetHeight }} cm
-              <q-icon name="info" :title="t('targetHeightDescription')" />
+              <q-icon name="info" />
             </span>
           </div>
         </div>
