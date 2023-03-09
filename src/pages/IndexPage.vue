@@ -23,15 +23,16 @@
             :bmi-reference-data="bmiReferenceData"
             :height-reference-data="heightReferenceData"
             :weight-reference-data="weightReferenceData"
-            @update:reference="loadReferenceData($event)"
+            @update:reference="loadReference($event)"
           />
-          <q-card-section class="text-center">
+          <q-separator />
+          <q-card-actions class="justify-center">
             <q-btn-group rounded push>
               <q-btn color="primary" icon="save" :label="t('export.title')" @click="showExportDialog = true" />
               <q-btn color="primary" icon="file_download" :label="t('import.title')" @click="showImportDialog = true" />
               <q-btn color="red" icon="restart_alt" :label="t('reset')" @click="resetUserInput" />
             </q-btn-group>
-          </q-card-section>
+          </q-card-actions>
         </q-card>
       </template>
 
@@ -50,10 +51,15 @@
 
           <q-separator />
 
-          <q-tab-panels v-model="chartTab" animated keep-alive>
+          <q-tab-panels v-model="chartTab" animated>
             <q-tab-panel name="height">
-              <growth-chart :property-name="t('height') + ' (cm)'" :scatter-data="heightData" :color="chartColor"
-                :centile-data="heightReferenceData" />
+              <growth-chart
+                :property-name="t('height') + ' (cm)'"
+                :scatter-data="heightData"
+                :color="chartColor"
+                :centile-data="heightReferenceData"
+                :target-sds="targetHeightSds"
+              />
             </q-tab-panel>
             <q-tab-panel name="weight">
               <growth-chart :property-name="t('weight') + ' (kg)'" :scatter-data="weightData" :color="chartColor"
@@ -76,14 +82,15 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue'
-import { ReferenceData, ReferenceDeclaration, SexReferenceData, UserInput, Visit } from 'components/models'
+import { Coordinate, UserInput, Visit } from 'components/models'
 import GrowthChart from 'components/GrowthChart.vue'
 import UserInputForm from 'src/components/UserInputForm.vue'
 import ExportDialog from 'components/ExportDialog.vue'
 import ImportDialog from 'components/ImportDialog.vue'
 import { useI18n } from 'vue-i18n'
-import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
+import { useReferenceStore } from 'src/stores/reference'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -91,65 +98,13 @@ export default defineComponent({
   setup() {
     const { t } = useI18n()
     const $q = useQuasar()
-
-    const availableReferences = computed(() => {
-      return [
-        {
-          value: 'normal_german',
-          label: t('normal_german'),
-          authors: 'Kromeyer-Hauschild et al. 2001',
-          url: 'https://doi.org/10.1007/s001120170107',
-        },
-        {
-          value: 'normal_china',
-          label: t('normal_china'),
-          authors: 'Zong et al. 2013',
-          url: 'https://doi.org/10.1371/journal.pone.0059569',
-        },
-        {
-          value: 'normal_who',
-          label: t('normal_who'),
-          authors: 'WHO',
-          url: 'https://doi.org/10.2471/blt.07.043497',
-        },
-        {
-          value: 'normal_turkish_germany',
-          label: t('normal_turkish_germany'),
-          authors: 'Redlefsen 2008',
-          url: 'https://d-nb.info/990166104/34',
-        },
-        {
-          value: 'achondroplasia_sweden',
-          label: t('achondroplasia_sweden'),
-          authors: 'Merker et al. 2019',
-          url: 'https://doi.org/10.1002/ajmg.a.38853',
-        },
-        {
-          value: 'hypochondroplasia_argentinia',
-          label: t('hypochondroplasia_argentinia'),
-          authors: 'Arenas et al. 2018',
-          url: 'https://doi.org/10.1515/jpem-2018-0046',
-        },
-        {
-          value: 'noonan_japan',
-          label: t('noonan_japan'),
-          authors: 'Isojima et al. 2016',
-          url: 'https://doi.org/10.1038/pr.2015.254',
-        },
-        {
-          value: 'trisomy21_america',
-          label: t('trisomy21_america'),
-          authors: 'Zemel et al. 2015',
-          url: 'https://doi.org/10.1542/peds.2015-1652',
-        },
-      ] as ReferenceDeclaration[]
-    })
+    const referenceStore = useReferenceStore()
+    const { availableReferences } = storeToRefs(referenceStore)
 
     const userInput = ref({
       visits: [{}],
       reference: availableReferences.value[0]?.value
     } as UserInput)
-    const referenceData = ref({} as ReferenceData)
     const birthdateDate = computed(() =>
       userInput.value.birthdate ? new Date(userInput.value.birthdate) : undefined
     )
@@ -163,46 +118,33 @@ export default defineComponent({
       return (local1.getTime() - local2.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
     }
 
-    const getData = (property: string) => {
+    const getData = (property: string): Coordinate[] => {
       if (!userInput.value.birthdate) return []
-      return userInput.value.visits?.map((v) => {
-        if (!v.date) return undefined
-        type VisitKey = keyof Visit
-        return {
-          x: dateDiffYears(new Date(v.date), birthdateDate.value),
-          y: v[property as VisitKey],
-        }
-      })
+      return userInput.value.visits?.filter(v => !!v.date)
+        .map(v => {
+          type VisitKey = keyof Visit
+          return {
+            x: dateDiffYears(new Date(v.date as string), birthdateDate.value),
+            y: v[property as VisitKey],
+          } as Coordinate
+        })
     }
 
-    const loadReferenceData = (referenceId?: string) => {
-      if (!referenceId) {
-        referenceData.value = {}
-      } else {
-        api
-          .get(`./references/${referenceId}.json`)
-          .then((response) => {
-            referenceData.value = response.data
-          })
-          .catch(() => {
-            referenceData.value = {}
-            $q.notify(t('referenceDataLoadFailed'))
-          })
-      }
+    const getReferenceData = (property: string) => {
+      if (!userInput.value.sex) return []
+      return referenceStore.getReferenceData(property, userInput.value.sex)
     }
 
-    const getReferenceDataByProperty = (property: string) => {
-      type ReferenceDataKey = keyof ReferenceData
-      const propertyReferenceData = referenceData.value[property as ReferenceDataKey]
-      if (!userInput.value.sex || !propertyReferenceData) return []
-      type SexReferenceDataKey = keyof SexReferenceData
-      return propertyReferenceData[userInput.value.sex as SexReferenceDataKey]
+    const loadReference = (referenceId?: string) => {
+      referenceStore
+        .loadReference(referenceId)
+        .catch(() => $q.notify(t('referenceDataLoadFailed')))
     }
 
     onMounted(() => {
       const prefill = localStorage.getItem('userInput')
       if (prefill) userInput.value = JSON.parse(prefill)
-      loadReferenceData(userInput.value.reference)
+      loadReference(userInput.value.reference)
     })
 
     return {
@@ -213,7 +155,7 @@ export default defineComponent({
       showImportDialog: ref(false),
       splitterModel: ref(57),
       chartTab: ref('height'),
-      loadReferenceData,
+      loadReference,
 
       heightData: computed(() => getData('height')),
 
@@ -221,20 +163,26 @@ export default defineComponent({
 
       bmiData: computed(() => {
         if (!userInput.value.birthdate) return [];
-        return userInput.value.visits?.map((v) => {
-          if (!v.date || !v.height || !v.weight) return undefined
-          return {
-            x: dateDiffYears(new Date(v.date), birthdateDate.value),
-            y: v.weight / (v.height / 100) ** 2,
-          }
-        })
+        return userInput.value.visits?.filter(v => v.date && v.height && v.weight)
+          .map((v) => {
+            return {
+              x: dateDiffYears(new Date(v.date as string), birthdateDate.value),
+              y: v.weight as number / (v.height as number / 100) ** 2,
+            } as Coordinate
+          })
       }),
 
-      heightReferenceData: computed(() => getReferenceDataByProperty('height')),
+      heightReferenceData: computed(() => getReferenceData('height')),
 
-      weightReferenceData: computed(() => getReferenceDataByProperty('weight')),
+      weightReferenceData: computed(() => getReferenceData('weight')),
 
-      bmiReferenceData: computed(() => getReferenceDataByProperty('bmi')),
+      bmiReferenceData: computed(() => getReferenceData('bmi')),
+
+      targetHeightSds: computed(() => {
+        if (!userInput.value.motherHeight || !userInput.value.fatherHeight)
+          return undefined
+        return referenceStore.getTargetHeightSds(userInput.value.fatherHeight, userInput.value.motherHeight)
+      }),
 
       chartColor: computed(() => {
         if (userInput.value.sex == 'male')

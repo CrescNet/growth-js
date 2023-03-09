@@ -8,6 +8,8 @@ import { ScatterChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import zoomPlugin from 'chartjs-plugin-zoom'
 import { CentileData, Coordinate, ReferenceDataRow } from 'components/models'
+import { useI18n } from 'vue-i18n'
+import useReferences from 'src/mixins/useReferences'
 
 Chart.register(...registerables, zoomPlugin)
 
@@ -15,13 +17,14 @@ export default defineComponent({
   components: { ScatterChart },
   props: {
     scatterData: {
-      type: Array,
+      type: Array as () => Coordinate[],
       default: () => { [] }
     },
     centileData: {
       type: Array as () => ReferenceDataRow[],
       default: () => { [] }
     },
+    targetSds: Number,
     options: {
       type: Object,
       default: () => {
@@ -55,9 +58,15 @@ export default defineComponent({
       type: String,
       default: 'black',
     },
+    targetColor: {
+      type: String,
+      default: '#3d9970'
+    },
     propertyName: String,
   },
   setup (props) {
+    const { t } = useI18n()
+    const { rawFromLms } = useReferences()
     const mounted = ref(false)
     const localCentileData = computed(() => {
       var result = { } as CentileData
@@ -71,6 +80,16 @@ export default defineComponent({
         }
       }
       return result
+    })
+
+    const targetData = computed(() => {
+      if (!props.targetSds || !props.centileData) return []
+      return props.centileData.map((c) => {
+        return {
+          x: c.age,
+          y: rawFromLms(props.targetSds as number, c.l, c.m, c.s)
+        } as Coordinate
+      })
     })
 
     onMounted(() => mounted.value = true)
@@ -88,37 +107,50 @@ export default defineComponent({
               backgroundColor: props.color,
             },
             {
+              label: t('parentalEstimatedValue'),
+              type: 'line',
+              data: targetData.value,
+              borderColor: props.targetColor,
+              borderWidth: 2,
+              pointHitRadius: 0,
+              pointRadius: 0
+            },
+            {
               label: 'p03',
               type: 'line',
-              fill: false,
-              borderWidth: 2,
               data: localCentileData.value.p03,
               borderColor: 'black',
-              pointRadius: 0,
+              borderWidth: 2,
               pointHitRadius: 0,
+              pointRadius: 0
             },
             {
               label: 'p50',
               type: 'line',
-              fill: false,
               borderDash: [5],
-              borderWidth: 2,
               data: localCentileData.value.p50,
               borderColor: 'black',
-              pointRadius: 0,
+              borderWidth: 2,
               pointHitRadius: 0,
+              pointRadius: 0
             },
             {
               label: 'p97',
               type: 'line',
-              fill: false,
-              borderWidth: 2,
               data: localCentileData.value.p97,
               borderColor: 'black',
-              pointRadius: 0,
+              borderWidth: 2,
               pointHitRadius: 0,
-            },
+              pointRadius: 0
+            }
           ],
+          options: {
+            elements: {
+              line: {
+                fill: false
+              }
+            }
+          }
         }
       })
     }

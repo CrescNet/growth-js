@@ -64,5 +64,12 @@
   "year": "0 Jahre|{count} Jahr|{count} Jahre",
   "sdsDescription": "SDS ist ein statistisches Abweichungsmaß.\nEin SDS-Wert von 0 entspricht dem Mittelwert.",
   "normal_turkish_germany": "Deutschland (türkischer Abstammung, ohne chronische Erkrankungen)",
-  "referenceDataLoadFailed": "Referenzdaten konnten nicht geladen werden. Bitte versuchen Sie es erneut."
+  "referenceDataLoadFailed": "Referenzdaten konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+  "motherHeight": "Muttergröße (cm)",
+  "fatherHeight": "Vatergröße (cm)",
+  "expand": "Erweitern",
+  "collapse": "Reduzieren",
+  "parentalEstimatedValue": "Elterlicher Erwartungswert",
+  "targetHeight": "Zielgröße",
+  "targetHeightDescription": "Die Zielhöhe ist eine grobe Schätzung der endgültigen Größe, die Ihr Kind erreichen könnte.\nSie leitet sich von der Vater- und Muttergröße ab."
 }

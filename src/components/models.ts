@@ -2,6 +2,8 @@ export interface UserInput {
   reference?: string,
   birthdate?: string,
   sex?: string,
+  motherHeight?: number,
+  fatherHeight?: number,
   visits: Array<Visit>
 }
 
@@ -16,6 +18,7 @@ export interface ReferenceDeclaration {
   label?: string,
   authors?: string,
   url?: string,
+  disease: boolean
 }
 
 export interface ReferenceDataRow {

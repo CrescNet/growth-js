@@ -12,7 +12,7 @@
             :options="availableReferences"
             @update:model-value="$emit('update:reference', $event)"
           />
-          <span class="text-caption" v-if="selectedReference && selectedReference.url">
+          <div class="text-caption" v-if="selectedReference && selectedReference.url">
             {{ t("source") }}:
             <a :href="selectedReference.url" target="_blank" class="q-link text-primary">
               {{
@@ -21,7 +21,7 @@
                 : selectedReference.url
               }}
             </a>
-          </span>
+          </div>
         </div>
 
         <div class="col-12 col-md q-gutter-md text-center q-pt-sm">
@@ -38,14 +38,52 @@
             debounce="500"
             v-model="local.birthdate"
           />
+          <q-btn
+            flat
+            dense
+            no-caps
+            :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+            :label="expanded ? t('collapse') : t('expand')"
+            class="text-caption float-right"
+            v-if="selectedReference && selectedReference.url"
+            @click="expanded = !expanded"
+          />
         </div>
       </div>
+      <q-slide-transition>
+        <div v-show="expanded" class="row items-center q-gutter-md">
+          <q-input
+            v-model.number="local.motherHeight"
+            type="number"
+            class="col-12 col-md"
+            outlined
+            stack-label
+            debounce="500"
+            :label="t('motherHeight')"
+          />
+          <q-input
+            v-model.number="local.fatherHeight"
+            type="number"
+            class="col-12 col-md"
+            outlined
+            stack-label
+            debounce="500"
+            :label="t('fatherHeight')"
+          />
+          <div class="col-12 col-md">
+            <span v-show="!!targetHeight" :title="t('targetHeightDescription')">
+              {{ t('targetHeight') }}: {{ targetHeight }} cm
+              <q-icon name="info" />
+            </span>
+          </div>
+        </div>
+      </q-slide-transition>
     </q-card-section>
 
-    <q-separator inset />
+    <q-separator />
 
-    <q-card-section>
-      <q-markup-table>
+    <q-card-section class="q-pa-none">
+      <q-markup-table flat>
         <thead>
           <tr>
             <th v-t="'date'" />
@@ -90,10 +128,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref, watch } from 'vue'
 import VisitRow from './VisitRow.vue'
 import { useI18n } from 'vue-i18n'
 import { UserInput, Visit, ReferenceDeclaration, ReferenceDataRow } from './models'
+import { useReferenceStore } from 'src/stores/reference'
 
 export default defineComponent({
   props: {
@@ -113,11 +152,23 @@ export default defineComponent({
   emits: ['update:reference'],
   setup(props) {
     const { t } = useI18n()
+    const referenceStore = useReferenceStore()
     const local = computed(() => props.modelValue)
+    const expanded = ref(false)
+
+    watch(
+      () => local.value.motherHeight,
+      (val) => expanded.value = expanded.value || !!val
+    )
+    watch(
+      () => local.value.fatherHeight,
+      (val) => expanded.value = expanded.value || !!val
+    )
 
     return {
       t,
       local,
+      expanded,
 
       selectedReference: computed(
         () => props.availableReferences.find((r) => r.value == local.value.reference)
@@ -131,7 +182,12 @@ export default defineComponent({
 
       removeVisit(visit: Visit) {
         local.value.visits?.splice(local.value.visits?.indexOf(visit), 1)
-      }
+      },
+
+      targetHeight: computed(() => {
+        if (!local.value.motherHeight || !local.value.fatherHeight || !local.value.sex) return undefined
+        return referenceStore.getTargetHeight(local.value.motherHeight, local.value.fatherHeight, local.value.sex)?.toFixed(1)
+      })
     }
   }
 })

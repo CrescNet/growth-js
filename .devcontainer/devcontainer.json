@@ -17,33 +17,30 @@
     "NPM_AUTH_TOKEN": "${localEnv:NPM_AUTH_TOKEN}"
   },
 
-  // Set *default* container specific settings.json values on container create.
-  "settings": {
-    "vetur.validation.template": false,
-    "vetur.validation.script": false,
-    "vetur.validation.style": false,
-    "vetur.validation.interpolation": false,
-    "vetur.format.defaultFormatter.ts": "prettier-tslint",
-    "vetur.format.enable": false,
-    "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "vetur.experimental.templateInterpolationService": true
+  "customizations": {
+    "vscode": {
+      // Set *default* container specific settings.json values on container create.
+      "settings": {
+        "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
+        "typescript.tsdk": "node_modules/typescript/lib",
+      },
+
+
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "Vue.volar",
+        "eamodio.gitlens",
+        "gamunu.vscode-yarn",
+        "hollowtree.vue-snippets",
+        "dariofuzinato.vue-peek",
+        "mhutchie.git-graph",
+        "syler.sass-indented",
+        "HookyQR.minify",
+        "eriklynd.json-tools"
+      ]
+    }
   },
-
-
-  // Add the IDs of extensions you want installed when the container is created.
-  "extensions": [
-    "dbaeumer.vscode-eslint",
-    "octref.vetur",
-    "eamodio.gitlens",
-    "gamunu.vscode-yarn",
-    "hollowtree.vue-snippets",
-    "dariofuzinato.vue-peek",
-    "mhutchie.git-graph",
-    "syler.sass-indented",
-    "HookyQR.minify",
-    "eriklynd.json-tools"
-],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
