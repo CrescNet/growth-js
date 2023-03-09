@@ -132,7 +132,7 @@ import { defineComponent, computed, ref, watch } from 'vue'
 import VisitRow from './VisitRow.vue'
 import { useI18n } from 'vue-i18n'
 import { UserInput, Visit, ReferenceDeclaration, ReferenceDataRow } from './models'
-import useReferences from 'src/mixins/useReferences'
+import { useReferenceStore } from 'src/stores/reference'
 
 export default defineComponent({
   props: {
@@ -152,7 +152,7 @@ export default defineComponent({
   emits: ['update:reference'],
   setup(props) {
     const { t } = useI18n()
-    const { targetHeight } = useReferences()
+    const referenceStore = useReferenceStore()
     const local = computed(() => props.modelValue)
     const expanded = ref(false)
 
@@ -186,7 +186,7 @@ export default defineComponent({
 
       targetHeight: computed(() => {
         if (!local.value.motherHeight || !local.value.fatherHeight || !local.value.sex) return undefined
-        return targetHeight(local.value.motherHeight, local.value.fatherHeight, local.value.sex).toFixed(1)
+        return referenceStore.getTargetHeight(local.value.motherHeight, local.value.fatherHeight, local.value.sex)?.toFixed(1)
       })
     }
   }

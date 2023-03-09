@@ -50,6 +50,12 @@ export default function (this: void) {
     return lower
   }
 
+  const rawFromLms = (sds: number, l: number, m: number, s: number) => {
+    return (Math.abs(l) < 0.00001)
+      ? Math.exp(s * sds) * m
+      : (sds * l * s + 1) ** (1 / l) * m
+  }
+
   const sdsFromLms = (value: number, l: number, m: number, s: number): number => {
     return (Math.abs(l) < 0.00001)
       ? Math.log(value / m) / s
@@ -66,10 +72,10 @@ export default function (this: void) {
   }
 
   return {
-    rawFromLms(sds: number, l: number, m: number, s: number): number {
-      return (Math.abs(l) < 0.00001)
-        ? Math.exp(s * sds) * m
-        : (sds * l * s + 1) ** (1 / l) * m
+    rawFromLms,
+    rawFromReference (referenceData: ReferenceDataRow[], age: number, value: number) {
+      const row = getMatchingReferenceRow(referenceData, age)
+    return !row ? undefined : rawFromLms(value, row.l, row.m, row.s)
     },
     sdsFromLms,
     sdsFromReference,

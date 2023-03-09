@@ -71,5 +71,5 @@
   "collapse": "Collapse",
   "parentalEstimatedValue": "Parental estimated value",
   "targetHeight": "Target height",
-  "targetHeightDescription": "The target height is an rough estimation of the final hight your child might reach.\nIt is derived from father and mother height."
+  "targetHeightDescription": "The target height is a rough estimation of the final hight your child might reach.\nIt is derived from father and mother height."
 }
