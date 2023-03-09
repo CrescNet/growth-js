@@ -128,7 +128,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted, ref } from 'vue'
+import { defineComponent, computed, ref, watch } from 'vue'
 import VisitRow from './VisitRow.vue'
 import { useI18n } from 'vue-i18n'
 import { UserInput, Visit, ReferenceDeclaration, ReferenceDataRow } from './models'
@@ -156,10 +156,14 @@ export default defineComponent({
     const local = computed(() => props.modelValue)
     const expanded = ref(false)
 
-    onMounted(() => {
-      if (local.value.motherHeight || local.value.fatherHeight)
-        expanded.value = true
-    })
+    watch(
+      () => local.value.motherHeight,
+      (val) => expanded.value = expanded.value || !!val
+    )
+    watch(
+      () => local.value.fatherHeight,
+      (val) => expanded.value = expanded.value || !!val
+    )
 
     return {
       t,
