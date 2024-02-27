@@ -74,7 +74,13 @@
       </template>
     </q-splitter>
 
-    <export-dialog v-model:show="showExportDialog" :userInput="userInput" />
+    <export-dialog
+      v-model:show="showExportDialog"
+      :userInput="userInput"
+      :bmi-reference-data="bmiReferenceData"
+      :height-reference-data="heightReferenceData"
+      :weight-reference-data="weightReferenceData"
+    />
 
     <import-dialog v-model:show="showImportDialog" v-model:userInput="userInput" />
   </q-page>

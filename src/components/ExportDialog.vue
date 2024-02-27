@@ -32,7 +32,7 @@
             color="primary"
             icon="download"
             :label="t('export.file.title')"
-            @click="saveToFile(JSON.stringify(userInput), exportFileName)"
+            @click="doFileExport"
           />
           <div class="col-7" v-t="'export.file.description'" />
         </div>
@@ -58,13 +58,13 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 import QrCodeDialog from './QrCodeDialog.vue'
-import fileHandler from 'src/mixins/fileHandler.js'
 import { useI18n } from 'vue-i18n'
-import { UserInput } from 'components/models'
+import { ReferenceDataRow, UserInput } from 'components/models'
+import useReferences from 'src/mixins/useReferences'
+import useFileHandler from 'src/mixins/useFileHandler'
 
 export default defineComponent({
   components: { QrCodeDialog },
-  mixins: [ fileHandler ],
   props: {
     show: {
       type: Boolean,
@@ -74,19 +74,52 @@ export default defineComponent({
       type: Object as () => UserInput,
       default: () => { {} }
     },
+    bmiReferenceData: Array as () => ReferenceDataRow[],
+    heightReferenceData: Array as () => ReferenceDataRow[],
+    weightReferenceData: Array as () => ReferenceDataRow[]
   },
   emits: ['update:show'],
-  setup (params) {
+  setup (props) {
     const { t } = useI18n()
     const showQrCode = ref(false)
+    const { sds, age, bmi } = useReferences()
+    const exportFileName = computed(() => 'data_' + new Date().toLocaleDateString() + '.json')
+    const { saveToFile } = useFileHandler()
+
     return {
       t,
       showQrCode,
+      exportFileName,
 
-      exportFileName: computed(() => 'data_' + new Date().toLocaleDateString() + '.json'),
+      saveUserInput() {
+        localStorage.setItem('userInput', JSON.stringify(props.userInput))
+      },
 
-      saveUserInput () {
-        localStorage.setItem('userInput', JSON.stringify(params.userInput))
+      doFileExport() {
+        const visits = props.userInput.visits.map(v => {
+          const ageYears = age(props.userInput.birthdate, v.date)
+          const bmiValue = bmi(v.height, v.weight)
+          return {
+            date: v.date,
+            age: ageYears,
+            height: v.height ? +v.height : undefined,
+            heightSds: sds(props.heightReferenceData, ageYears, v.height),
+            weight: v.weight ? +v.weight : undefined,
+            weightSds: sds(props.weightReferenceData, ageYears, v.weight),
+            bmi: bmiValue,
+            bmiSds: sds(props.bmiReferenceData, ageYears, bmiValue)
+          }
+        })
+        const data = {
+          birthdate: props.userInput.birthdate,
+          motherHeight: props.userInput.motherHeight,
+          fatherHeight: props.userInput.fatherHeight,
+          sex: props.userInput.sex,
+          reference: props.userInput.reference,
+          visits
+        }
+
+        saveToFile(JSON.stringify(data), exportFileName.value)
       }
     }
   }

@@ -1,6 +1,6 @@
-export default {
-  methods: {
-    saveToFile(content, filename) {
+export default function() {
+  return {
+    saveToFile: (content, filename) => {
       const data = content;
       const blob = new Blob([data], { type: 'text/plain' });
       const e = document.createEvent('MouseEvents'),
@@ -26,6 +26,6 @@ export default {
         null
       );
       a.dispatchEvent(e);
-    },
-  },
+    }
+  }
 };

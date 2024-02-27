@@ -95,39 +95,27 @@ export default defineComponent({
   emits: ['update:modelValue', 'deleteRow'],
   setup (props, { emit }) {
     const { t } = useI18n()
-    const { sdsFromReference } = useReferences()
+    const { sds, age, bmi } = useReferences()
 
-    const age = computed(() => {
-      if (!props.birthdate || !props.modelValue.date) return undefined
-      return (new Date(props.modelValue.date).getTime() - new Date(props.birthdate).getTime()) / (1000 * 60 * 60 * 24 * 354.25)
-    })
-
-    const bmi = computed(() => {
-      if (!props.modelValue.height || !props.modelValue.weight) return undefined
-      return props.modelValue.weight / (props.modelValue.height / 100)**2
-    })
-
-    const sds = (referenceData?: ReferenceDataRow[], value?: number): number|undefined => {
-      if (!referenceData || age.value == undefined || !value) return undefined
-      return sdsFromReference(referenceData, age.value, value)
-    }
+    const ageYears = computed(() => age(props.birthdate, props.modelValue.date))
+    const bmiValue = computed(() => bmi(props.modelValue.height, props.modelValue.weight))
 
     return {
       t,
-      age,
+      age: ageYears,
 
       bmi: computed(() => {
-        if (!bmi.value) return undefined
-        return bmi.value.toFixed(2)
+        if (!bmiValue.value) return undefined
+        return bmiValue.value.toFixed(2)
       }),
 
-      bmiSds: computed(() => sds(props.bmiReferenceData, bmi.value)),
+      bmiSds: computed(() => sds(props.bmiReferenceData, ageYears.value, bmiValue.value)),
 
-      heightSds: computed(() => sds(props.heightReferenceData, props.modelValue.height)),
+      heightSds: computed(() => sds(props.heightReferenceData, ageYears.value, props.modelValue.height)),
 
-      weightSds: computed(() => sds(props.weightReferenceData, props.modelValue.weight)),
+      weightSds: computed(() => sds(props.weightReferenceData, ageYears.value, props.modelValue.weight)),
 
-      update (key: string, value: number|undefined) {
+      update (key: string, value?: string|number|null) {
         emit('update:modelValue', { ...props.modelValue, [key]: value })
       },
 
