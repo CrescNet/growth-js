@@ -1,53 +1,66 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.202.1/containers/typescript-node
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-  "name": "Node.js & TypeScript",
-  "runArgs": ["--init"],
-  "build": {
-    "dockerfile": "Dockerfile",
-    // Update 'VARIANT' to pick a Node version: 16, 14, 12.
-    // Append -bullseye or -buster to pin to an OS version.
-    // Use -bullseye variants on local on arm64/Apple Silicon.
-    "args": { 
-      "VARIANT": "16-bullseye"
-    }
-  },
+	"name": "Node.js & TypeScript",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"nodeGypDependencies": true,
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-contrib/features/quasar-cli": {
+			"version": "latest"
+		}
+	},
 
-  "remoteEnv": {
-    "NPM_AUTH_TOKEN": "${localEnv:NPM_AUTH_TOKEN}"
-  },
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
 
-  "customizations": {
-    "vscode": {
-      // Set *default* container specific settings.json values on container create.
-      "settings": {
-        "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
-        "typescript.tsdk": "node_modules/typescript/lib",
-      },
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
 
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "yarn install",
 
-      // Add the IDs of extensions you want installed when the container is created.
-      "extensions": [
-        "dbaeumer.vscode-eslint",
-        "Vue.volar",
-        "eamodio.gitlens",
-        "gamunu.vscode-yarn",
-        "hollowtree.vue-snippets",
-        "dariofuzinato.vue-peek",
-        "mhutchie.git-graph",
-        "syler.sass-indented",
-        "HookyQR.minify",
-        "eriklynd.json-tools"
-      ]
-    }
-  },
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": {
+				"eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
+				"typescript.tsdk": "node_modules/typescript/lib",
+				"[vue]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode"
+				},
+				"[javascript]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode"
+				},
+				"[typescript]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode"
+				}
+			},
 
-  // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  // "forwardPorts": [],
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"Vue.volar",
+				"gamunu.vscode-yarn",
+				"hollowtree.vue-snippets",
+				"dariofuzinato.vue-peek",
+				"mhutchie.git-graph",
+				"syler.sass-indented",
+				"HookyQR.minify",
+				"lokalise.i18n-ally",
+				"esbenp.prettier-vscode",
+				"formulahendry.auto-rename-tag",
+				"sdras.vue-vscode-snippets",
+				"mutantdino.resourcemonitor",
+				"Vue.vscode-typescript-vue-plugin"
+			]
+		}
+	}
 
-  // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "yarn install",
-
-  // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-  "remoteUser": "node"
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }
