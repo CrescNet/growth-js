@@ -82,6 +82,18 @@ export default function (this: void) {
     targetHeight,
     targetHeightSds(referenceData: ReferenceDataRow[], motherHeight: number, fatherHeight: number, sex: string): number|undefined {
       return sdsFromReference(referenceData, 18, targetHeight(motherHeight, fatherHeight, sex))
+    },
+    sds: (referenceData?: ReferenceDataRow[], age?: number, value?: number): number|undefined => {
+      if (!referenceData || age == undefined || !value) return undefined
+      return sdsFromReference(referenceData, age, value)
+    },
+    age: (birthdate?: string, date?: string) => {
+      if (!birthdate || !date) return undefined
+      return (new Date(date).getTime() - new Date(birthdate).getTime()) / (1000 * 60 * 60 * 24 * 354.25)
+    },
+    bmi: (height?: number, weight?: number) => {
+      if (!height || !weight) return undefined
+      return weight / (height / 100)**2
     }
   }
 }
