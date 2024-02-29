@@ -50,10 +50,10 @@ export const useReferenceStore = defineStore('reference', () => {
       disease: true
     },
     {
-      value: 'hypochondroplasia_argentinia',
-      label: t('hypochondroplasia_argentinia'),
-      authors: 'Arenas et al. 2018',
-      url: 'https://doi.org/10.1515/jpem-2018-0046',
+      value: 'hypochondroplasia',
+      label: t('hypochondroplasia'),
+      authors: 'Cheung et al. 2024',
+      url: 'https://doi.org/10.1002/ajmg.a.63431',
       disease: true
     },
     {
