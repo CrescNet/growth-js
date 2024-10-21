@@ -36,6 +36,7 @@
 import { defineComponent } from 'vue'
 import LanguageSelector from 'components/LanguageSelector.vue'
 import { useI18n } from 'vue-i18n'
+import packageInfo from '../../package.json'
 
 export default defineComponent({
   components: { LanguageSelector },
@@ -45,8 +46,8 @@ export default defineComponent({
       t,
       imprintUrl: process.env.VUE_APP_IMPRINT_URL,
       copyrightNotice: process.env.VUE_APP_COPYRIGHT_NOTICE,
-      version: process.env.npm_package_version,
-      productName: process.env.npm_package_productName
+      version: packageInfo.version,
+      productName: packageInfo.productName
     }
   }
 })
