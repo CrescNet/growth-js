@@ -6,7 +6,7 @@
         type="date"
         debounce="500"
         :modelValue="modelValue.date"
-        :title="age === undefined ? undefined : t('year', Math.round(age * 10) / 10)"
+        :title="roundedAge === undefined ? undefined : t('year', roundedAge)"
         @update:model-value="update('date', $event)"
       />
     </td>
@@ -47,15 +47,7 @@
       </q-input>
     </td>
     <td>
-      <q-input
-        outlined
-        readonly
-        class="cursor-inherit"
-        type="number"
-        step="any"
-        title="kg/m²"
-        :model-value="bmi"
-      >
+      <q-input outlined readonly class="cursor-inherit" type="number" step="any" title="kg/m²" :model-value="bmi">
         <template #append>
           <div v-if="bmiSds" :title="t('sdsDescription')" class="text-subtitle2" :class="sdsClass(bmiSds)">
             {{ bmiSds.toFixed(2) }} SDS
@@ -64,13 +56,7 @@
       </q-input>
     </td>
     <td>
-      <q-btn
-        round
-        color="red"
-        icon="clear"
-        :title="t('deleteRow')"
-        @click="$emit('deleteRow')"
-      />
+      <q-btn round color="red" icon="clear" :title="t('deleteRow')" @click="$emit('deleteRow')" />
     </td>
   </tr>
 </template>
@@ -85,7 +71,10 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Object as () => Visit,
-      default: () => { {} }
+      default: () => {
+        {
+        }
+      }
     },
     birthdate: String,
     bmiReferenceData: Array as () => ReferenceDataRow[],
@@ -93,16 +82,21 @@ export default defineComponent({
     weightReferenceData: Array as () => ReferenceDataRow[]
   },
   emits: ['update:modelValue', 'deleteRow'],
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const { t } = useI18n()
     const { sds, age, bmi } = useReferences()
 
     const ageYears = computed(() => age(props.birthdate, props.modelValue.date))
     const bmiValue = computed(() => bmi(props.modelValue.height, props.modelValue.weight))
+    const roundedAge = computed(() => {
+      if (ageYears.value === undefined) return undefined
+      const rounded = Math.round(ageYears.value * 10) / 10
+      return rounded < 0 ? 0 : rounded
+    })
 
     return {
       t,
-      age: ageYears,
+      roundedAge,
 
       bmi: computed(() => {
         if (!bmiValue.value) return undefined
@@ -115,11 +109,11 @@ export default defineComponent({
 
       weightSds: computed(() => sds(props.weightReferenceData, ageYears.value, props.modelValue.weight)),
 
-      update (key: string, value?: string|number|null) {
+      update(key: string, value?: string | number | null) {
         emit('update:modelValue', { ...props.modelValue, [key]: value })
       },
 
-      sdsClass (sds: number): string {
+      sdsClass(sds: number): string {
         if (Math.abs(sds) >= 1.881) return 'text-negative'
         if (Math.abs(sds) >= 1.644) return 'text-warning'
         return 'text-positive'
