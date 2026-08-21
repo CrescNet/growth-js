@@ -1,8 +1,10 @@
 <script lang="ts">
 	let {
-		value = $bindable()
+		value = $bindable(),
+		class: className = ''
 	}: {
 		value?: Date;
+		class?: string;
 	} = $props();
 
 	let internal = $derived(value?.toISOString().split('T', 1));
@@ -18,4 +20,4 @@
 	}
 </script>
 
-<input type="date" class="input" value={internal} oninput={(e) => handleInput(e)} />
+<input type="date" class="input {className}" value={internal} oninput={(e) => handleInput(e)} />

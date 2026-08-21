@@ -90,7 +90,7 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>{m.date()}</th>
+								<th>{m.date()} | {m.age()}</th>
 								<th>{m.height()} (cm)</th>
 								<th>{m.weight()} (kg)</th>
 								<th>{m.bmi()} (kg/m<sup>2</sup>)</th>
@@ -100,9 +100,14 @@
 						<tbody>
 							{#each measurements as measurement, i}
 								<tr>
-									<td title={m.age({ years: age(measurement.date, birthDate) ?? '' })}
-										><DateInput bind:value={measurement.date} /></td
-									>
+									<td>
+										<div class="join">
+											<DateInput class="join-item" bind:value={measurement.date} />
+											<span class="btn pointer-events-none join-item"
+												>{age(birthDate, measurement.date)}</span
+											>
+										</div>
+									</td>
 									<td><input type="number" class="input" bind:value={measurement.height} /></td>
 									<td><input type="number" class="input" bind:value={measurement.weight} /></td>
 									<td
