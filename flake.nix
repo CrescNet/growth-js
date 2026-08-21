@@ -1,5 +1,5 @@
 {
-  description = "Node.js development environment";
+  description = "SvelteKit development environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -14,11 +14,13 @@
       {
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            nodejs_26
-            yarn
+            bun
+            marksman
             prettier
-            vue-language-server
+            svelte-language-server
+            tailwindcss-language-server
             typescript-language-server
+            vscode-json-languageserver
           ];
         };
       });

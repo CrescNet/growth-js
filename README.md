@@ -16,21 +16,17 @@ We focused on data privacy when developing this application.
 
 ```bash
 # Install the dependencies
-yarn
+bun i
 
 # Start the app in development mode (hot-code reloading, error reporting, etc.)
-yarn dev
+bun dev
 
 # Lint the files
-yarn lint
+bun lint
 
 # Format the files
-yarn format
+bun format
 
 # Build the app for production
-yarn build
+bun build
 ```
-
-### Customize the configuration
-
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
