@@ -1,28 +1,12 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
 	import DateInput from '$lib/components/DateInput.svelte';
-
-	interface Reference {
-		title: string;
-		source?: string;
-	}
+	import { age, bmi, type Reference } from '$lib/references';
 
 	interface Measurement {
 		date?: Date;
 		height?: number;
 		weight?: number;
-	}
-
-	function bmi(height?: number, weight?: number): number | undefined {
-		if (height === undefined || weight === undefined) return undefined;
-		return (weight / (height / 100)) ^ 2;
-	}
-	function age(date?: Date, birthDate?: Date) {
-		if (date === undefined || birthDate === undefined) return undefined;
-		return (
-			Math.round(((date.getTime() - birthDate.getTime()) / (1000 * 60 * 60 * 24 * 365.25)) * 10) /
-			10
-		);
 	}
 
 	const references: Reference[] = [];
