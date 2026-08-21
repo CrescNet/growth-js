@@ -25,5 +25,6 @@
 	"export": "Export",
 	"import": "Import",
 	"reset": "Reset",
-	"age": "Alter: {years} Jahre"
+	"age": "Alter: {years} Jahre",
+	"optional": "Optional"
 }
