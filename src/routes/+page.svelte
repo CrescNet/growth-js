@@ -4,6 +4,7 @@
 	import { type Measurement } from '$lib/types';
 	import MeasurementTable from '$lib/components/MeasurementTable.svelte';
 	import MasterDataInput from '$lib/components/MasterDataInput.svelte';
+	import GrowthChart from '$lib/components/GrowthChart.svelte';
 
 	let reference = $state<Reference>();
 	let sex = $state<String>();
@@ -53,11 +54,11 @@
 
 	<div class="divider lg:divider-horizontal"></div>
 
-	<div class="dock flex flex-1">
-		<button><span class="dock-label">{m.height()}</span></button>
+	<div class="flex flex-1">
+		<!-- <button><span class="dock-label">{m.height()}</span></button>
 		<button><span class="dock-label">{m.weight()}</span></button>
-		<button><span class="dock-label">{m.bmi()}</span></button>
+		<button><span class="dock-label">{m.bmi()}</span></button> -->
 
-		<div class="h-100 w-full skeleton"></div>
+		<GrowthChart {measurements} {reference} {sex} {birthDate} {motherHeight} {fatherHeight} />
 	</div>
 </div>

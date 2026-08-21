@@ -54,5 +54,10 @@
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.60.1",
 		"vite": "^8.0.16"
+	},
+	"dependencies": {
+		"chart.js": "^4.5.1",
+		"chartjs-plugin-zoom": "^2.2.0",
+		"svelte-chartjs": "^4.0.1"
 	}
 }
