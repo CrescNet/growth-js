@@ -1,0 +1,4 @@
+[[language]]
+name = "svelte"
+language-servers = [ "svelteserver", "tailwindcss-ls", "typescript-language-server" ]
+auto-format = true
