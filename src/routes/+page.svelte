@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
-	import DateInput from '../components/DateInput.svelte';
+	import DateInput from '$lib/components/DateInput.svelte';
 
 	interface Reference {
 		title: string;
