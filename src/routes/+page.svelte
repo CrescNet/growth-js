@@ -12,9 +12,10 @@
 	let motherHeight = $state<number>();
 	let fatherHeight = $state<number>();
 	let measurements = $state<Measurement[]>([{}]);
+	let chartMeasurement = $state('height');
 </script>
 
-<div class="flex w-full flex-col lg:flex-row">
+<div class="flex h-full flex-col lg:flex-row">
 	<div class="flex flex-1 flex-col gap-3">
 		<div class="card bg-base-100 shadow-sm card-sm card-border">
 			<div class="card-body">
@@ -48,11 +49,28 @@
 
 	<div class="divider lg:divider-horizontal"></div>
 
-	<div class="flex flex-1">
-		<!-- <button><span class="dock-label">{m.height()}</span></button>
-		<button><span class="dock-label">{m.weight()}</span></button>
-		<button><span class="dock-label">{m.bmi()}</span></button> -->
+	<div class="flex flex-1 flex-col items-center">
+		<label class="tabs tabs-box">
+			{#each ['height', 'weight', 'bmi'] as measurementType}
+				<input
+					type="radio"
+					name="type"
+					class="tab"
+					aria-label={m[measurementType as keyof typeof m]()}
+					value={measurementType}
+					bind:group={chartMeasurement}
+				/>
+			{/each}
+		</label>
 
-		<GrowthChart {measurements} {reference} {sex} {birthDate} {motherHeight} {fatherHeight} />
+		<GrowthChart
+			measurementType={chartMeasurement}
+			{measurements}
+			reference={reference.data}
+			{sex}
+			{birthDate}
+			{motherHeight}
+			{fatherHeight}
+		/>
 	</div>
 </div>

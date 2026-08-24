@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { age, type Reference } from '$lib/references';
-	import type { Measurement } from '$lib/types';
+	import { age, bmi, rawFromLms } from '$lib/references';
+	import type { Measurement, ReferenceData, ReferenceDataRow, SexReferenceData } from '$lib/types';
 	import { Chart } from 'svelte-chartjs';
 	import {
 		Chart as ChartJS,
@@ -11,8 +11,11 @@
 		CategoryScale,
 		LinearScale,
 		PointElement,
-		ScatterController
+		ScatterController,
+		LineController
 	} from 'chart.js';
+	import { m } from '$lib/paraglide/messages';
+	import { getTargetHeightSds } from '$lib/reference.svelte';
 
 	ChartJS.register(
 		Title,
@@ -22,34 +25,85 @@
 		CategoryScale,
 		LinearScale,
 		PointElement,
-		ScatterController
+		ScatterController,
+		LineController
 	);
 
 	let {
+		measurementType,
 		measurements,
 		reference,
 		sex,
 		birthDate,
 		motherHeight,
-		fatherHeight
+		fatherHeight,
+		targetColor = '#3d9970'
 	}: {
+		measurementType: string;
 		measurements: Measurement[];
-		reference?: Reference;
-		sex?: String;
+		reference?: ReferenceData;
+		sex?: string;
 		birthDate?: Date;
-		motherHeight?: Number;
-		fatherHeight?: Number;
+		motherHeight?: number;
+		fatherHeight?: number;
+		targetColor?: string;
 	} = $props();
+
+	let centileData = $derived(
+		!sex
+			? []
+			: (reference?.[measurementType as keyof ReferenceData]?.[sex as keyof SexReferenceData] ?? [])
+	);
+
+	let targetSds = $derived(getTargetHeightSds(fatherHeight, motherHeight));
+	let color = $derived(sex === 'female' ? '#f392a3' : sex === 'male' ? '#2086e8' : 'black');
 
 	let data = $derived({
 		datasets: [
 			{
-				label: 'Height',
+				label: m[measurementType as keyof typeof m](),
 				type: 'scatter',
-				backgroundColor: 'black',
-				data: measurements.map((m) => ({ x: age(birthDate, m.date), y: m.height }))
+				backgroundColor: color,
+				data: measurements.map((m) => ({
+					x: age(birthDate, m.date),
+					y:
+						measurementType === 'bmi'
+							? bmi(m.height, m.weight)
+							: m[measurementType as keyof Measurement]
+				}))
+			},
+			{
+				label: m.parental_estimated_value(),
+				type: 'line',
+				data:
+					targetSds === undefined
+						? []
+						: centileData?.map((c) => ({
+								x: c.age,
+								y: rawFromLms(targetSds, c.l ?? 1, c.m, c.s)
+							})),
+				borderColor: targetColor,
+				borderWidth: 2,
+				pointHitRadius: 0,
+				pointRadius: 0
+			},
+			...['p03', 'p50', 'p97'].map((p) => ({
+				label: p,
+				type: 'line',
+				data: centileData.map((c) => ({ x: c.age, y: c[p as keyof ReferenceDataRow] })),
+				borderColor: 'black',
+				borderWidth: 1,
+				pointHitRadius: 0,
+				pointRadius: 0
+			}))
+		],
+		options: {
+			elements: {
+				line: {
+					fill: false
+				}
 			}
-		]
+		}
 	});
 	let options = {
 		responsive: true,
@@ -60,4 +114,4 @@
 	};
 </script>
 
-<Chart type="scatter" {data} {options} class="h-50 w-50" />
+<Chart type="scatter" {data} {options} updateMode="none" class="h-50 w-50" />
