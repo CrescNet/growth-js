@@ -39,14 +39,12 @@
 				</option>
 			{/each}
 		</select>
-		{#if reference.declaration?.authors}
-			<p class="label">
-				{m.source()}:
-				<a href={reference.declaration.url} class="link truncate link-hover" target="_blank">
-					{reference.declaration.authors}
-				</a>
-			</p>
-		{/if}
+		<p class={['label', !reference.declaration?.authors && 'invisible']}>
+			{m.source()}:
+			<a href={reference.declaration?.url} class="link truncate link-hover" target="_blank">
+				{reference.declaration?.authors}
+			</a>
+		</p>
 	</div>
 
 	<div class="flex flex-col">
