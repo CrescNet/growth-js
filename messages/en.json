@@ -26,5 +26,16 @@
 	"import": "Import",
 	"reset": "Reset",
 	"age": "Age",
-	"optional": "Optional"
+	"optional": "optional",
+	"normal_german": "Germany (without chronic diseases)",
+	"normal_china": "China (without chronic diseases)",
+	"normal_who": "International, WHO (without chronic diseases)",
+	"normal_turkish_germany": "Germany (Turkish descent born, without chronic diseases)",
+	"achondroplasia": "Achondroplasia",
+	"hypochondroplasia": "Hypochondroplasia",
+	"noonan_japan": "Noonan Syndrome",
+	"trisomy21_america": "Trisomy 21",
+	"target_height": "Target height",
+	"target_height_description": "The target height is a rough estimation of the final hight your child might reach.\nIt is derived from father and mother height.",
+	"parental_estimated_value": "Parental estimated value"
 }

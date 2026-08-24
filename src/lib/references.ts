@@ -74,32 +74,19 @@ export function sdsFromLms(value: number, l: number, m: number, s: number): numb
 export function sdsFromReference(
 	referenceData: ReferenceDataRow[],
 	age: number,
-	value: number
+	value?: number
 ): number | undefined {
 	const row = getMatchingReferenceRow(referenceData, age);
-	return !row ? undefined : sdsFromLms(value, row.l ?? 1, row.m, row.s);
-}
-
-export function targetHeight(motherHeight: number, fatherHeight: number, sex: string): number {
-	return (motherHeight + fatherHeight) / 2 + (sex == 'male' ? 6.5 : -6.5);
+	return (!row || value === undefined) ? undefined : sdsFromLms(value, row.l ?? 1, row.m, row.s);
 }
 
 export function rawFromReference(
 	referenceData: ReferenceDataRow[],
 	age: number,
-	value: number
+	value?: number
 ): number | undefined {
 	const row = getMatchingReferenceRow(referenceData, age);
-	return !row ? undefined : rawFromLms(value, row.l ?? 1, row.m, row.s);
-}
-
-export function targetHeightSds(
-	referenceData: ReferenceDataRow[],
-	motherHeight: number,
-	fatherHeight: number,
-	sex: string
-): number | undefined {
-	return sdsFromReference(referenceData, 18, targetHeight(motherHeight, fatherHeight, sex));
+	return (!row || value === undefined) ? undefined : rawFromLms(value, row.l ?? 1, row.m, row.s);
 }
 
 export function sds(

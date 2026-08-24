@@ -1,40 +1,50 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
-	import type { Reference } from '$lib/references';
 	import DateInput from './DateInput.svelte';
+	import {
+		reference,
+		availableReferences,
+		getTargetHeight,
+		getTargetHeightSds
+	} from '$lib/reference.svelte';
+	import type { ReferenceDeclaration } from '$lib/types';
+	import { round } from '$lib/utils';
 
 	let {
-		reference: selectedReference = $bindable(),
 		sex = $bindable(),
 		birthDate = $bindable(),
 		motherHeight = $bindable(),
 		fatherHeight = $bindable()
 	}: {
-		reference?: Reference;
-		sex?: String;
+		sex?: string;
 		birthDate?: Date;
-		motherHeight?: Number;
-		fatherHeight?: Number;
+		motherHeight?: number;
+		fatherHeight?: number;
 	} = $props();
 
-	const references: Reference[] = [];
+	const references: ReferenceDeclaration[] = availableReferences;
+
+	const target = $derived(round(getTargetHeight(sex, fatherHeight, motherHeight)));
+	const targetSds = $derived(round(getTargetHeightSds(fatherHeight, motherHeight), 2));
 </script>
 
 <div class="grid grid-flow-row grid-cols-3 gap-3">
 	<div class="flex flex-col">
 		<label class="label" for="reference">{m.reference()}</label>
-		<select class="select" id="reference" bind:value={selectedReference}>
-			<option disabled selected>{m.pick_reference()}</option>
+		<select class="select" id="reference" bind:value={reference.declaration}>
+			<option disabled selected value={undefined}>{m.pick_reference()}</option>
 			{#each references as reference}
 				<option value={reference}>
-					{reference.title}
+					{reference.label}
 				</option>
 			{/each}
 		</select>
-		{#if selectedReference?.source}
+		{#if reference.declaration?.authors}
 			<p class="label">
 				{m.source()}:
-				{selectedReference.source}
+				<a href={reference.declaration.url} class="link truncate link-hover" target="_blank">
+					{reference.declaration.authors}
+				</a>
 			</p>
 		{/if}
 	</div>
@@ -42,7 +52,7 @@
 	<div class="flex flex-col">
 		<label class="label" for="sex">{m.sex()}</label>
 		<select class="select" id="sex" bind:value={sex}>
-			<option disabled selected>{m.pick_sex()}</option>
+			<option disabled selected value={undefined}>{m.pick_sex()}</option>
 			<option value="female">{m.female()}</option>
 			<option value="male">{m.male()}</option>
 			<option value="diverse">{m.diverse()}</option>
@@ -65,4 +75,16 @@
 		<input type="number" id="father-height" class="input" bind:value={fatherHeight} />
 		<p class="label">{m.in_cm()}</p>
 	</div>
+
+	{#if target !== undefined}
+		<div class="flex flex-col" title={m.target_height_description()}>
+			<div class="label">{m.target_height()}</div>
+			<strong class="input border-0 pl-0">
+				{target} cm
+				{#if targetSds !== undefined}
+					({targetSds} SDS)
+				{/if}
+			</strong>
+		</div>
+	{/if}
 </div>

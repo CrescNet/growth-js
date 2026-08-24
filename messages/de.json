@@ -9,7 +9,7 @@
 	"sex": "Biologisches Geschlecht",
 	"pick_sex": "Geschlecht auswählen...",
 	"female": "Weiblich",
-	"male": "Wännlich",
+	"male": "Männlich",
 	"diverse": "Divers",
 	"birth_date": "Geburtsdatum",
 	"source": "Quelle",
@@ -26,5 +26,16 @@
 	"import": "Import",
 	"reset": "Reset",
 	"age": "Alter",
-	"optional": "Optional"
+	"optional": "optional",
+	"normal_german": "Deutschland (ohne chronische Erkrankungen)",
+	"normal_china": "China (ohne chronische Erkrankungen)",
+	"normal_who": "International, WHO (ohne chronische Erkrankungen)",
+	"normal_turkish_germany": "Deutschland (türkischer Abstammung, ohne chronische Erkrankungen)",
+	"achondroplasia": "Achondroplasie",
+	"hypochondroplasia": "Hypochondroplasie",
+	"noonan_japan": "Noonan-Syndrom",
+	"trisomy21_america": "Trisomie 21",
+	"target_height": "Zielgröße",
+	"target_height_description": "Die Zielgröße ist eine grobe Schätzung der endgültigen Größe, die Ihr Kind erreichen könnte.\nSie leitet sich von der Vater- und Muttergröße ab.",
+	"parental_estimated_value": "Elterlicher Erwartungswert"
 }
