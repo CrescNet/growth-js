@@ -17,7 +17,7 @@ export interface ReferenceDataRow {
 	s: number;
 	p03?: number;
 	p50?: number;
-	p97?:number;
+	p97?: number;
 }
 
 export interface ReferenceDeclaration {

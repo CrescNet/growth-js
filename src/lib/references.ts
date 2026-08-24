@@ -1,4 +1,4 @@
-import type { ReferenceData, SexReferenceData } from "./types";
+import type { ReferenceData, SexReferenceData } from './types';
 
 export interface Reference {
 	title: string;
@@ -79,7 +79,7 @@ export function sdsFromReference(
 	value?: number
 ): number | undefined {
 	const row = getMatchingReferenceRow(referenceData, age);
-	return (!row || value === undefined) ? undefined : sdsFromLms(value, row.l ?? 1, row.m, row.s);
+	return !row || value === undefined ? undefined : sdsFromLms(value, row.l ?? 1, row.m, row.s);
 }
 
 export function rawFromReference(
@@ -88,7 +88,7 @@ export function rawFromReference(
 	value?: number
 ): number | undefined {
 	const row = getMatchingReferenceRow(referenceData, age);
-	return (!row || value === undefined) ? undefined : rawFromLms(value, row.l ?? 1, row.m, row.s);
+	return !row || value === undefined ? undefined : rawFromLms(value, row.l ?? 1, row.m, row.s);
 }
 
 export function sds(
@@ -96,9 +96,10 @@ export function sds(
 	value?: number,
 	sex?: string,
 	measurement?: string,
-	referenceData?: ReferenceData,
+	referenceData?: ReferenceData
 ): number | undefined {
-	if (age === undefined || value === undefined || !sex || !measurement || !referenceData) return undefined;
+	if (age === undefined || value === undefined || !sex || !measurement || !referenceData)
+		return undefined;
 	const data = referenceData[measurement as keyof ReferenceData]?.[sex as keyof SexReferenceData];
 	if (!data) return undefined;
 	return sdsFromReference(data, age, value);
@@ -106,12 +107,10 @@ export function sds(
 
 export function age(birthdate?: Date, date?: Date): number | undefined {
 	if (birthdate === undefined || date === undefined) return undefined;
-	return (
-		(date.getTime() - birthdate.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
-	);
+	return (date.getTime() - birthdate.getTime()) / (1000 * 60 * 60 * 24 * 365.25);
 }
 
 export function bmi(height?: number, weight?: number): number | undefined {
 	if (height === undefined || weight === undefined) return undefined;
-	return (weight / (height / 100) ** 2);
+	return weight / (height / 100) ** 2;
 }

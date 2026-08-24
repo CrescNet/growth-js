@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
-	import { type Reference } from '$lib/references';
 	import { type Measurement } from '$lib/types';
 	import MeasurementTable from '$lib/components/MeasurementTable.svelte';
 	import MasterDataInput from '$lib/components/MasterDataInput.svelte';
