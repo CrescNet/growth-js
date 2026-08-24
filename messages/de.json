@@ -37,5 +37,10 @@
 	"trisomy21_america": "Trisomie 21",
 	"target_height": "Zielgröße",
 	"target_height_description": "Die Zielgröße ist eine grobe Schätzung der endgültigen Größe, die Ihr Kind erreichen könnte.\nSie leitet sich von der Vater- und Muttergröße ab.",
-	"parental_estimated_value": "Elterlicher Erwartungswert"
+	"parental_estimated_value": "Elterlicher Erwartungswert",
+	"export_description": "Sie haben folgende Möglichkeiten, um Ihre eingegebenen Daten abzuspeichern, bzw. zu exportieren:",
+	"save_to_file": "In Datei speichern",
+	"save_to_file_description": "Erzeugen Sie eine Datei aus Ihren Daten, die z.B. an Ihren Hausarzt übergeben werden kann.",
+	"show_qr": "QR-Code anzeigen",
+	"show_qr_description": "Lassen Sie sich einen mit Smartphone scanbaren QR-Code anzeigen."
 }

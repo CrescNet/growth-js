@@ -37,5 +37,10 @@
 	"trisomy21_america": "Trisomy 21",
 	"target_height": "Target height",
 	"target_height_description": "The target height is a rough estimation of the final hight your child might reach.\nIt is derived from father and mother height.",
-	"parental_estimated_value": "Parental estimated value"
+	"parental_estimated_value": "Parental estimated value",
+	"export_description": "You have the following options for saving or exporting the data you have entered:",
+	"save_to_file": "Save to file",
+	"save_to_file_description": "Create a file from your data that can for example be handed over to your family doctor.",
+	"show_qr": "Show QR code",
+	"show_qr_description": "You can scan this QR code to get your entered data as JSON format. This format is machine-readable."
 }

@@ -6,6 +6,7 @@
 	import GrowthChart from '$lib/components/GrowthChart.svelte';
 	import { reference } from '$lib/reference.svelte';
 	import { localStore } from '$lib/localStore.svelte';
+	import ExportModal from '$lib/components/ExportModal.svelte';
 
 	let sex = localStore('sex', undefined);
 	let birthDate = localStore('birthDate', undefined);
@@ -13,6 +14,8 @@
 	let fatherHeight = localStore('fatherHeight', undefined);
 	let measurements = localStore<Measurement[]>('measurements', []);
 	let chartMeasurement = $state('height');
+
+	let exportModal = $state(false);
 
 	function reset() {
 		reference.declaration = undefined;
@@ -56,7 +59,10 @@
 
 				<div class="flex flex-row justify-center">
 					<div class="join">
-						<button class="btn join-item text-primary-content btn-primary">{m.export()}</button>
+						<button
+							class="btn join-item text-primary-content btn-primary"
+							onclick={() => (exportModal = true)}>{m.export()}</button
+						>
 						<button class="btn join-item text-primary-content btn-primary">{m.import()}</button>
 						<button class="btn join-item text-error-content btn-error" onclick={reset}
 							>{m.reset()}</button
@@ -93,4 +99,14 @@
 			fatherHeight={fatherHeight.value}
 		/>
 	</div>
+
+	<ExportModal
+		bind:open={exportModal}
+		measurements={measurements.value}
+		referenceId={reference.declaration?.value}
+		sex={sex.value}
+		birthDate={birthDate.value}
+		motherHeight={motherHeight.value}
+		fatherHeight={fatherHeight.value}
+	/>
 </div>

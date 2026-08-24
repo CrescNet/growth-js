@@ -21,7 +21,7 @@
 </script>
 
 <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-	<table class="table w-full table-fixed table-xs [&_td]:px-1">
+	<table class="table w-full table-fixed table-xs [&_td]:px-1 [&_th]:truncate">
 		<thead>
 			<tr>
 				<th class="w-1/4">{m.date()} | {m.age()}</th>
