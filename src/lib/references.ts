@@ -1,3 +1,5 @@
+import type { ReferenceData, SexReferenceData } from "./types";
+
 export interface Reference {
 	title: string;
 	source?: string;
@@ -90,22 +92,26 @@ export function rawFromReference(
 }
 
 export function sds(
-	referenceData?: ReferenceDataRow[],
 	age?: number,
-	value?: number
+	value?: number,
+	sex?: string,
+	measurement?: string,
+	referenceData?: ReferenceData,
 ): number | undefined {
-	if (!referenceData || age == undefined || !value) return undefined;
-	return sdsFromReference(referenceData, age, value);
+	if (age === undefined || value === undefined || !sex || !measurement || !referenceData) return undefined;
+	const data = referenceData[measurement as keyof ReferenceData]?.[sex as keyof SexReferenceData];
+	if (!data) return undefined;
+	return sdsFromReference(data, age, value);
 }
 
 export function age(birthdate?: Date, date?: Date): number | undefined {
 	if (birthdate === undefined || date === undefined) return undefined;
 	return (
-		Math.round(((date.getTime() - birthdate.getTime()) / (1000 * 60 * 60 * 24 * 365.25)) * 10) / 10
+		(date.getTime() - birthdate.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
 	);
 }
 
 export function bmi(height?: number, weight?: number): number | undefined {
 	if (height === undefined || weight === undefined) return undefined;
-	return Math.round((weight / (height / 100) ** 2) * 100) / 100;
+	return (weight / (height / 100) ** 2);
 }

@@ -2,10 +2,15 @@
 	import { m } from '$lib/paraglide/messages';
 	import DateInput from '$lib/components/DateInput.svelte';
 	import type { Measurement } from '$lib/types';
-	import { age, bmi } from '$lib/references';
+	import { age, bmi, sds } from '$lib/references';
+	import { reference } from '$lib/reference.svelte';
+	import { round } from '$lib/utils';
 
-	let { value: measurements = $bindable(), birthDate }: { value: Measurement[]; birthDate?: Date } =
-		$props();
+	let {
+		value: measurements = $bindable(),
+		birthDate,
+		sex
+	}: { value: Measurement[]; birthDate?: Date; sex?: string } = $props();
 </script>
 
 <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -21,25 +26,41 @@
 		</thead>
 		<tbody>
 			{#each measurements as measurement, i}
+				{@const currentAge = age(birthDate, measurement.date)}
+				{@const bmiValue = bmi(measurement.height, measurement.weight)}
 				<tr>
 					<td>
 						<div class="join">
 							<DateInput class="join-item" bind:value={measurement.date} />
-							<span class="btn pointer-events-none join-item"
-								>{age(birthDate, measurement.date)}</span
-							>
+							<span class="btn pointer-events-none join-item">{round(currentAge, 1)}</span>
 						</div>
 					</td>
-					<td><input type="number" class="input" bind:value={measurement.height} /></td>
-					<td><input type="number" class="input" bind:value={measurement.weight} /></td>
-					<td
-						><input
-							type="number"
-							class="input"
-							disabled
-							value={bmi(measurement.height, measurement.weight)}
-						/></td
-					>
+					<td>
+						<div class="join">
+							<input type="number" class="input join-item" bind:value={measurement.height} />
+							<span class="btn pointer-events-none join-item">
+								{round(sds(currentAge, measurement.height, sex, 'height', reference.data), 2)}
+							</span>
+						</div>
+					</td>
+					<td>
+						<div class="join">
+							<input type="number" class="input join-item" bind:value={measurement.weight} />
+							<span class="btn pointer-events-none join-item">
+								{round(sds(currentAge, measurement.weight, sex, 'weight', reference.data), 2)}
+							</span>
+						</div>
+					</td>
+					<td>
+						<div class="join">
+							<div class="input join-item border border-dashed">
+								{round(bmiValue, 1)}
+							</div>
+							<span class="btn pointer-events-none join-item">
+								{round(sds(currentAge, bmiValue, sex, 'bmi', reference.data), 2)}
+							</span>
+						</div>
+					</td>
 					<td>
 						<button
 							class="btn text-error-content btn-error btn-sm"

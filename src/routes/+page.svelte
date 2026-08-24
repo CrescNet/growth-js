@@ -5,12 +5,12 @@
 	import MeasurementTable from '$lib/components/MeasurementTable.svelte';
 	import MasterDataInput from '$lib/components/MasterDataInput.svelte';
 	import GrowthChart from '$lib/components/GrowthChart.svelte';
+	import { reference } from '$lib/reference.svelte';
 
-	let reference = $state<Reference>();
-	let sex = $state<String>();
+	let sex = $state<string>();
 	let birthDate = $state<Date>();
-	let motherHeight = $state<Number>();
-	let fatherHeight = $state<Number>();
+	let motherHeight = $state<number>();
+	let fatherHeight = $state<number>();
 	let measurements = $state<Measurement[]>([{}]);
 </script>
 
@@ -29,17 +29,11 @@
 
 		<div class="card bg-base-100 shadow-sm card-sm card-border">
 			<div class="card-body flex flex-col">
-				<MasterDataInput
-					bind:reference
-					bind:sex
-					bind:birthDate
-					bind:motherHeight
-					bind:fatherHeight
-				/>
+				<MasterDataInput bind:sex bind:birthDate bind:motherHeight bind:fatherHeight />
 
 				<div class="divider"></div>
 
-				<MeasurementTable {birthDate} bind:value={measurements} />
+				<MeasurementTable {birthDate} {sex} bind:value={measurements} />
 
 				<div class="flex flex-row justify-center">
 					<div class="join">
