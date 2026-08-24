@@ -65,15 +65,15 @@
 	</div>
 
 	<div class="flex flex-col">
-		<label class="label" for="mother-height"><i>{m.optional()}:</i>{m.mother_height()}</label>
+		<label class="label" for="mother-height">{m.mother_height()}</label>
 		<input type="number" id="mother-height" class="input" bind:value={motherHeight} />
-		<p class="label">{m.in_cm()}</p>
+		<p class="label">{m.in_cm()}, {m.optional()}</p>
 	</div>
 
 	<div class="flex flex-col">
-		<label class="label" for="father-height"><i>{m.optional()}:</i>{m.father_height()}</label>
+		<label class="label" for="father-height">{m.father_height()}</label>
 		<input type="number" id="father-height" class="input" bind:value={fatherHeight} />
-		<p class="label">{m.in_cm()}</p>
+		<p class="label">{m.in_cm()}, {m.optional()}</p>
 	</div>
 
 	{#if target !== undefined}
