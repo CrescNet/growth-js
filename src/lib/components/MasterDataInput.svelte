@@ -2,10 +2,10 @@
 	import { m } from '$lib/paraglide/messages';
 	import DateInput from './DateInput.svelte';
 	import {
-		reference,
 		availableReferences,
 		getTargetHeight,
-		getTargetHeightSds
+		getTargetHeightSds,
+		reference
 	} from '$lib/reference.svelte';
 	import type { ReferenceDeclaration } from '$lib/types';
 	import { round } from '$lib/utils';

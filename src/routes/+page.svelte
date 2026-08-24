@@ -5,13 +5,23 @@
 	import MasterDataInput from '$lib/components/MasterDataInput.svelte';
 	import GrowthChart from '$lib/components/GrowthChart.svelte';
 	import { reference } from '$lib/reference.svelte';
+	import { localStore } from '$lib/localStore.svelte';
 
-	let sex = $state<string>();
-	let birthDate = $state<Date>();
-	let motherHeight = $state<number>();
-	let fatherHeight = $state<number>();
-	let measurements = $state<Measurement[]>([{}]);
+	let sex = localStore('sex', undefined);
+	let birthDate = localStore('birthDate', undefined);
+	let motherHeight = localStore('motherHeight', undefined);
+	let fatherHeight = localStore('fatherHeight', undefined);
+	let measurements = localStore<Measurement[]>('measurements', []);
 	let chartMeasurement = $state('height');
+
+	function reset() {
+		reference.declaration = undefined;
+		sex.value = undefined;
+		birthDate.value = undefined;
+		motherHeight.value = undefined;
+		fatherHeight.value = undefined;
+		measurements.value = [{}];
+	}
 </script>
 
 <div class="flex h-full flex-col lg:flex-row">
@@ -29,17 +39,28 @@
 
 		<div class="card bg-base-100 shadow-sm card-sm card-border">
 			<div class="card-body flex flex-col">
-				<MasterDataInput bind:sex bind:birthDate bind:motherHeight bind:fatherHeight />
+				<MasterDataInput
+					bind:sex={sex.value}
+					bind:birthDate={birthDate.value}
+					bind:motherHeight={motherHeight.value}
+					bind:fatherHeight={fatherHeight.value}
+				/>
 
 				<div class="divider"></div>
 
-				<MeasurementTable {birthDate} {sex} bind:value={measurements} />
+				<MeasurementTable
+					birthDate={birthDate.value}
+					sex={sex.value}
+					bind:value={measurements.value}
+				/>
 
 				<div class="flex flex-row justify-center">
 					<div class="join">
 						<button class="btn join-item text-primary-content btn-primary">{m.export()}</button>
 						<button class="btn join-item text-primary-content btn-primary">{m.import()}</button>
-						<button class="btn join-item text-error-content btn-error">{m.reset()}</button>
+						<button class="btn join-item text-error-content btn-error" onclick={reset}
+							>{m.reset()}</button
+						>
 					</div>
 				</div>
 			</div>
@@ -64,12 +85,12 @@
 
 		<GrowthChart
 			measurementType={chartMeasurement}
-			{measurements}
+			measurements={measurements.value}
 			reference={reference.data}
-			{sex}
-			{birthDate}
-			{motherHeight}
-			{fatherHeight}
+			sex={sex.value}
+			birthDate={birthDate.value}
+			motherHeight={motherHeight.value}
+			fatherHeight={fatherHeight.value}
 		/>
 	</div>
 </div>

@@ -1,26 +1,9 @@
 import { m } from '$lib/paraglide/messages';
+import { localStore } from './localStore.svelte';
 import { rawFromReference, sdsFromReference } from './references';
-import type { ReferenceData, ReferenceDeclaration, SexReferenceData } from './types';
+import type { ReferenceData, SexReferenceData } from './types';
 
 const references = import.meta.glob('$lib/references/*.json', { eager: true });
-
-export const reference = $state({
-	declaration: undefined as ReferenceDeclaration | undefined,
-	data: undefined as ReferenceData | undefined
-});
-
-$effect.root(() => {
-	$effect(() => {
-		if (reference.declaration) {
-			const referenceId = reference.declaration.value;
-			const path = `/src/lib/references/${referenceId}.json`;
-			const module = references[path];
-			reference.data = module ? (module as { default: ReferenceData }).default : undefined;
-		} else {
-			reference.data = undefined;
-		}
-	});
-});
 
 export const availableReferences = $state([
 	{
@@ -80,6 +63,26 @@ export const availableReferences = $state([
 		disease: true
 	}
 ]);
+
+const referenceId = localStore('referenceId', availableReferences.at(0)?.value);
+
+export const reference = $state({
+	declaration: availableReferences.find((r) => r.value === referenceId.value),
+	data: undefined as ReferenceData | undefined
+});
+
+$effect.root(() => {
+	$effect(() => {
+		referenceId.value = reference.declaration?.value;
+		if (reference.declaration) {
+			const path = `/src/lib/references/${referenceId.value}.json`;
+			const module = references[path];
+			reference.data = module ? (module as { default: ReferenceData }).default : undefined;
+		} else {
+			reference.data = undefined;
+		}
+	});
+});
 
 export function getTargetHeightSds(
 	fatherHeight?: number,
