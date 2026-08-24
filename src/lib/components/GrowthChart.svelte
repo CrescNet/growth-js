@@ -2,7 +2,6 @@
 	import { age, type Reference } from '$lib/references';
 	import type { Measurement } from '$lib/types';
 	import { Chart } from 'svelte-chartjs';
-	import zoomPlugin from 'chartjs-plugin-zoom';
 	import {
 		Chart as ChartJS,
 		Title,
@@ -23,8 +22,7 @@
 		CategoryScale,
 		LinearScale,
 		PointElement,
-		ScatterController,
-		zoomPlugin
+		ScatterController
 	);
 
 	let {
@@ -58,23 +56,6 @@
 		scales: {
 			x: { min: 0, max: 18 },
 			y: { min: 0 }
-		},
-		plugins: {
-			zoom: {
-				limits: {
-					x: { min: 0, max: 25, minRange: 1 },
-					y: { min: 0, max: 300, minRange: 5 }
-				},
-				zoom: {
-					wheel: { enabled: true },
-					pinch: { enabled: true },
-					mode: 'xy'
-				},
-				pan: {
-					enabled: true,
-					mode: 'xy'
-				}
-			}
 		}
 	};
 </script>
