@@ -114,4 +114,12 @@
 	};
 </script>
 
-<Chart type="scatter" {data} {options} updateMode="none" class="h-50 w-50" />
+<Chart
+	type="scatter"
+	{data}
+	{options}
+	updateMode="none"
+	class="h-50 w-50"
+	height={80}
+	width={100}
+/>
