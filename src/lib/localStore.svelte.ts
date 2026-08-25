@@ -1,5 +1,14 @@
 import { browser } from '$app/environment';
 
+const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
+
+function dateReviver(_: string, value: any) {
+	if (typeof value === 'string' && ISO_DATE_REGEX.test(value)) {
+		return new Date(value);
+	}
+	return value;
+}
+
 export class LocalStore<T> {
 	value = $state<T>() as T;
 	key = '';
@@ -10,7 +19,7 @@ export class LocalStore<T> {
 
 		if (browser) {
 			const item = localStorage.getItem(key);
-			if (item) this.value = JSON.parse(item);
+			if (item) this.value = JSON.parse(item, dateReviver);
 		}
 
 		$effect.root(() => {
