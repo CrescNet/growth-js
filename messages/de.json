@@ -43,5 +43,10 @@
 	"save_to_file_description": "Erzeugen Sie eine Datei aus Ihren Daten, die z.B. an Ihren Hausarzt übergeben werden kann.",
 	"show_qr": "QR-Code anzeigen",
 	"show_qr_description": "Lassen Sie sich einen mit Smartphone scanbaren QR-Code anzeigen.",
-	"qr_code": "QR-Code"
+	"qr_code": "QR-Code",
+	"import_description": "Laden Sie vormals exportierte Eingabedaten aus einer JSON-Datei oder -Zeichenkette.",
+	"json_file": "JSON-Datei",
+	"load_file": "Datei laden",
+	"load_string": "Zeichenkette laden",
+	"json_string": "JSON-Zeichenkette"
 }

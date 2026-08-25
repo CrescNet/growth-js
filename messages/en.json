@@ -43,5 +43,10 @@
 	"save_to_file_description": "Create a file from your data that can for example be handed over to your family doctor.",
 	"show_qr": "Show QR code",
 	"show_qr_description": "You can scan this QR code to get your entered data as JSON format. This format is machine-readable.",
-	"qr_code": "QR Code"
+	"qr_code": "QR Code",
+	"import_description": "Load previously exported input data from a JSON file or string.",
+	"json_file": "JSON file",
+	"load_file": "Load file",
+	"load_string": "Load string",
+	"json_string": "JSON string"
 }

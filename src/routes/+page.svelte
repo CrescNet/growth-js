@@ -7,6 +7,7 @@
 	import { reference } from '$lib/reference.svelte';
 	import { localStore } from '$lib/localStore.svelte';
 	import ExportModal from '$lib/components/ExportModal.svelte';
+	import ImportModal from '$lib/components/ImportModal.svelte';
 
 	let sex = localStore('sex', undefined);
 	let birthDate = localStore('birthDate', undefined);
@@ -16,6 +17,7 @@
 	let chartMeasurement = $state('height');
 
 	let exportModal = $state(false);
+	let importModal = $state(false);
 
 	function reset() {
 		reference.declaration = undefined;
@@ -63,7 +65,10 @@
 							class="btn join-item text-primary-content btn-primary"
 							onclick={() => (exportModal = true)}>{m.export()}</button
 						>
-						<button class="btn join-item text-primary-content btn-primary">{m.import()}</button>
+						<button
+							class="btn join-item text-primary-content btn-primary"
+							onclick={() => (importModal = true)}>{m.import()}</button
+						>
 						<button class="btn join-item text-error-content btn-error" onclick={reset}
 							>{m.reset()}</button
 						>
@@ -109,4 +114,6 @@
 		motherHeight={motherHeight.value}
 		fatherHeight={fatherHeight.value}
 	/>
+
+	<ImportModal bind:open={importModal} />
 </div>
