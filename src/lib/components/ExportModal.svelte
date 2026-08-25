@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
 	import type { Measurement } from '$lib/types';
+	import { saveToFile } from '$lib/utils';
 
 	let {
 		open = $bindable(false),
@@ -21,7 +22,6 @@
 	} = $props();
 
 	let dialogRef = $state<HTMLDialogElement>();
-	let exportFileName = $derived('data_' + new Date().toISOString() + '.json');
 	let showQrCode = $state(false);
 
 	$effect(() => {
@@ -32,7 +32,19 @@
 		}
 	});
 
-	function doFileExport() {}
+	function doFileExport() {
+		saveToFile(
+			JSON.stringify({
+				referenceId,
+				sex,
+				birthDate,
+				motherHeight,
+				fatherHeight,
+				measurements
+			}),
+			'data_' + new Date().toISOString() + '.json'
+		);
+	}
 </script>
 
 <dialog bind:this={dialogRef} class="modal" onclose={() => (open = false)}>
