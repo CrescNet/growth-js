@@ -2,6 +2,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import type { Measurement } from '$lib/types';
 	import { saveToFile } from '$lib/utils';
+	import QRCode from 'qrcode';
 
 	let {
 		open = $bindable(false),
@@ -23,13 +24,25 @@
 
 	let dialogRef = $state<HTMLDialogElement>();
 	let showQrCode = $state(false);
+	let qrSize = $derived(Math.sqrt(measurements.length ?? 1) * 100);
+	let qrDataUrl = $state<string>();
 
 	$effect(() => {
 		if (open) {
 			dialogRef?.showModal();
 		} else {
 			dialogRef?.close();
+			showQrCode = false;
 		}
+	});
+
+	$effect(() => {
+		QRCode.toDataURL(
+			JSON.stringify({ referenceId, sex, birthDate, motherHeight, fatherHeight, measurements }),
+			{ width: qrSize, margin: 2 }
+		)
+			.then((url) => (qrDataUrl = url))
+			.catch((e) => console.log(e));
 	});
 
 	function doFileExport() {
@@ -66,11 +79,16 @@
 			>
 			<p class="col-span-2 text-sm">{m.save_to_file_description()}</p>
 
-			<button class="btn text-primary-content btn-primary" onclick={() => (showQrCode = true)}
-				>{m.show_qr()}</button
+			<button
+				class="btn text-primary-content btn-primary"
+				onclick={() => (showQrCode = !showQrCode)}>{m.show_qr()}</button
 			>
 			<p class="col-span-2 text-sm">{m.show_qr_description()}</p>
 		</div>
+
+		{#if qrDataUrl && showQrCode}
+			<img src={qrDataUrl} class="mx-auto block" alt={m.qr_code()} />
+		{/if}
 	</div>
 	<form method="dialog" class="modal-backdrop">
 		<button onclick={() => (open = false)}>close</button>

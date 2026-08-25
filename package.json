@@ -40,6 +40,7 @@
 		"@tailwindcss/typography": "^0.5.19",
 		"@tailwindcss/vite": "^4.3.0",
 		"@types/node": "^24",
+		"@types/qrcode": "^1.5.6",
 		"daisyui": "^5.7.20",
 		"eslint": "^10.4.1",
 		"eslint-config-prettier": "^10.1.8",
@@ -58,6 +59,7 @@
 	"dependencies": {
 		"chart.js": "^4.5.1",
 		"chartjs-plugin-zoom": "^2.2.0",
+		"qrcode": "^1.5.4",
 		"svelte-chartjs": "^4.0.1"
 	}
 }

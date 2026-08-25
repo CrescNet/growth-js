@@ -42,5 +42,6 @@
 	"save_to_file": "In Datei speichern",
 	"save_to_file_description": "Erzeugen Sie eine Datei aus Ihren Daten, die z.B. an Ihren Hausarzt übergeben werden kann.",
 	"show_qr": "QR-Code anzeigen",
-	"show_qr_description": "Lassen Sie sich einen mit Smartphone scanbaren QR-Code anzeigen."
+	"show_qr_description": "Lassen Sie sich einen mit Smartphone scanbaren QR-Code anzeigen.",
+	"qr_code": "QR-Code"
 }

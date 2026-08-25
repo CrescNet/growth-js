@@ -42,5 +42,6 @@
 	"save_to_file": "Save to file",
 	"save_to_file_description": "Create a file from your data that can for example be handed over to your family doctor.",
 	"show_qr": "Show QR code",
-	"show_qr_description": "You can scan this QR code to get your entered data as JSON format. This format is machine-readable."
+	"show_qr_description": "You can scan this QR code to get your entered data as JSON format. This format is machine-readable.",
+	"qr_code": "QR Code"
 }
