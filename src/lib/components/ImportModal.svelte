@@ -6,12 +6,14 @@
 
 	let {
 		open = $bindable(),
+		/* eslint-disable no-useless-assignment */
 		reference = $bindable(),
 		sex = $bindable(),
 		birthDate = $bindable(),
 		fatherHeight = $bindable(),
 		motherHeight = $bindable(),
 		measurements = $bindable()
+		/* eslint-enable no-useless-assignment */
 	}: {
 		open: boolean;
 		reference?: ReferenceDeclaration;

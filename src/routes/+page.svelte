@@ -86,7 +86,7 @@
 
 	<div class="flex flex-col items-center overflow-hidden pb-3 lg:flex-5/12 xl:flex-1">
 		<label class="tabs tabs-box">
-			{#each ['height', 'weight', 'bmi'] as measurementType}
+			{#each ['height', 'weight', 'bmi'] as measurementType (measurementType)}
 				<input
 					type="radio"
 					name="type"

@@ -33,7 +33,7 @@
 		<label class="label" for="reference">{m.reference()}</label>
 		<select class="select" id="reference" bind:value={reference.declaration}>
 			<option disabled selected value={undefined}>{m.pick_reference()}</option>
-			{#each references as reference}
+			{#each references as reference (reference.value)}
 				<option value={reference}>
 					{reference.label}
 				</option>
@@ -41,7 +41,12 @@
 		</select>
 		<p class={['label', !reference.declaration?.authors && 'invisible']}>
 			{m.source()}:
-			<a href={reference.declaration?.url} class="link truncate link-hover" target="_blank">
+			<a
+				href={reference.declaration?.url}
+				class="link truncate link-hover"
+				rel="external"
+				target="_blank"
+			>
 				{reference.declaration?.authors}
 			</a>
 		</p>

@@ -32,7 +32,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each measurements as measurement, i}
+			{#each measurements as measurement, i (i)}
 				{@const currentAge = age(birthDate, measurement.date)}
 				{@const bmiValue = bmi(measurement.height, measurement.weight)}
 				{@const bmiSds = sds(currentAge, bmiValue, sex, 'bmi', reference.data)}
@@ -51,7 +51,7 @@
 							>
 						</div>
 					</td>
-					{#each ['height', 'weight'] as measurementType}
+					{#each ['height', 'weight'] as measurementType (measurementType)}
 						{@const sdsValue = sds(
 							currentAge,
 							measurement[measurementType as keyof Measurement] as number | undefined,

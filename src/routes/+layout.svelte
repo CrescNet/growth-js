@@ -43,7 +43,7 @@
 				<ul
 					class="menu dropdown-content z-1 rounded-box bg-base-200 p-2 text-base-content shadow-sm"
 				>
-					{#each locales as locale}
+					{#each locales as locale (locale)}
 						<li>
 							<button class="uppercase" onclick={() => setLocale(locale)}>{locale}</button>
 						</li>
@@ -64,8 +64,8 @@
 			</p>
 		</aside>
 		<nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-			<a href="https://crescnet.org/">CrescNet</a>
-			<a href={packageInfo.homepage}>GitHub</a>
+			<a href="https://crescnet.org/" rel="external" target="_blank">CrescNet</a>
+			<a href={packageInfo.homepage} rel="external" target="_blank">GitHub</a>
 		</nav>
 	</footer>
 </div>
