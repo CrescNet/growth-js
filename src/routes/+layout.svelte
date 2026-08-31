@@ -2,6 +2,7 @@
 	import { locales, setLocale } from '$lib/paraglide/runtime';
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.ico';
+	import logo from '$lib/assets/logo.svg';
 	import packageInfo from '../../package.json';
 
 	let { children } = $props();
@@ -11,8 +12,9 @@
 
 <div class="flex min-h-screen flex-col">
 	<div class="navbar bg-primary text-primary-content shadow-sm">
-		<div class="flex-1">
-			<span class="text-xl">{packageInfo.productName}</span>
+		<div class="flex flex-1 flex-row items-center justify-start gap-3">
+			<img src={logo} alt="CrescNet" class="h-8 flex-none" />
+			<span class="flex-1 text-xl">{packageInfo.productName}</span>
 		</div>
 		<div class="flex-none">
 			<div class="dropdown dropdown-end">
