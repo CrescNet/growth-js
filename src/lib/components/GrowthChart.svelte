@@ -124,3 +124,11 @@
 	height={80}
 	width={100}
 />
+
+<div class="card bg-base-100 shadow-sm card-sm sm:card-border">
+	<div class="card-body p-1 sm:p-3">
+		<h2 class="card-title">{m.description()}</h2>
+		<p>{m.percentile_description()}</p>
+		<p>{m.parental_estimation_description()}</p>
+	</div>
+</div>

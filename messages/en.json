@@ -49,5 +49,7 @@
 	"load_file": "Load file",
 	"load_string": "Load string",
 	"json_string": "JSON string",
-	"measurements": "Measurements"
+	"measurements": "Measurements",
+	"percentile_description": "The lines p03, p50, and p97 are referred to as the 3rd, 50th, and 97th percentiles, respectively. For example, the 97th percentile indicates that 97% of all measured values lie below this line. A child whose measurement lies above the 97th percentile is therefore noticeably tall compared to children of the same age and gender. The child is among the tallest 3 percent.",
+	"parental_estimation_description": "The parental expectation value is calculated based on both parental measures and the selected reference values. This is merely a guideline that can be used to estimate whether a child, for example, falls significantly below or above parental expectations."
 }
