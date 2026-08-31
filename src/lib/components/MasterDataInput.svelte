@@ -28,7 +28,7 @@
 	const targetSds = $derived(round(getTargetHeightSds(fatherHeight, motherHeight), 2));
 </script>
 
-<div class="grid grid-flow-row grid-cols-3 gap-3">
+<div class="grid grid-flow-row grid-cols-2 gap-x-2 sm:grid-cols-3 sm:gap-3">
 	<div class="flex flex-col">
 		<label class="label" for="reference">{m.reference()}</label>
 		<select class="select" id="reference" bind:value={reference.declaration}>

@@ -30,28 +30,32 @@
 </script>
 
 <div class="flex h-full flex-col lg:flex-row">
-	<div class="flex flex-1 flex-col gap-3">
-		<div class="card bg-base-100 shadow-sm card-sm card-border">
-			<div class="card-body">
+	<div class="flex flex-col gap-3 lg:flex-7/12 xl:flex-1">
+		<div class="card bg-base-100 shadow-sm card-sm sm:card-border">
+			<div class="card-body p-1 sm:p-3">
 				<h2 class="card-title">{m.description()}</h2>
 				<p>{m.app_description()}</p>
 			</div>
-			<div class="card-body">
+			<div class="card-body p-1 sm:p-3">
 				<h2 class="card-title">{m.privacy()}</h2>
 				<p>{m.privacy_note()}</p>
 			</div>
 		</div>
 
 		<div class="card bg-base-100 shadow-sm card-sm card-border">
-			<div class="card-body flex flex-col">
+			<div class="card-body flex flex-col p-1 sm:p-3">
 				<MasterDataInput
 					bind:sex={sex.value}
 					bind:birthDate={birthDate.value}
 					bind:motherHeight={motherHeight.value}
 					bind:fatherHeight={fatherHeight.value}
 				/>
+			</div>
 
-				<div class="divider"></div>
+			<div class="divider m-0"></div>
+
+			<div class="card-body p-1 sm:p-3">
+				<div class="card-title">{m.measurements()}</div>
 
 				<MeasurementTable
 					birthDate={birthDate.value}
@@ -78,9 +82,9 @@
 		</div>
 	</div>
 
-	<div class="divider lg:divider-horizontal"></div>
+	<div class="divider lg:mx-1 lg:divider-horizontal"></div>
 
-	<div class="flex flex-1 flex-col items-center">
+	<div class="flex flex-col items-center overflow-hidden pb-3 lg:flex-5/12 xl:flex-1">
 		<label class="tabs tabs-box">
 			{#each ['height', 'weight', 'bmi'] as measurementType}
 				<input

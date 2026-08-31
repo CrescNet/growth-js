@@ -107,6 +107,7 @@
 	});
 	let options = {
 		responsive: true,
+		maintainAspectRatio: true,
 		scales: {
 			x: { min: 0, max: 18 },
 			y: { min: 0 }

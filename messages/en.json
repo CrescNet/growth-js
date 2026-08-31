@@ -48,5 +48,6 @@
 	"json_file": "JSON file",
 	"load_file": "Load file",
 	"load_string": "Load string",
-	"json_string": "JSON string"
+	"json_string": "JSON string",
+	"measurements": "Measurements"
 }

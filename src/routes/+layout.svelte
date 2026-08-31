@@ -48,7 +48,7 @@
 		</div>
 	</div>
 
-	<div class="grow p-2">
+	<div class="grow sm:p-2">
 		{@render children()}
 	</div>
 

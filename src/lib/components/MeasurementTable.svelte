@@ -20,9 +20,9 @@
 	}
 </script>
 
-<div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-	<table class="table w-full table-fixed table-xs [&_td]:px-1 [&_th]:truncate">
-		<thead>
+<div class="rounded-box border border-base-content/5 bg-base-100">
+	<table class="w-full sm:table sm:table-fixed sm:table-xs sm:[&_td]:px-1 [&_th]:truncate">
+		<thead class="hidden sm:table-header-group">
 			<tr>
 				<th class="w-1/4">{m.date()} | {m.age()}</th>
 				<th class="w-1/4">{m.height()} (cm) | SDS</th>
@@ -36,11 +36,17 @@
 				{@const currentAge = age(birthDate, measurement.date)}
 				{@const bmiValue = bmi(measurement.height, measurement.weight)}
 				{@const bmiSds = sds(currentAge, bmiValue, sex, 'bmi', reference.data)}
-				<tr>
-					<td>
+				<tr class="grid grid-flow-row grid-cols-2 gap-x-2 pb-3 sm:table-row sm:pb-0">
+					<td class="block sm:table-cell">
+						<label class="label sm:hidden" for={'date-' + i}>{m.date()}</label>
 						<div class="join w-full">
-							<DateInput class="join-item" bind:value={measurement.date} />
-							<span class="btn pointer-events-none join-item w-10 justify-end truncate pr-0.5 pl-0"
+							<DateInput
+								class="join-item min-w-0 input-sm"
+								name={'date' + i}
+								bind:value={measurement.date}
+							/>
+							<span
+								class="btn pointer-events-none join-item w-10 justify-end truncate pr-1 pl-0 btn-sm"
 								>{round(currentAge, 1)}</span
 							>
 						</div>
@@ -53,16 +59,20 @@
 							measurementType,
 							reference.data
 						)}
-						<td>
-							<div class="join">
+						<td class="block sm:table-cell">
+							<label class="label sm:hidden" for={measurementType + '-' + i}
+								>{m[measurementType as keyof typeof m]()}</label
+							>
+							<div class="join w-full">
 								<input
 									type="number"
-									class="input join-item"
+									name={measurementType + '-' + i}
+									class="input join-item input-sm"
 									bind:value={measurement[measurementType as keyof Measurement]}
 								/>
 								<span
 									class={[
-										'btn pointer-events-none join-item w-10 justify-end truncate pr-0.5 pl-0',
+										'btn pointer-events-none join-item w-10 justify-end truncate pr-1 pl-0 btn-sm',
 										sdsClass(sdsValue)
 									]}
 								>
@@ -71,17 +81,19 @@
 							</div>
 						</td>
 					{/each}
-					<td>
-						<div class="join">
+					<td class="block sm:table-cell">
+						<label class="label sm:hidden" for={'bmi-' + i}>{m.bmi()}</label>
+						<div class="join w-full">
 							<input
 								type="number"
-								class="disabled input join-item border-dashed"
+								name={'bmi-' + i}
+								class="disabled input join-item border-dashed input-sm"
 								readonly
 								value={round(bmiValue, 1)}
 							/>
 							<span
 								class={[
-									'btn pointer-events-none join-item w-10 justify-end truncate pr-0.5 pl-0',
+									'btn pointer-events-none join-item w-10 justify-end truncate pr-1 pl-0 btn-sm',
 									sdsClass(bmiSds)
 								]}
 							>
@@ -89,11 +101,12 @@
 							</span>
 						</div>
 					</td>
-					<td>
+					<td class="mt-1 block sm:mt-0 sm:table-cell">
 						<button
 							class="btn text-error-content btn-error btn-sm"
 							title={m.remove_measurement()}
-							onclick={() => measurements.splice(i, 1)}>X</button
+							onclick={() => measurements.splice(i, 1)}
+							>X<span class="sm:hidden">{m.remove_measurement()}</span></button
 						>
 					</td>
 				</tr>
@@ -103,7 +116,7 @@
 			<tr>
 				<td colspan="5">
 					<button
-						class="btn text-secondary-content btn-secondary"
+						class="btn text-secondary-content btn-secondary btn-sm"
 						onclick={() => measurements.push({})}>+ {m.add_measurement()}</button
 					>
 				</td>

@@ -48,5 +48,6 @@
 	"json_file": "JSON-Datei",
 	"load_file": "Datei laden",
 	"load_string": "Zeichenkette laden",
-	"json_string": "JSON-Zeichenkette"
+	"json_string": "JSON-Zeichenkette",
+	"measurements": "Messungen"
 }
