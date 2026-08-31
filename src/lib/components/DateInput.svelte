@@ -2,11 +2,11 @@
 	let {
 		value = $bindable(),
 		class: className = '',
-		name = 'date'
+		id
 	}: {
 		value?: Date;
 		class?: string;
-		name?: string;
+		id?: string;
 	} = $props();
 
 	let internal = $derived(value?.toISOString().split('T', 1));
@@ -24,7 +24,7 @@
 
 <input
 	type="date"
-	{name}
+	{id}
 	class="input {className}"
 	value={internal}
 	oninput={(e) => handleInput(e)}

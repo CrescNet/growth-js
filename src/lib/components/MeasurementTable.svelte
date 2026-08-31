@@ -42,7 +42,7 @@
 						<div class="join w-full">
 							<DateInput
 								class="join-item min-w-0 input-sm"
-								name={'date' + i}
+								id={'date-' + i}
 								bind:value={measurement.date}
 							/>
 							<span
@@ -66,7 +66,7 @@
 							<div class="join w-full">
 								<input
 									type="number"
-									name={measurementType + '-' + i}
+									id={measurementType + '-' + i}
 									class="input join-item input-sm"
 									bind:value={measurement[measurementType as keyof Measurement]}
 								/>
@@ -86,7 +86,7 @@
 						<div class="join w-full">
 							<input
 								type="number"
-								name={'bmi-' + i}
+								id={'bmi-' + i}
 								class="disabled input join-item border-dashed input-sm"
 								readonly
 								value={round(bmiValue, 1)}

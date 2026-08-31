@@ -59,7 +59,7 @@
 
 	<div class="flex flex-col">
 		<label class="label" for="birth-date">{m.birth_date()}</label>
-		<DateInput bind:value={birthDate} />
+		<DateInput id="birth-date" bind:value={birthDate} />
 	</div>
 
 	<div class="flex flex-col">

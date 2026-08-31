@@ -37,12 +37,24 @@
 		<p>{m.import_description()}</p>
 
 		<div class="mt-3 grid grid-cols-2 items-center gap-x-5 gap-y-2">
-			<input type="file" class="input" placeholder={m.json_file()} accept=".json" />
+			<input
+				type="file"
+				class="input"
+				name="json-file"
+				placeholder={m.json_file()}
+				accept=".json"
+			/>
 			<button class="btn text-primary-content btn-primary" onclick={doFileImport}
 				>{m.load_file()}</button
 			>
 
-			<input type="text" class="input" placeholder={m.json_string()} bind:value={jsonString} />
+			<input
+				type="text"
+				class="input"
+				name="json-string"
+				placeholder={m.json_string()}
+				bind:value={jsonString}
+			/>
 			<button class="btn text-primary-content btn-primary" onclick={doStringImport}
 				>{m.load_string()}</button
 			>
