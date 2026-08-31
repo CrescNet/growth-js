@@ -13,3 +13,12 @@ export function saveToFile(content: string, filename: string): void {
 	a.click();
 	URL.revokeObjectURL(url);
 }
+
+const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
+
+export function dateReviver(_: string, value: any) {
+	if (typeof value === 'string' && ISO_DATE_REGEX.test(value)) {
+		return new Date(value);
+	}
+	return value;
+}

@@ -119,5 +119,13 @@
 		fatherHeight={fatherHeight.value}
 	/>
 
-	<ImportModal bind:open={importModal} />
+	<ImportModal
+		bind:open={importModal}
+		bind:measurements={measurements.value}
+		bind:reference={reference.declaration}
+		bind:sex={sex.value}
+		bind:birthDate={birthDate.value}
+		bind:motherHeight={motherHeight.value}
+		bind:fatherHeight={fatherHeight.value}
+	/>
 </div>

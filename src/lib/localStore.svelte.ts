@@ -1,13 +1,5 @@
 import { browser } from '$app/environment';
-
-const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
-
-function dateReviver(_: string, value: any) {
-	if (typeof value === 'string' && ISO_DATE_REGEX.test(value)) {
-		return new Date(value);
-	}
-	return value;
-}
+import { dateReviver } from './utils';
 
 export class LocalStore<T> {
 	value = $state<T>() as T;
