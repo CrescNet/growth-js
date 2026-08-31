@@ -98,6 +98,7 @@
 				data: centileData.map((c) => ({ x: c.age, y: c[p as keyof ReferenceDataRow] })),
 				borderColor: 'black',
 				borderWidth: 1,
+				borderDash: p === 'p50' ? [5] : undefined,
 				pointHitRadius: 0,
 				pointRadius: 0
 			}))
