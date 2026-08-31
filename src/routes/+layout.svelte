@@ -8,7 +8,10 @@
 	let { children } = $props();
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<svelte:head>
+	<link rel="icon" href={favicon} />
+	<title>{packageInfo.productName} | CrescNet</title>
+</svelte:head>
 
 <div class="flex min-h-screen flex-col">
 	<div class="navbar bg-primary text-primary-content shadow-sm">
