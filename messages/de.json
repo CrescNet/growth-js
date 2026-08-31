@@ -51,5 +51,8 @@
 	"json_string": "JSON-Zeichenkette",
 	"measurements": "Messungen",
 	"percentile_description": "Die Linien p03, p50 bzw. p97 werden als 3., 50. bzw. 97. Perzentile bezeichnet. Beispielsweise gibt das 97. Perzentil an, dass 97% aller Messwerte unterhalb dieser Linie liegen. Ein Kind dessen Messwert oberhalb des 97. Perzentil liegt ist daher im Vergleich zu gleichaltrigen Kindern des selben Geschlechts auffällig groß. Das Kind gehört zu den größten 3 Prozent.",
-	"parental_estimation_description": "Der elterliche Erwartungswert ergibt sich aus den beiden Elterngrößen und den gewählten Referenzwerten. Es handelt sich hierbei nur um einen Richtwert, der genutzt werden kann, um abzuschätzen, ob ein Kind beispielsweise deutlich unter oder über der elterlichen Erwartung liegt."
+	"parental_estimation_description": "Der elterliche Erwartungswert ergibt sich aus den beiden Elterngrößen und den gewählten Referenzwerten. Es handelt sich hierbei nur um einen Richtwert, der genutzt werden kann, um abzuschätzen, ob ein Kind beispielsweise deutlich unter oder über der elterlichen Erwartung liegt.",
+	"in_years": "in Jahren",
+	"min_age": "Mindestalter",
+	"max_age": "Höchstalter"
 }

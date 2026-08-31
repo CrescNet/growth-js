@@ -49,6 +49,15 @@
 		targetColor?: string;
 	} = $props();
 
+	let measurementData = $derived(
+		measurements.map((m) => ({
+			x: age(birthDate, m.date),
+			y:
+				measurementType === 'bmi'
+					? bmi(m.height, m.weight)
+					: (m[measurementType as keyof Measurement] as number)
+		}))
+	);
 	let centileData = $derived(
 		!sex
 			? []
@@ -57,6 +66,8 @@
 
 	let targetSds = $derived(getTargetHeightSds(fatherHeight, motherHeight));
 	let color = $derived(sex === 'female' ? '#f392a3' : sex === 'male' ? '#2086e8' : 'black');
+	let minAge = $state(0);
+	let maxAge = $state(18);
 
 	let data = $derived({
 		datasets: [
@@ -64,13 +75,7 @@
 				label: m[measurementType as keyof typeof m](),
 				type: 'scatter',
 				backgroundColor: color,
-				data: measurements.map((m) => ({
-					x: age(birthDate, m.date),
-					y:
-						measurementType === 'bmi'
-							? bmi(m.height, m.weight)
-							: m[measurementType as keyof Measurement]
-				}))
+				data: measurementData
 			},
 			{
 				label: m.parental_estimated_value(),
@@ -105,14 +110,13 @@
 			}
 		}
 	});
-	let options = {
+	let options = $derived({
 		responsive: true,
 		maintainAspectRatio: true,
 		scales: {
-			x: { min: 0, max: 18 },
-			y: { min: 0 }
+			x: { min: minAge, max: maxAge }
 		}
-	};
+	});
 </script>
 
 <Chart
@@ -124,6 +128,22 @@
 	height={80}
 	width={100}
 />
+
+<div class="card card-sm">
+	<div class="card-body grid grid-flow-row grid-cols-2 gap-2 sm:gap-3">
+		<div class="flex flex-col">
+			<label class="label" for="min-age">{m.min_age()}</label>
+			<input type="number" class="input input-sm" id="min-age" bind:value={minAge} />
+			<p class="label">{m.in_years()}</p>
+		</div>
+
+		<div class="flex flex-col">
+			<label class="label" for="max-age">{m.max_age()}</label>
+			<input type="number" class="input input-sm" id="max-age" bind:value={maxAge} />
+			<p class="label">{m.in_years()}</p>
+		</div>
+	</div>
+</div>
 
 <div class="card bg-base-100 shadow-sm card-sm sm:card-border">
 	<div class="card-body p-1 sm:p-3">
