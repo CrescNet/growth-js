@@ -35,7 +35,7 @@ export const availableReferences = $state([
 		disease: false
 	},
 	{
-		value: 'achondroplasia_sweden',
+		value: 'achondroplasia',
 		label: m.achondroplasia(),
 		authors: 'Merker et al. 2019',
 		url: 'https://doi.org/10.1002/ajmg.a.38853',
