@@ -85,7 +85,7 @@
 	<div class="divider lg:mx-1 lg:divider-horizontal"></div>
 
 	<div class="flex flex-col items-center overflow-hidden pb-3 lg:flex-5/12 xl:flex-1">
-		<label class="tabs tabs-box">
+		<label class="tabs tabs-box font-bold">
 			{#each ['height', 'weight', 'bmi'] as measurementType (measurementType)}
 				<input
 					type="radio"
