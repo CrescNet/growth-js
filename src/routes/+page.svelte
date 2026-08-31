@@ -1,0 +1,131 @@
+<script lang="ts">
+	import { m } from '$lib/paraglide/messages';
+	import { type Measurement } from '$lib/types';
+	import MeasurementTable from '$lib/components/MeasurementTable.svelte';
+	import MasterDataInput from '$lib/components/MasterDataInput.svelte';
+	import GrowthChart from '$lib/components/GrowthChart.svelte';
+	import { reference } from '$lib/reference.svelte';
+	import { localStore } from '$lib/localStore.svelte';
+	import ExportModal from '$lib/components/ExportModal.svelte';
+	import ImportModal from '$lib/components/ImportModal.svelte';
+
+	let sex = localStore('sex', undefined);
+	let birthDate = localStore('birthDate', undefined);
+	let motherHeight = localStore('motherHeight', undefined);
+	let fatherHeight = localStore('fatherHeight', undefined);
+	let measurements = localStore<Measurement[]>('measurements', [{}]);
+	let chartMeasurement = $state('height');
+
+	let exportModal = $state(false);
+	let importModal = $state(false);
+
+	function reset() {
+		reference.declaration = undefined;
+		sex.value = undefined;
+		birthDate.value = undefined;
+		motherHeight.value = undefined;
+		fatherHeight.value = undefined;
+		measurements.value = [{}];
+	}
+</script>
+
+<div class="flex h-full flex-col lg:flex-row">
+	<div class="flex flex-col gap-3 lg:flex-7/12 xl:flex-1">
+		<div class="card bg-base-100 shadow-sm card-sm sm:card-border">
+			<div class="card-body p-1 sm:p-3">
+				<h2 class="card-title">{m.description()}</h2>
+				<p>{m.app_description()}</p>
+			</div>
+			<div class="card-body p-1 sm:p-3">
+				<h2 class="card-title">{m.privacy()}</h2>
+				<p>{m.privacy_note()}</p>
+			</div>
+		</div>
+
+		<div class="card bg-base-100 shadow-sm card-sm card-border">
+			<div class="card-body flex flex-col p-1 sm:p-3">
+				<MasterDataInput
+					bind:sex={sex.value}
+					bind:birthDate={birthDate.value}
+					bind:motherHeight={motherHeight.value}
+					bind:fatherHeight={fatherHeight.value}
+				/>
+			</div>
+
+			<div class="divider m-0"></div>
+
+			<div class="card-body p-1 sm:p-3">
+				<div class="card-title">{m.measurements()}</div>
+
+				<MeasurementTable
+					birthDate={birthDate.value}
+					sex={sex.value}
+					bind:value={measurements.value}
+				/>
+
+				<div class="flex flex-row justify-center">
+					<div class="join">
+						<button
+							class="btn join-item text-primary-content btn-primary"
+							onclick={() => (exportModal = true)}>{m.export()}</button
+						>
+						<button
+							class="btn join-item text-primary-content btn-primary"
+							onclick={() => (importModal = true)}>{m.import()}</button
+						>
+						<button class="btn join-item text-error-content btn-error" onclick={reset}
+							>{m.reset()}</button
+						>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="divider lg:mx-1 lg:divider-horizontal"></div>
+
+	<div class="flex flex-col items-center overflow-hidden pb-3 lg:flex-5/12 xl:flex-1">
+		<label class="tabs tabs-box font-bold">
+			{#each ['height', 'weight', 'bmi'] as measurementType (measurementType)}
+				<input
+					type="radio"
+					name="type"
+					class="tab"
+					aria-label={m[measurementType as keyof typeof m]()}
+					value={measurementType}
+					bind:group={chartMeasurement}
+				/>
+			{/each}
+		</label>
+
+		<GrowthChart
+			measurementType={chartMeasurement}
+			measurements={measurements.value}
+			reference={reference.data}
+			sex={sex.value}
+			birthDate={birthDate.value}
+			motherHeight={motherHeight.value}
+			fatherHeight={fatherHeight.value}
+		/>
+	</div>
+
+	<ExportModal
+		bind:open={exportModal}
+		measurements={measurements.value}
+		referenceId={reference.declaration?.value}
+		sex={sex.value}
+		birthDate={birthDate.value}
+		motherHeight={motherHeight.value}
+		fatherHeight={fatherHeight.value}
+	/>
+
+	<ImportModal
+		bind:open={importModal}
+		bind:measurements={measurements.value}
+		bind:reference={reference.declaration}
+		bind:sex={sex.value}
+		bind:birthDate={birthDate.value}
+		bind:motherHeight={motherHeight.value}
+		bind:fatherHeight={fatherHeight.value}
+	/>
+</div>
