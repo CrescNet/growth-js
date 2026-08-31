@@ -1,8 +1,5 @@
 <script lang="ts">
-	import type { Pathname } from '$app/types';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
-	import { locales, getLocale, setLocale } from '$lib/paraglide/runtime';
+	import { locales, setLocale } from '$lib/paraglide/runtime';
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import packageInfo from '../../package.json';
