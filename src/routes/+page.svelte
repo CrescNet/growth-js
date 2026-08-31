@@ -13,7 +13,7 @@
 	let birthDate = localStore('birthDate', undefined);
 	let motherHeight = localStore('motherHeight', undefined);
 	let fatherHeight = localStore('fatherHeight', undefined);
-	let measurements = localStore<Measurement[]>('measurements', []);
+	let measurements = localStore<Measurement[]>('measurements', [{}]);
 	let chartMeasurement = $state('height');
 
 	let exportModal = $state(false);
