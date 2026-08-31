@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { locales, setLocale } from '$lib/paraglide/runtime';
 	import './layout.css';
-	import favicon from '$lib/assets/favicon.svg';
+	import favicon from '$lib/assets/favicon.ico';
 	import packageInfo from '../../package.json';
 
 	let { children } = $props();
